@@ -15,7 +15,6 @@ Nice To Have
 - Perfil de usuário (exibe as mensagens que estão ativas em qualquer categoria)
 - Compra de mensagem (pode programar a alteração da mensagem e pode ficar protegida por mais tempo)
 - Analytics
+- Feed/notificações/email de atualizações de categorias e usuários
+- Compartilhamento em outras redes sociais
 
-Ideias:
-
-Ronald: Uma funcionalidade que acho interessante seria, que as primeiras posições poderiam ser compartilhadas em outras redes sociais de forma automática. Acredito que muitas pessoas irão utilizar a solução para propagandas de seus próprios negócios e gostariam desta funcionalidade.
