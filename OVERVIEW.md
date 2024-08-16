@@ -1,6 +1,6 @@
-Mural
+# Mural
 
-Visão Geral
+## Visão Geral
 
 1. Sistema é composto de um número fixo de mensagens
 2. As mensagens têm posição fixa, elas não se alteram baseado em data de publicação ou nenhum outro aspecto
@@ -8,7 +8,7 @@ Visão Geral
 4. Ao inserir uma mensagem em uma posição específica, a mensagem que estava nesta posição é descartada.
 5. Mensagens publicadas há menos de 1 minuto não podem ser alteradas.
 
-Nice To Have
+## Nice To Have
 
 - Categorias de mensagens
 - Paginação de mensagens de categorias
