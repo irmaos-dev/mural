@@ -1,0 +1,3 @@
+Article vem sem o campo favorited quando não está logado
+
+validação UpdateUserRequest está lendo campo inexistente
