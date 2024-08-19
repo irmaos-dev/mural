@@ -35,6 +35,10 @@ Para mais informações, leia o [OVERVIEW.md](https://github.com/irmaos-dev/mura
 - React no front-end
 - Laravel no back-end
 
+## Documentação da stack base
+
+https://realworld-docs.netlify.app/docs/intro
+
 ## Instalação
 
 Para ambos client e server, é sugerido que utilize o WSL 2.
