@@ -35,16 +35,58 @@ Para mais informações, leia o [OVERVIEW.md](https://github.com/irmaos-dev/mura
 - React no front-end
 - Laravel no back-end
 
-## Membros e Cargos
+## Instalação
 
+Para ambos client e server, é sugerido que utilize o WSL 2.
 
-| Nome              | Cargos                                          |
-|-------------------|-------------------------------------------------|
-| Marcelão          | :mortar_board: Mentor, :bulb: Tech lead         |
-| Claudio           | :mortar_board: Mentor                           |
-| Ronald SS         | :computer: Desenvolvedor                        |
-| William           | :computer: Desenvolvedor                        |
-| Renan Costa       | :computer: Desenvolvedor                        |
-| Daniella          | :computer: Desenvolvedor                        |
+Primeiramente, instale o Docker Desktop:
 
+https://docs.docker.com/desktop/install/windows-install/
 
+Depois, siga o passo a passo a seguir:
+
+https://www.certificacaolinux.com.br/como-instalar-ubuntu-no-windows-usando-wsl/
+
+Abra o terminal do WSL e rode o comando a seguir:
+
+`git clone https://github.com/irmaos-dev/mural.git && code mural`
+
+Neste momento, o projeto do Mural estará aberto no seu Visual Studio Code.
+
+### Client
+
+Para instalar, abra o terminal e rode o comando:
+
+```
+cd client
+npm install
+```
+
+Para rodar o client, rode:
+
+`npm run dev`
+
+### Server
+
+Para instalar, abra um novo terminal e rode o comando:
+
+```
+cd server
+composer install
+php artisan migrate
+```
+
+Para rodar o server, rode:
+
+```
+vendor/bin/sail up
+```
+
+### Banco de Dados
+
+Baixe e instale o DBeaver Community
+
+https://dbeaver.io/download/
+
+Configure uma conexão Postgres para conectar com o banco de dados do server.
+Verifique as credenciais do servidor no arquivo .env
