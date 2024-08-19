@@ -16,3 +16,6 @@
 12. Feed/notificações/email de atualizações de categorias e usuários
 13. Compartilhamento em outras redes sociais
 
+Imagem de conceito:
+
+![image](https://github.com/user-attachments/assets/2a3666d9-4d53-48c1-88ba-b65977a7a07b)
