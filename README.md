@@ -1,12 +1,12 @@
-# Mural
+# Mural App
 
-O Mural é um software de rede social criada pelo Clube de Desenvolvimento dos Irmãos.Dev.
-Essa iniciativa tem como propósito te fornecer uma experiência real de desenvolvimento em equipe que você pode colocar no seu currículo.
+Mural App é um software de rede social criada pelo <u>Clube de Desenvolvimento dos IrmãosDev</u>.
 
-Para participar, preencha o formulário:
-https://forms.gle/mxC9LdM4ckJThFno9
+Essa iniciativa tem como propósito fornecer uma experiência real de desenvolvimento de software em equipe para jovens programadores.
 
-## Escopo do projeto
+Para participar, preencha o formulário: https://forms.gle/mxC9LdM4ckJThFno9 
+
+## Escopo do Projeto
 
 O sistema consiste em uma rede social onde usuários poderão postar mensagens em um mural. Este mural é público e tem tamanho limitado, ou seja, em caso dele estar cheio, novas mensagens deverão substituir mensagens antigas. Cada mensagem fica no mural por, pelo menos, 1 minuto. Depois desse tempo, uma nova mensagem pode substituí-la e tomar o seu lugar.
 
@@ -16,38 +16,39 @@ Para mais informações, leia o [OVERVIEW.md](https://github.com/irmaos-dev/mura
 
 [//]: # "Marcelo, seria bom se você colocasse um print daquele protótipo que você mostrou em live."
 
-## Processos
+## Como Funciona?
 
-- Todo código deve ser adicionado por meio de Pull requests. A branch `main` é bloqueada para commits diretos
-- Você deve compartilhar o progresso de suas tarefas, pelo menos, a cada 7 dias
-- Um dos mentor irá disponibilizar 30 minutos diários para uma call para ajudar os membros (opcional)
-- Um membro pode requisitar uma task e terá cerca de 7 dias para completá-la
+- Todo código deve ser adicionado por meio de Pull Requests;
+- A branch `main` é bloqueada para commits diretos, portanto faça o fork do projeto;
+- Você deverá compartilhar o progresso de suas tarefas semanalmente;
+- Um dos mentores irá disponibilizar 30 minutos diários para uma call a fim de auxiliar os membros (opcional);
+- Os membros pode solicitar tarefas e terão 1 semana para completá-las;
 
 ## Requisitos Mínimos
 
-- HTML e CSS
-- Lógica de programação
-- Arquitetura client-server (REST-like)
-- Testes Automatizados
+- HTML, CSS e/ou Javascript;
+- Lógica de programação;
+- Arquitetura client-server (REST-like);
+- Experiência com testes automatizados;
 
 ## Tech Stack
 
-- React no front-end
-- Laravel no back-end
+- Front-End: Javascript (React);
+- Back-End: PHP (Laravel);
 
-## Documentação da stack base
+## Documentação do Projeto Base
 
 https://realworld-docs.netlify.app/docs/intro
 
-## Instalação
+## Instalação do Projeto
 
-Para ambos client e server, é sugerido que utilize o WSL 2.
+Para ambos client e server, é sugerido que utilize Docker Desktop em conjunto com o WSL 2 (Subsistema Windows para Linux).
 
 Primeiramente, instale o Docker Desktop:
 
 https://docs.docker.com/desktop/install/windows-install/
 
-Depois, siga o passo a passo a seguir:
+Siga o passo a passo a seguir para instalar o WSL 2:
 
 https://www.certificacaolinux.com.br/como-instalar-ubuntu-no-windows-usando-wsl/
 
@@ -55,36 +56,25 @@ Abra o terminal do WSL e rode o comando a seguir:
 
 `git clone https://github.com/irmaos-dev/mural.git && code mural`
 
-Neste momento, o projeto do Mural estará aberto no seu Visual Studio Code.
+Neste momento, o projeto do Mural App estará aberto no seu Visual Studio Code.
 
-### Client
+### Dependências do Front-End (Client)
 
-Para instalar, abra o terminal e rode o comando:
+Abra o terminal e entre na pasta do projeto: `cd client`.
 
-```
-cd client
-npm install
-```
+Para instalar as dependências do projeto, rode o comando: `npm install`.
 
-Para rodar o client, rode:
+Para compilar o codigo, execute: `npm run dev`.
 
-`npm run dev`
+### Dependências do Back-End (Server)
 
-### Server
+Abra o terminal e entre na pasta do projeto: `cd server`.
 
-Para instalar, abra um novo terminal e rode o comando:
+Para instalar as dependências do projeto, rode o comando: `composer install`.
 
-```
-cd server
-composer install
-php artisan migrate
-```
+Para rodar as migrações do banco de dados, execute: `php artisan migrate`.
 
-Para rodar o server, rode:
-
-```
-vendor/bin/sail up
-```
+Para rodar o servidor, execute: `vendor/bin/sail up`.
 
 ### Banco de Dados
 
@@ -93,4 +83,5 @@ Baixe e instale o DBeaver Community
 https://dbeaver.io/download/
 
 Configure uma conexão Postgres para conectar com o banco de dados do server.
-Verifique as credenciais do servidor no arquivo .env
+
+Verifique as credenciais do servidor no arquivo `.env`.
