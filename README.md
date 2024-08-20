@@ -36,6 +36,18 @@ Para mais informações, leia o [OVERVIEW.md](https://github.com/irmaos-dev/mura
 - Front-End: Javascript (React);
 - Back-End: PHP (Laravel);
 
+## Ferramentas utilizadas
+
+- Windows 10+
+- Visual Studio Code
+- Docker Desktop
+- Windows Subsystem for Linux
+- Node.JS
+
+### Posso usar alguma outra ferramenta fora essas?
+
+Sim! Essa é a lista de ferramentas que iremos considerar na criação dos guias de instalação, executação, etc. Mas sinta-se à vontade para utilizar alternativas.
+
 ## Documentação do Projeto Base
 
 https://realworld-docs.netlify.app/docs/intro
@@ -44,15 +56,25 @@ https://realworld-docs.netlify.app/docs/intro
 
 Para ambos client e server, é sugerido que utilize Docker Desktop em conjunto com o WSL 2 (Subsistema Windows para Linux).
 
-Primeiramente, instale o Docker Desktop:
+- Primeiramente, instale o Docker Desktop:
 
 https://docs.docker.com/desktop/install/windows-install/
 
-Siga o passo a passo a seguir para instalar o WSL 2:
+- Siga o passo a passo a seguir para instalar o WSL 2:
 
 https://www.certificacaolinux.com.br/como-instalar-ubuntu-no-windows-usando-wsl/
 
-Abra o terminal do WSL e rode o comando a seguir:
+- Execute o comando a seguir para atualizar os pacotes do Linux
+
+```sudo apt update && sudo apt upgrade```
+
+- Instale o Node com o comando abaixo
+
+```sudo apt-get install -y curl && curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/master/install.sh | bash && nvm install 16```
+
+- Instale a extensão do WSL dentro do Visual Studio Code.
+
+- Abra o terminal do WSL e rode o comando a seguir:
 
 `git clone https://github.com/irmaos-dev/mural.git && code mural`
 
@@ -60,28 +82,28 @@ Neste momento, o projeto do Mural App estará aberto no seu Visual Studio Code.
 
 ### Dependências do Front-End (Client)
 
-Abra o terminal e entre na pasta do projeto: `cd client`.
+- Abra o terminal e entre na pasta do projeto: `cd client`.
 
-Para instalar as dependências do projeto, rode o comando: `npm install`.
+- Para instalar as dependências do projeto, rode o comando: `npm install`.
 
-Para compilar o codigo, execute: `npm run dev`.
+- Para compilar o codigo, execute: `npm run dev`.
 
 ### Dependências do Back-End (Server)
 
-Abra o terminal e entre na pasta do projeto: `cd server`.
+- Abra o terminal e entre na pasta do projeto: `cd server`.
 
-Para instalar as dependências do projeto, rode o comando: `composer install`.
+- Para instalar as dependências do projeto, rode o comando: `composer install`.
 
-Para rodar as migrações do banco de dados, execute: `php artisan migrate`.
+- Para rodar as migrações do banco de dados, execute: `php artisan migrate`.
 
-Para rodar o servidor, execute: `vendor/bin/sail up`.
+- Para rodar o servidor, execute: `vendor/bin/sail up`.
 
 ### Banco de Dados
 
-Baixe e instale o DBeaver Community
+- Baixe e instale o DBeaver Community
 
 https://dbeaver.io/download/
 
-Configure uma conexão Postgres para conectar com o banco de dados do server.
+- Configure uma conexão Postgres para conectar com o banco de dados do server.
 
-Verifique as credenciais do servidor no arquivo `.env`.
+- Verifique as credenciais do servidor no arquivo `.env`.
