@@ -107,3 +107,9 @@ https://dbeaver.io/download/
 - Configure uma conexão Postgres para conectar com o banco de dados do server.
 
 - Verifique as credenciais do servidor no arquivo `.env`.
+
+### Screenshot da aplicação base
+
+Você deverá conseguir rodar o projeto, registrar um usuário e logar, criar um artigo e ver a lista de artigos pelo feed, como na foto a seguir:
+
+![image](https://github.com/user-attachments/assets/799d67bf-150d-46e4-9543-ed5d8f266edf)
