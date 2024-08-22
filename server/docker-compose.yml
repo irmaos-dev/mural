@@ -1,21 +1,18 @@
-# For more information: https://laravel.com/docs/sail
-version: '3.9'
-
 services:
     laravel.test:
         build:
-            context: ./vendor/laravel/sail/runtimes/8.1
+            context: ./vendor/laravel/sail/runtimes/8.3
             dockerfile: Dockerfile
             args:
+                NODE_VERSION: '20'
                 WWWGROUP: '${WWWGROUP}'
-        image: sail-8.1/app
+        image: sail-8.3/app
         extra_hosts:
             - 'host.docker.internal:host-gateway'
         ports:
             - '${APP_PORT:-80}:80'
             - '${HMR_PORT:-8080}:8080'
         environment:
-            PHP_IDE_CONFIG: 'serverName=laravel-realworld.test'
             WWWUSER: '${WWWUSER}'
             LARAVEL_SAIL: 1
             XDEBUG_MODE: '${SAIL_XDEBUG_MODE:-off}'
@@ -26,9 +23,10 @@ services:
             - sail
         depends_on:
             - pgsql
-
+            - redis
+            - mailpit
     pgsql:
-        image: 'postgres:14-alpine'
+        image: 'postgres:15'
         ports:
             - '${FORWARD_DB_PORT:-5432}:5432'
         environment:
@@ -42,16 +40,43 @@ services:
         networks:
             - sail
         healthcheck:
-            test: [ "CMD", "pg_isready", "-q", "-d", "${DB_DATABASE}", "-U", "${DB_USERNAME}" ]
+            test:
+                - CMD
+                - pg_isready
+                - '-q'
+                - '-d'
+                - '${DB_DATABASE}'
+                - '-U'
+                - '${DB_USERNAME}'
             retries: 3
             timeout: 5s
-
+    redis:
+        image: 'redis:alpine'
+        ports:
+            - '${FORWARD_REDIS_PORT:-6379}:6379'
+        volumes:
+            - 'sail-redis:/data'
+        networks:
+            - sail
+        healthcheck:
+            test:
+                - CMD
+                - redis-cli
+                - ping
+            retries: 3
+            timeout: 5s
+    mailpit:
+        image: 'axllent/mailpit:latest'
+        ports:
+            - '${FORWARD_MAILPIT_PORT:-1025}:1025'
+            - '${FORWARD_MAILPIT_DASHBOARD_PORT:-8025}:8025'
+        networks:
+            - sail
 networks:
     sail:
-        name: laravel-realworld-network
         driver: bridge
-
 volumes:
     sail-pgsql:
-        name: laravel-realworld-database
+        driver: local
+    sail-redis:
         driver: local
