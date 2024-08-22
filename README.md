@@ -92,6 +92,10 @@ Neste momento, o projeto do Mural App estará aberto no seu Visual Studio Code.
 
 - Abra o terminal e entre na pasta do projeto: `cd server`.
 
+- Com o WSL já configurado e o docker instalado(ambiente Mac e Linux), rode o comando: `make`
+
+- Para ambientes sem ser com o docker siga os passos abaixo:
+
 - Para instalar as dependências do projeto, rode o comando: `composer install`.
 
 - Para rodar as migrações do banco de dados, execute: `php artisan migrate`.
