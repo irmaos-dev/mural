@@ -1,5 +1,5 @@
 default: env prepare up key-generate migrate
-	@echo "--> Your environment is ready to use! Access http://localhost:3000/api/ and enjoy it!"
+	@echo "--> Your environment is ready to use! Access http://localhost:8081/api/ and enjoy it!"
 
 .PHONY: env
 env:
