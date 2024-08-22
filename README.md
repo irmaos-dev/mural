@@ -12,7 +12,7 @@ O sistema consiste em uma rede social onde usuários poderão postar mensagens e
 
 A ordem das mensagens é definida pelos usuários, então atributos como `texto`, `data de criação` ou qualquer outro aspecto da mensagem não são considerados para definir a ordem das mensagens no mural.
 
-Para mais informações, leia o [OVERVIEW.md](https://github.com/irmaos-dev/mural/blob/main/OVERVIEW.md) do projeto
+Para mais informações, leia o [OVERVIEW.md](https://github.com/irmaos-dev/mural/blob/main/docs/OVERVIEW.md) do projeto
 
 [//]: # "Marcelo, seria bom se você colocasse um print daquele protótipo que você mostrou em live."
 
