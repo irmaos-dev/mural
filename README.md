@@ -92,6 +92,8 @@ Neste momento, o projeto do Mural App estará aberto no seu Visual Studio Code.
 
 - Abra o terminal e entre na pasta do projeto: `cd server`.
 
+- Para usar as configurações padrões de ambiente, rode o comando: `mv .env.example .env`.
+
 - Para instalar as dependências do projeto, rode o comando: `composer install`.
 
 - Para rodar as migrações do banco de dados, execute: `php artisan migrate`.
