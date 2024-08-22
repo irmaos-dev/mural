@@ -12,7 +12,7 @@ O sistema consiste em uma rede social onde usuários poderão postar mensagens e
 
 A ordem das mensagens é definida pelos usuários, então atributos como `texto`, `data de criação` ou qualquer outro aspecto da mensagem não são considerados para definir a ordem das mensagens no mural.
 
-Para mais informações, leia o [OVERVIEW.md](https://github.com/irmaos-dev/mural/blob/main/OVERVIEW.md) do projeto
+Para mais informações, leia o [OVERVIEW.md](https://github.com/irmaos-dev/mural/blob/main/docs/OVERVIEW.md) do projeto
 
 [//]: # "Marcelo, seria bom se você colocasse um print daquele protótipo que você mostrou em live."
 
@@ -96,6 +96,8 @@ Neste momento, o projeto do Mural App estará aberto no seu Visual Studio Code.
 
 - Para ambientes sem ser com o docker siga os passos abaixo:
 
+- Para usar as configurações padrões de ambiente, rode o comando: `mv .env.example .env`.
+
 - Para instalar as dependências do projeto, rode o comando: `composer install`.
 
 - Para rodar as migrações do banco de dados, execute: `php artisan migrate`.
@@ -111,3 +113,9 @@ https://dbeaver.io/download/
 - Configure uma conexão Postgres para conectar com o banco de dados do server.
 
 - Verifique as credenciais do servidor no arquivo `.env`.
+
+### Screenshot da aplicação base
+
+Você deverá conseguir rodar o projeto, registrar um usuário e logar, criar um artigo e ver a lista de artigos pelo feed, como na foto a seguir:
+
+![image](https://github.com/user-attachments/assets/799d67bf-150d-46e4-9543-ed5d8f266edf)
