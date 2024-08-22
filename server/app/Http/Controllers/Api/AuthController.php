@@ -9,6 +9,7 @@ use App\Http\Resources\Api\UserResource;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 class AuthController extends Controller
 {
@@ -18,7 +19,7 @@ class AuthController extends Controller
      * @param NewUserRequest $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function register(NewUserRequest $request)
+    public function register(NewUserRequest $request): JsonResponse
     {
         $attributes = $request->validated();
 
@@ -37,7 +38,7 @@ class AuthController extends Controller
      * @param \App\Http\Requests\Api\LoginRequest $request
      * @return \App\Http\Resources\Api\UserResource|\Illuminate\Http\JsonResponse
      */
-    public function login(LoginRequest $request)
+    public function login(LoginRequest $request): JsonResponse
     {
         Auth::shouldUse('web');
 

@@ -4,13 +4,21 @@ namespace App\Http\Requests\Api;
 
 class UpdateArticleRequest extends BaseArticleRequest
 {
-    public function rules()
+    /**
+     * Determine if the user is authorized to make this request.
+     */
+    public function authorize(): bool
     {
-        return array_merge_recursive(parent::rules(), [
+        return true;
+    }
+
+    public function rules(): array
+    {
+        return [
             'title' => ['required_without_all:description,body'],
             'slug' => ['required_with:title'],
             'description' => ['required_without_all:title,body'],
             'body' => ['required_without_all:title,description'],
-        ]);
+        ];
     }
 }

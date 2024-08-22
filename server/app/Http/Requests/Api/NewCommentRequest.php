@@ -8,11 +8,19 @@ use Illuminate\Support\Arr;
 class NewCommentRequest extends FormRequest
 {
     /**
+     * Determine if the user is authorized to make this request.
+     */
+    public function authorize(): bool
+    {
+        return true;
+    }
+
+    /**
      * Get the validation rules that apply to the request.
      *
      * @return array<string, mixed>
      */
-    public function rules()
+    public function rules(): array
     {
         return [
             'body' => 'required|string',
@@ -22,7 +30,7 @@ class NewCommentRequest extends FormRequest
     /**
      * @return array<mixed>
      */
-    public function validationData()
+    public function validationData(): array
     {
         return Arr::wrap($this->input('comment'));
     }

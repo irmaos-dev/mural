@@ -11,11 +11,19 @@ use Illuminate\Validation\Rule;
 abstract class BaseArticleRequest extends FormRequest
 {
     /**
+     * Determine if the user is authorized to make this request.
+     */
+    public function authorize(): bool
+    {
+        return true;
+    }
+
+    /**
      * Prepare the data for validation.
      *
      * @return void
      */
-    protected function prepareForValidation()
+    protected function prepareForValidation(): void
     {
         $input = $this->input();
         $title = Arr::get($input, 'article.title');
