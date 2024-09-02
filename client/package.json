@@ -1,82 +1,71 @@
 {
-  "name": "ts-redux-react-realworld-example-app",
-  "version": "0.1.0",
+  "name": "realworld-react-fsd",
   "private": true,
-  "dependencies": {
-    "@hqoss/monads": "^0.5.0",
-    "@reduxjs/toolkit": "^1.6.1",
-    "@testing-library/jest-dom": "^4.2.4",
-    "@testing-library/react": "^9.5.0",
-    "@testing-library/user-event": "^7.2.1",
-    "@types/axios": "^0.14.0",
-    "@types/date-fns": "^2.6.0",
-    "@types/jest": "^24.9.1",
-    "@types/node": "^12.20.18",
-    "@types/ramda": "^0.27.44",
-    "@types/react": "^16.14.11",
-    "@types/react-dom": "^16.9.14",
-    "@types/react-redux": "^7.1.18",
-    "@types/react-router-dom": "^5.1.8",
-    "axios": "^0.21.1",
-    "date-fns": "^2.23.0",
-    "decoders": "^1.25.1",
-    "ramda": "^0.27.1",
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2",
-    "react-redux": "^7.2.4",
-    "react-router-dom": "^5.2.0",
-    "react-scripts": "4.0.3",
-    "typescript": "^4.3.5"
-  },
+  "version": "0.0.0",
+  "type": "module",
   "scripts": {
-    "start": "cross-env DISABLE_ESLINT_PLUGIN=true react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "prettier:check": "prettier --check src",
-    "prettier": "prettier --write src",
-    "lint": "eslint src"
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview",
+    "lint": "eslint src --fix --ext ts,tsx --cache --report-unused-disable-directives --max-warnings 0",
+    "lint:perf": "set TIMING=1 && eslint src --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
+    "prettier": "pretty-quick --ignore-path .gitignore",
+    "prettier:all": "prettier --write . --ignore-path .gitignore",
+    "test:watch": "vitest watch",
+    "test:run": "vitest run",
+    "test:coverage": "vitest run --coverage",
+    "coverage:open": "npx vite preview --outDir ./coverage",
+    "test:coverage:open": "yarn run test:coverage && yarn run coverage:open",
+    "dep-cruiser:preview": "npx depcruise src --include-only \"^src\" --output-type dot | dot -T svg > dependency-graph-preview.svg"
   },
-  "pre-commit": [
-    "prettier:check",
-    "lint"
-  ],
-  "eslintConfig": {
-    "extends": "react-app"
-  },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
+  "dependencies": {
+    "@hookform/resolvers": "^3.6.0",
+    "@tanstack/react-query": "^5.40.0",
+    "@tanstack/react-query-devtools": "^5.40.1",
+    "axios": "^1.7.2",
+    "classnames": "^2.5.1",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-error-boundary": "^4.0.13",
+    "react-hook-form": "^7.51.5",
+    "react-icons": "^5.2.1",
+    "react-query": "^3.39.3",
+    "react-router-dom": "^6.23.1",
+    "zod": "^3.23.8",
+    "zustand": "^4.5.2"
   },
   "devDependencies": {
-    "@typescript-eslint/eslint-plugin": "^4.28.5",
-    "@typescript-eslint/parser": "^4.28.5",
-    "cross-env": "^7.0.3",
-    "eslint": "^7.32.0",
-    "pre-commit": "^1.2.2",
-    "prettier": "^2.3.2"
-  },
-  "jest": {
-    "clearMocks": true,
-    "collectCoverageFrom": [
-      "!<rootDir>/src/index.tsx",
-      "!<rootDir>/src/helpers/testsHelpers.ts"
-    ],
-    "coverageThreshold": {
-      "global": {
-        "branches": 100,
-        "functions": 100,
-        "lines": 100,
-        "statements": 100
-      }
-    }
+    "@testing-library/dom": "^10.1.0",
+    "@testing-library/jest-dom": "^6.4.5",
+    "@testing-library/react": "^16.0.0",
+    "@testing-library/user-event": "^14.5.2",
+    "@types/react": "^18.3.3",
+    "@types/react-dom": "^18.3.0",
+    "@typescript-eslint/eslint-plugin": "^7.13.0",
+    "@typescript-eslint/parser": "^7.13.0",
+    "@vitejs/plugin-react": "^4.3.1",
+    "@vitest/coverage-v8": "^1.6.0",
+    "dependency-cruiser": "^16.3.3",
+    "eslint": "^8.2.0",
+    "eslint-config-airbnb": "19.0.4",
+    "eslint-config-airbnb-typescript": "^18.0.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-import-resolver-typescript": "^3.6.1",
+    "eslint-plugin-import": "^2.25.3",
+    "eslint-plugin-jsx-a11y": "^6.5.1",
+    "eslint-plugin-react": "^7.28.0",
+    "eslint-plugin-react-hooks": "^4.3.0",
+    "eslint-plugin-react-refresh": "^0.4.7",
+    "eslint-plugin-testing-library": "^6.2.2",
+    "jsdom": "^24.1.0",
+    "path": "^0.12.7",
+    "prettier": "^3.3.1",
+    "pretty-quick": "^4.0.0",
+    "typescript": "^5.4.5",
+    "unplugin-fonts": "^1.1.1",
+    "vite": "^5.2.13",
+    "vite-plugin-checker": "^0.6.4",
+    "vite-plugin-eslint": "^1.8.1",
+    "vitest": "^1.6.0"
   }
 }

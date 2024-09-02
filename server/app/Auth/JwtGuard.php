@@ -43,8 +43,8 @@ class JwtGuard implements Guard
     public function __construct(
         UserProvider $provider,
         Request $request,
-        string $inputKey = 'token')
-    {
+        string $inputKey = 'token'
+    ) {
         $this->request = $request;
         $this->provider = $provider;
         $this->inputKey = $inputKey;
@@ -60,7 +60,7 @@ class JwtGuard implements Guard
         // If we've already retrieved the user for the current request we can just
         // return it back immediately. We do not want to fetch the user data on
         // every call to this method because that would be tremendously slow.
-        if (! is_null($this->user)) {
+        if (!is_null($this->user)) {
             return $this->user;
         }
 
@@ -68,7 +68,7 @@ class JwtGuard implements Guard
 
         $token = $this->getTokenForRequest();
 
-        if (! empty($token) && is_string($token)) {
+        if (!empty($token) && is_string($token)) {
             try {
                 $jwt = Jwt\Parser::parse($token);
             } catch (JwtParseException | JsonException) {
@@ -100,7 +100,7 @@ class JwtGuard implements Guard
 
         $token = $credentials[$this->inputKey];
 
-        if (! $token instanceof JwtTokenInterface) {
+        if (!$token instanceof JwtTokenInterface) {
             return false;
         }
 
@@ -137,7 +137,7 @@ class JwtGuard implements Guard
         /** @var string $header */
         $header = $this->request->header('Authorization', '');
 
-        if (Str::startsWith($header, 'Token ')) {
+        if (Str::startsWith($header, 'Bearer ')) {
             return Str::substr($header, 6);
         }
 

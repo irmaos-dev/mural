@@ -1,66 +1,102 @@
-[![Netlify Status](https://api.netlify.com/api/v1/badges/a85b9a22-32b1-479a-a00a-26277493613b/deploy-status)](https://app.netlify.com/sites/react-ts-redux-realworld-example-app/deploys)
-![Pipeline](https://github.com/angelguzmaning/ts-redux-react-realworld-example-app/actions/workflows/pipeline.yml/badge.svg)
+# 🙌 RealWorld example app 🍰 Feature-Sliced Design
 
-> ### React codebase containing real world examples (CRUD, auth, advanced patterns, etc) that adheres to the [RealWorld](https://github.com/gothinkster/realworld) spec and API.
+This codebase containing real world examples (CRUD, auth, advanced patterns, etc) that adheres to the [RealWorld](https://github.com/gothinkster/realworld) spec and API. Powered by [FSD (Feature-Sliced Design)](https://feature-sliced.design) architectural methodology.
 
-### [Demo](https://react-ts-redux-realworld-example-app.netlify.app/)&nbsp;&nbsp;&nbsp;&nbsp;[RealWorld](https://github.com/gothinkster/realworld)
+![Realworld example app](./logo.gif)
 
-This codebase was created to demonstrate a fully fledged fullstack application built with React, Typescript, and Redux Toolkit including CRUD operations, authentication, routing, pagination, and more.
+---
 
-For more information on how this works with other frontends/backends, head over to the [RealWorld](https://github.com/gothinkster/realworld) repo.
+[![Netlify Status][netlify-domain]](https://realworld-fsd.netlify.app/)
+[![Build workflow][build-domain]](https://github.com/sldk-yuri/realworld-react-fsd/actions/workflows/build.yml)
+[![Codecov][codecov-domain]](https://app.codecov.io/gh/sldk-yuri/realworld-react-fsd/branch/master)
+[![Code style: prettier][prettier-domain]](https://github.com/prettier/prettier)
+[![license][license-domain]](https://github.com/sldk-yuri/realworld-react-fsd/blob/master/LICENSE)
 
+## Features
 
-# How it works
-The root of the application is the `src/components/App` component. The App component uses react-router's HashRouter to display the different pages. Each page is represented by a [function component](https://reactjs.org/docs/components-and-props.html). 
+The example application is a social blogging site (i.e. a Medium.com clone) called "Conduit". It uses a custom API for all requests, including authentication.
 
-Some components include a `.slice` file that contains the definition of its state and reducers, which might also be used by other components. These slice files follow the [Redux Toolkit](https://redux-toolkit.js.org/) guidelines. Components connect to the state by using [custom hooks](https://reactjs.org/docs/hooks-custom.html#using-a-custom-hook).
+![Dependency Graph][dependency-graph-domain]
 
-This application is built following (as much as practicable) functional programming principles:
-* Immutable Data
-* No classes
-* No let or var
-* Use of monads (Option, Result)
-* No side effects
+**General functionality:**
 
-The code avoids runtime type-related errors by using Typescript and decoders for data coming from the API.
+- Authenticate users via JWT (login/signup pages + logout button on settings page)
+- CRU- users (sign up & settings page - no deleting required)
+- CRUD Articles
+- CR-D Comments on articles (no updating required)
+- GET and display paginated lists of articles
+- Favorite articles
+- Follow other users
 
-Some components include a `.test` file that contains unit tests. This project enforces a 100% code coverage.
+**The general page breakdown:**
 
-This project uses prettier and eslint to enforce a consistent code syntax.
+- Home page (URL: / )
+  - List of tags
+  - List of articles pulled from either Feed, Global, or by Tag
+  - Pagination for list of articles
+- Sign in/Sign up pages (URL: /login, /register )
+  - Uses JWT (store the token in localStorage)
+  - Authentication can be easily switched to session/cookie based
+- Settings page (URL: /settings )
+- Editor page to create/edit articles (URL: /editor, /editor/article-slug-here )
+- Article page (URL: /article/article-slug-here )
+  - Delete article button (only shown to article's author)
+  - Render markdown from server client side
+  - Comments section at bottom of page
+  - Delete comment button (only shown to comment's author)
+- Profile page (URL: /profile/:username, /profile/:username/favorites)
+  - Show basic user info
+  - List of articles populated from author's created articles or author's favorited articles
 
-## Folder structure
-* `src/components` Contains all the functional components.
-* `src/components/Pages` Contains the components used by the router as pages.
-* `src/state` Contains redux related code.
-* `src/services` Contains the code that interacts with external systems (API requests).
-* `src/types` Contains type definitions alongside the code related to those types.
-* `src/config` Contains configuration files.
+## Getting started
 
-# Getting started
+This project was bootstrapped with [Create Vite](https://vitejs.dev/guide/#getting-started)
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app), using the [Redux](https://redux.js.org/) and [Redux Toolkit](https://redux-toolkit.js.org/) template.
+To get the frontend running locally:
 
-## Available Scripts
-In the project directory, you can run:
+1. Clone this repo
+2. `yarn install` to install all the dependencies defined in a `package.json` file.
+3. `yarn dev` to start Vite dev server.
 
-### `npm start`
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## Scripts
 
-The page will reload if you make edits.<br />
+- `yarn dev` - start a development server with hot reload.
+- `yarn build` - build for production. The generated files will be on the dist folder.
+- `yarn preview` - locally preview the production build.
+- `yarn lint` - run ESLint.
+- `yarn lint:perf` - run ESLint and track the performance of individual rules.
+- `yarn prettier` - run Prettier on changed files.
+- `yarn prettier:all` - run Prettier on all files.
+- `yarn test:run` - run all test suites.
+- `yarn test:watch` - run all test suites but watch for changes and rerun tests when they change.
+- `yarn test:coverage` - run all test suites and enable coverage report.
+- `yarn test:coverage:open` - run all test suites and enable coverage report then open coverage report in browser.
+- `yarn dep-cruiser:preview` - create a graph of the dependencies[^1]
 
-Note: This project will run the app even if linting fails.
+[^1]:
+    This assumes the GraphViz `dot` command is available - on most linux and
+    comparable systems this will be. In case it's not, see
+    [GraphViz' download page](https://www.graphviz.org/download/) for instructions
+    on how to get it on your machine.
 
-### `npm test`
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+[![Feature-Sliced Design][shields-fsd-domain]](https://feature-sliced.design/)
+[![Vite][shields-vite-domain]](https://vitejs.dev/)
+[![React][shields-react-domain]](https://react.dev/)
+[![React Router][shields-react-router-domain]](https://reactrouter.com/)
+[![React Query][shields-react-query-domain]](https://tanstack.com/query/v4/)
+[![Zustand][shields-zustand-domain]](https://zustand-demo.pmnd.rs/)
+[![TypeScript][shields-typescript-domain]](https://www.typescriptlang.org/)
 
-### `npm run build`
-
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+[shields-react-router-domain]: https://img.shields.io/badge/React_Router-CA4245?style=for-the-badge&logo=react-router&logoColor=white
+[shields-react-query-domain]: https://img.shields.io/badge/-React%20Query-FF4154?style=for-the-badge&logo=react%20query&logoColor=white
+[shields-zustand-domain]: https://img.shields.io/badge/zustand-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB
+[shields-typescript-domain]: https://img.shields.io/badge/typescript-%23007ACC.svg?style=for-the-badge&logo=typescript&logoColor=white
+[shields-fsd-domain]: https://img.shields.io/badge/Feature--Sliced-Design?style=for-the-badge&color=F2F2F2&labelColor=262224&logoWidth=10&logo=data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAaCAYAAAC3g3x9AAAACXBIWXMAAALFAAACxQGJ1n/vAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAABISURBVHgB7dKxCQAgDETR0w2cws0cys2cwhEUBbsggikCuVekDHwSQFlYo7Q+8KnmtHdFWMdk2cl5wSsbxGSZw8dm8pX9ZHUTMBUgGU2F718AAAAASUVORK5CYII=
+[shields-vite-domain]: https://img.shields.io/badge/vite-%23646CFF.svg?style=for-the-badge&logo=vite&logoColor=white
+[shields-react-domain]: https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB
+[netlify-domain]: https://api.netlify.com/api/v1/badges/5d5013c3-ec61-4496-8f48-caa7145fb166/deploy-status
+[dependency-graph-domain]: ./dependency-graph-preview.svg
+[build-domain]: https://github.com/sldk-yuri/realworld-react-fsd/actions/workflows/build.yml/badge.svg
+[codecov-domain]: https://codecov.io/gh/sldk-yuri/realworld-react-fsd/branch/master/graph/badge.svg?token=IXE2YRPYK5
+[prettier-domain]: https://img.shields.io/badge/code_style-prettier-ff69b4.svg
+[license-domain]: https://img.shields.io/badge/license-MIT-green.svg

@@ -22,8 +22,8 @@ abstract class BaseUserResource extends JsonResource
     {
         return [
             'username' => $this->resource->username,
-            'bio' => $this->resource->bio,
-            'image' => $this->resource->image,
+            'bio' => $this->resource->bio ?? "",
+            'image' => $this->resource->image ?? "",
         ];
     }
 }
