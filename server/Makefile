@@ -1,4 +1,4 @@
-default: env prepare up key-generate migrate
+default: env prepare up key-generate migrate test
 	@echo "--> Your environment is ready to use! Access http://localhost:8081/api/ and enjoy it!"
 
 .PHONY: env
@@ -26,3 +26,9 @@ migrate:
 	@echo "--> run sail art migrate command..."
 	@sleep 10
 	@./vendor/bin/sail art migrate --seed
+
+.PHONY: test
+test:
+	@echo "--> running laravel tests..."
+	@./vendor/bin/sail art optimize
+	@./vendor/bin/sail art test
