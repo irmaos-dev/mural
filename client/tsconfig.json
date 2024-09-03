@@ -21,23 +21,23 @@
     "noFallthroughCasesInSwitch": true,
     "baseUrl": "./src",
     "paths": {
-      "~app": ["./app"],
-      "~app/*": ["./app/*"],
+      "~1app": ["./1app"],
+      "~1app/*": ["./1app/*"],
 
-      "~pages": ["./pages"],
-      "~pages/*": ["./pages/*"],
+      "~2pages": ["./2pages"],
+      "~2pages/*": ["./2pages/*"],
 
-      "~widgets": ["./widgets"],
-      "~widgets/*": ["./widgets/*"],
+      "~3widgets": ["./3widgets"],
+      "~3widgets/*": ["./3widgets/*"],
 
-      "~features": ["./features"],
-      "~features/*": ["./features/*"],
+      "~4features": ["./4features"],
+      "~4features/*": ["./4features/*"],
 
-      "~entities": ["./entities"],
-      "~entities/*": ["./entities/*"],
+      "~5entities": ["./5entities"],
+      "~5entities/*": ["./5entities/*"],
 
-      "~shared": ["./shared"],
-      "~shared/*": ["./shared/*"]
+      "~6shared": ["./6shared"],
+      "~6shared/*": ["./6shared/*"]
     }
   },
   "include": ["src"],

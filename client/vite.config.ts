@@ -31,10 +31,10 @@ export default defineConfig(({ mode }) => ({
   }),
   test: {
     environment: 'jsdom',
-    setupFiles: 'src/shared/lib/test/setup.ts',
+    setupFiles: 'src/6shared/lib/test/setup.ts',
     coverage: {
       provider: 'v8',
-      exclude: ['src/shared/api/realworld/**'],
+      exclude: ['src/6shared/api/realworld/**'],
     },
   },
   server: { host: false },
@@ -44,28 +44,28 @@ export default defineConfig(({ mode }) => ({
       output: {
         manualChunks: {
           'article-service': [
-            'src/shared/api/article/article.service.ts',
-            'src/shared/api/article/index.ts',
+            'src/6shared/api/article/article.service.ts',
+            'src/6shared/api/article/index.ts',
           ],
           'auth-service': [
-            'src/shared/api/auth/auth.service.ts',
-            'src/shared/api/auth/index.ts',
+            'src/6shared/api/auth/auth.service.ts',
+            'src/6shared/api/auth/index.ts',
           ],
           'comment-service': [
-            'src/shared/api/comment/comment.service.ts',
-            'src/shared/api/comment/index.ts',
+            'src/6shared/api/comment/comment.service.ts',
+            'src/6shared/api/comment/index.ts',
           ],
           'favorite-service': [
-            'src/shared/api/favorite/favorite.service.ts',
-            'src/shared/api/favorite/index.ts',
+            'src/6shared/api/favorite/favorite.service.ts',
+            'src/6shared/api/favorite/index.ts',
           ],
           'profile-service': [
-            'src/shared/api/profile/profile.service.ts',
-            'src/shared/api/profile/index.ts',
+            'src/6shared/api/profile/profile.service.ts',
+            'src/6shared/api/profile/index.ts',
           ],
           'tag-service': [
-            'src/shared/api/tag/tag.service.ts',
-            'src/shared/api/tag/index.ts',
+            'src/6shared/api/tag/tag.service.ts',
+            'src/6shared/api/tag/index.ts',
           ],
         },
       },
@@ -73,12 +73,12 @@ export default defineConfig(({ mode }) => ({
   },
   resolve: {
     alias: {
-      '~app': path.resolve('src/app'),
-      '~entities': path.resolve('src/entities'),
-      '~features': path.resolve('src/features'),
-      '~pages': path.resolve('src/pages'),
-      '~shared': path.resolve('src/shared'),
-      '~widgets': path.resolve('src/widgets'),
+      '~1app': path.resolve('src/1app'),
+      '~2pages': path.resolve('src/2pages'),
+      '~3widgets': path.resolve('src/3widgets'),
+      '~4features': path.resolve('src/4features'),
+      '~5entities': path.resolve('src/5entities'),
+      '~6shared': path.resolve('src/6shared'),
     },
   },
 }))
