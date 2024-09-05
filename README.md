@@ -70,7 +70,7 @@ https://www.certificacaolinux.com.br/como-instalar-ubuntu-no-windows-usando-wsl/
 
 - Instale o Node com o comando abaixo
 
-```sudo apt-get install -y curl && curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/master/install.sh | bash && nvm install 16```
+```sudo apt-get install -y curl && curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/master/install.sh | bash && nvm install 20```
 
 - Instale a extensão do WSL dentro do Visual Studio Code.
 
