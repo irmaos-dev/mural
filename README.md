@@ -74,7 +74,7 @@ https://www.certificacaolinux.com.br/como-instalar-ubuntu-no-windows-usando-wsl/
 
 - Instale a extensão do WSL dentro do Visual Studio Code.
 
-- Abra o terminal do WSL e rode o comando a seguir:
+- Abra o terminal do WSL (menu iniciar -> pesquisar por WSL) e rode o comando a seguir para baixar o código do projeto e abrí-lo no Visual Studio Code:
 
 `git clone https://github.com/irmaos-dev/mural.git && code mural`
 
