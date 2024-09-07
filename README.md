@@ -29,20 +29,21 @@ Para mais informações, leia o [OVERVIEW.md](https://github.com/irmaos-dev/mura
 - HTML, CSS e/ou Javascript;
 - Lógica de programação;
 - Arquitetura client-server (REST-like);
-- Noções de Laravel e React
+- Noções de frameworks back-end e front-end;
+- Interesse em aprender a tech stack.
 
 ## Tech Stack
 
 - Front-End: Javascript (React);
-- Back-End: PHP (Laravel);
+- Back-End: PHP (Laravel).
 
 ## Ferramentas utilizadas
 
-- Windows 10+
-- Visual Studio Code
-- Docker Desktop
-- Windows Subsystem for Linux
-- Node.JS
+- Windows 10+;
+- Visual Studio Code;
+- Docker Desktop;
+- Windows Subsystem for Linux;
+- Node.JS;
 
 ### Posso usar alguma outra ferramenta fora essas?
 
