@@ -21,35 +21,47 @@ class UpdateUserTest extends TestCase
 
     public function testUpdateUser(): void
     {
-        $this->assertNotEquals($username = 'new.username', $this->user->username);
-        $this->assertNotEquals($email = 'newEmail@example.com', $this->user->email);
-        $this->assertNotEquals($bio = 'New bio information.', $this->user->bio);
-        $this->assertNotEquals($image = 'https://example.com/image.png', $this->user->image);
+        $this->assertNotEquals(
+            $username = "new.username",
+            $this->user->username
+        );
+        $this->assertNotEquals(
+            $email = "newEmail@example.com",
+            $this->user->email
+        );
+        $this->assertNotEquals($bio = "New bio information.", $this->user->bio);
+        $this->assertNotEquals(
+            $image = "https://example.com/image.png",
+            $this->user->image
+        );
 
         // update by one to check required_without_all rule
         $this->actingAs($this->user)
-            ->putJson('/api/user', ['user' => ['username' => $username]])
+            ->putJson("/api/user", ["user" => ["username" => $username]])
             ->assertOk();
         $this->actingAs($this->user)
-            ->putJson('/api/user', ['user' => ['email' => $email]])
+            ->putJson("/api/user", ["user" => ["email" => $email]])
             ->assertOk();
-        $this->actingAs($this->user)
-            ->putJson('/api/user', ['user' => ['bio' => $bio]]);
-        $response = $this->actingAs($this->user)
-            ->putJson('/api/user', ['user' => ['image' => $image]]);
+        $this->actingAs($this->user)->putJson("/api/user", [
+            "user" => ["bio" => $bio],
+        ]);
+        $response = $this->actingAs($this->user)->putJson("/api/user", [
+            "user" => ["image" => $image],
+        ]);
 
-        $response->assertOk()
-            ->assertJson(fn (AssertableJson $json) =>
-                $json->has('user', fn (AssertableJson $item) =>
-                    $item->whereType('token', 'string')
-                        ->whereAll([
-                            'username' => $username,
-                            'email' => $email,
-                            'bio' => $bio,
-                            'image' => $image,
-                        ])
-                )
-            );
+        $response->assertOk()->assertJson(
+            fn(AssertableJson $json) => $json->has(
+                "user",
+                fn(AssertableJson $item) => $item
+                    ->whereType("token", "string")
+                    ->whereAll([
+                        "username" => $username,
+                        "email" => $email,
+                        "bio" => $bio,
+                        "image" => $image,
+                    ])
+            )
+        );
     }
 
     /**
@@ -59,11 +71,9 @@ class UpdateUserTest extends TestCase
      */
     public function testUpdateUserValidation(array $data, $errors): void
     {
-        $response = $this->actingAs($this->user)
-            ->putJson('/api/user', $data);
+        $response = $this->actingAs($this->user)->putJson("/api/user", $data);
 
-        $response->assertUnprocessable()
-            ->assertInvalid($errors);
+        $response->assertUnprocessable()->assertInvalid($errors);
     }
 
     public function testUpdateUserValidationUnique(): void
@@ -71,27 +81,24 @@ class UpdateUserTest extends TestCase
         /** @var User $anotherUser */
         $anotherUser = User::factory()->create();
 
-        $response = $this->actingAs($this->user)
-            ->putJson('/api/user', [
-                'user' => [
-                    'username' => $anotherUser->username,
-                    'email' => $anotherUser->email,
-                ],
-            ]);
+        $response = $this->actingAs($this->user)->putJson("/api/user", [
+            "user" => [
+                "username" => $anotherUser->username,
+                "email" => $anotherUser->email,
+            ],
+        ]);
 
-        $response->assertUnprocessable()
-            ->assertInvalid(['username', 'email']);
+        $response->assertUnprocessable()->assertInvalid(["username", "email"]);
     }
 
     public function testSelfUpdateUserValidationUnique(): void
     {
-        $response = $this->actingAs($this->user)
-            ->putJson('/api/user', [
-                'user' => [
-                    'username' => $this->user->username,
-                    'email' => $this->user->email,
-                ],
-            ]);
+        $response = $this->actingAs($this->user)->putJson("/api/user", [
+            "user" => [
+                "username" => $this->user->username,
+                "email" => $this->user->email,
+            ],
+        ]);
 
         $response->assertOk();
     }
@@ -101,28 +108,27 @@ class UpdateUserTest extends TestCase
         /** @var User $user */
         $user = User::factory()
             ->state([
-                'bio' => 'not-null',
-                'image' => 'https://example.com/image.png',
+                "bio" => "not-null",
+                "image" => "https://example.com/image.png",
             ])
             ->create();
 
-        $response = $this->actingAs($user)
-            ->putJson('/api/user', [
-                'user' => [
-                    'bio' => null,
-                    'image' => null,
-                ],
-            ]);
+        $response = $this->actingAs($user)->putJson("/api/user", [
+            "user" => [
+                "bio" => "test bio",
+                "image" => "https://test-image.fake/imageid",
+            ],
+        ]);
 
-        $response->assertOk()
-            ->assertJsonPath('user.bio', null)
-            ->assertJsonPath('user.image', null);
+        $response
+            ->assertOk()
+            ->assertJsonPath("user.bio", "test bio")
+            ->assertJsonPath("user.image", "https://test-image.fake/imageid");
     }
 
     public function testUpdateUserWithoutAuth(): void
     {
-        $this->putJson('/api/user')
-            ->assertUnauthorized();
+        $this->putJson("/api/user")->assertUnauthorized();
     }
 
     /**
@@ -130,28 +136,37 @@ class UpdateUserTest extends TestCase
      */
     public function userProvider(): array
     {
-        $strErrors = ['username', 'email'];
-        $allErrors = array_merge($strErrors, ['bio', 'image']);
+        $strErrors = ["username", "email"];
+        $allErrors = array_merge($strErrors, ["bio", "image"]);
 
         return [
-            'required' => [[], 'any'],
-            'wrong type' => [[
-                'user' => [
-                    'username' => 123,
-                    'email' => null,
-                    'bio' => [],
-                    'image' => 123.0,
+            "required" => [[], "any"],
+            "wrong type" => [
+                [
+                    "user" => [
+                        "username" => 123,
+                        "email" => null,
+                        "bio" => [],
+                        "image" => 123.0,
+                    ],
                 ],
-            ], $allErrors],
-            'empty strings' => [[
-                'user' => [
-                    'username' => '',
-                    'email' => '',
+                $allErrors,
+            ],
+            "empty strings" => [
+                [
+                    "user" => [
+                        "username" => "",
+                        "email" => "",
+                    ],
                 ],
-            ], $strErrors],
-            'bad username' => [['user' => ['username' => 'user n@me']], 'username'],
-            'not email' => [['user' => ['email' => 'not an email']], 'email'],
-            'not url' => [['user' => ['image' => 'string']], 'image'],
+                $strErrors,
+            ],
+            "bad username" => [
+                ["user" => ["username" => "user n@me"]],
+                "username",
+            ],
+            "not email" => [["user" => ["email" => "not an email"]], "email"],
+            "not url" => [["user" => ["image" => "string"]], "image"],
         ];
     }
 }

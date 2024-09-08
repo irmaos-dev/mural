@@ -17,16 +17,23 @@ class NewUserRequest extends FormRequest
     public function rules()
     {
         return [
-            'username' => [
-                'required', 'string', 'regex:' . User::REGEX_USERNAME,
-                'max:255', 'unique:users,username'
+            "username" => [
+                "required",
+                "string",
+                "regex:" . User::REGEX_USERNAME,
+                "max:255",
+                "unique:users,username",
             ],
-            'email' => 'required|string|email|max:255|unique:users,email',
-            'password' => [
-                'required', 'string', 'max:255',
+            "email" => "required|string|email|max:255|unique:users,email",
+            "password" => [
+                "required",
+                "string",
+                "max:255",
                 // we can set additional password requirements below
                 Password::min(8),
             ],
+            "bio" => "sometimes|nullable|string",
+            "image" => "sometimes|nullable|string|url",
         ];
     }
 
@@ -35,6 +42,6 @@ class NewUserRequest extends FormRequest
      */
     public function validationData()
     {
-        return Arr::wrap($this->input('user'));
+        return Arr::wrap($this->input("user"));
     }
 }
