@@ -29,20 +29,21 @@ Para mais informações, leia o [OVERVIEW.md](https://github.com/irmaos-dev/mura
 - HTML, CSS e/ou Javascript;
 - Lógica de programação;
 - Arquitetura client-server (REST-like);
-- Experiência com testes automatizados;
+- Noções de frameworks back-end e front-end;
+- Interesse em aprender a tech stack.
 
 ## Tech Stack
 
 - Front-End: Javascript (React);
-- Back-End: PHP (Laravel);
+- Back-End: PHP (Laravel).
 
 ## Ferramentas utilizadas
 
-- Windows 10+
-- Visual Studio Code
-- Docker Desktop
-- Windows Subsystem for Linux
-- Node.JS
+- Windows 10+;
+- Visual Studio Code;
+- Docker Desktop;
+- Windows Subsystem for Linux;
+- Node.JS;
 
 ### Posso usar alguma outra ferramenta fora essas?
 
@@ -70,11 +71,11 @@ https://www.certificacaolinux.com.br/como-instalar-ubuntu-no-windows-usando-wsl/
 
 - Instale o Node com o comando abaixo
 
-```sudo apt-get install -y curl && curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/master/install.sh | bash && nvm install 16```
+```sudo apt-get install -y curl && curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/master/install.sh | bash && nvm install 20```
 
 - Instale a extensão do WSL dentro do Visual Studio Code.
 
-- Abra o terminal do WSL e rode o comando a seguir:
+- Abra o terminal do WSL (menu iniciar -> pesquisar por WSL) e rode o comando a seguir para baixar o código do projeto e abrí-lo no Visual Studio Code:
 
 `git clone https://github.com/irmaos-dev/mural.git && code mural`
 
@@ -113,6 +114,19 @@ https://dbeaver.io/download/
 - Configure uma conexão Postgres para conectar com o banco de dados do server.
 
 - Verifique as credenciais do servidor no arquivo `.env`.
+
+### Testes com Playwright
+
+Playwright é uma ferramenta que simula a interação de um usuário com o site no navegador.
+Você cria código em Javascript que executa comandos no navegador, como preencher um campo ou apertar um botão.
+
+Para instalar e executar os testes:
+
+- Abra o terminal e entre na pasta do Playwright: `cd playwright`.
+
+- Para instalar as dependências do projeto, rode o comando: `npm install`.
+
+- Para executar a suite de testes, primeiro garanta que ambos os server e client estejam rodando e execute: `npx playwright test`.
 
 ### Screenshot da aplicação base
 
