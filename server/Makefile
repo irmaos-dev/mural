@@ -25,10 +25,10 @@ key-generate:
 migrate:
 	@echo "--> run sail art migrate command..."
 	@sleep 10
-	@./vendor/bin/sail art migrate --seed
+	@./vendor/bin/sail art migrate:fresh --seed
 
 .PHONY: test
 test:
 	@echo "--> running laravel tests..."
-	@./vendor/bin/sail art optimize
+	@./vendor/bin/sail art config:cache
 	@./vendor/bin/sail art test
