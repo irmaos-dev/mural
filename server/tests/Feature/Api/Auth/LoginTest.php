@@ -80,7 +80,7 @@ class LoginTest extends TestCase
     /**
      * @return array<int|string, array<mixed>>
      */
-    public function credentialsProvider(): array
+    public static function credentialsProvider(): array
     {
         $errors = ['email', 'password'];
 

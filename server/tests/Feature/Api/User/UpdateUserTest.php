@@ -128,7 +128,7 @@ class UpdateUserTest extends TestCase
     /**
      * @return array<int|string, array<mixed>>
      */
-    public function userProvider(): array
+    public static function userProvider(): array
     {
         $strErrors = ['username', 'email'];
         $allErrors = array_merge($strErrors, ['bio', 'image']);

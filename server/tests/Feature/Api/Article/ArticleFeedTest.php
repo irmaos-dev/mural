@@ -120,7 +120,7 @@ class ArticleFeedTest extends TestCase
     /**
      * @return array<int|string, array<mixed>>
      */
-    public function queryProvider(): array
+    public static function queryProvider(): array
     {
         $errors = ['limit', 'offset'];
 

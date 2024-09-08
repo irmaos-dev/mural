@@ -159,7 +159,7 @@ class UpdateArticleTest extends TestCase
     /**
      * @return array<int|string, array<mixed>>
      */
-    public function articleProvider(): array
+    public static function articleProvider(): array
     {
         $errors = ['title', 'description', 'body'];
 

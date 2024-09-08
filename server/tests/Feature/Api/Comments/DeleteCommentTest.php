@@ -93,7 +93,7 @@ class DeleteCommentTest extends TestCase
     /**
      * @return array<int|string, array<mixed>>
      */
-    public function nonExistentIdProvider(): array
+    public static function nonExistentIdProvider(): array
     {
         return [
             'int key' => [123],

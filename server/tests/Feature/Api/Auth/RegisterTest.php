@@ -75,7 +75,7 @@ class RegisterTest extends TestCase
     /**
      * @return array<int|string, array<mixed>>
      */
-    public function userProvider(): array
+    public static function userProvider(): array
     {
         $errors = ['username', 'email', 'password'];
 

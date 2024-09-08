@@ -159,7 +159,7 @@ class CreateArticleTest extends TestCase
     /**
      * @return array<int|string, array<mixed>>
      */
-    public function articleProvider(): array
+    public static function articleProvider(): array
     {
         $errors = ['title', 'description', 'body'];
         $tags = ['tagList.0', 'tagList.1', 'tagList.2'];
