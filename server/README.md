@@ -57,7 +57,7 @@ Migrate the database with seeding:
 
 ## Usage
 
-The API is available at `http://localhost:3000/api` (You can change the `APP_PORT` in `.env` file).
+The API is available at `http://localhost:8081/api` (You can change the `APP_PORT` in `.env` file).
 
 ### Run tests
 
@@ -69,7 +69,7 @@ The API is available at `http://localhost:3000/api` (You can change the `APP_POR
 
 ### OpenAPI specification (not ready yet)
 
-Swagger UI will be live at [http://localhost:3000/api/documentation](http://localhost:3000/api/documentation).
+Swagger UI will be live at [http://localhost:8081/api/documentation](http://localhost:8081/api/documentation).
 
 For now, please visit the specification [here](https://github.com/gothinkster/realworld/tree/main/api).
 
