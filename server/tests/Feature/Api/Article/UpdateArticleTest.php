@@ -19,7 +19,15 @@ class UpdateArticleTest extends TestCase
         parent::setUp();
 
         /** @var Article $article */
-        $article = Article::factory()->create();
+        $article = Article::factory()
+            ->for(
+                User::factory()->state([
+                    "bio" => "not-null",
+                    "image" => "https://example.com/image.png",
+                ]),
+                "author"
+            )
+            ->create();
         $this->article = $article;
     }
 
@@ -80,7 +88,7 @@ class UpdateArticleTest extends TestCase
                         "author",
                         fn(AssertableJson $subItem) => $subItem->whereAll([
                             "username" => $author->username,
-                            "bio" => "",
+                            "bio" => $author->bio,
                             "image" => $author->image,
                             "following" => false,
                         ])

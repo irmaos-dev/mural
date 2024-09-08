@@ -32,6 +32,7 @@ class ShowProfileTest extends TestCase
             "profile" => [
                 "username" => $profile->username,
                 "bio" => $profile->bio,
+                "following" => false,
                 "image" => $profile->image,
             ],
         ]);
