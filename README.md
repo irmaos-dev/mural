@@ -87,19 +87,11 @@ Neste momento, o projeto do Mural App estará aberto no seu Visual Studio Code.
 
 - Para instalar as dependências do projeto, rode o comando: `npm install`.
 
-- Para compilar o codigo, execute: `npm start`.
+- Para compilar o codigo, execute: `npm run dev`.
 
 ### Dependências do Back-End (Server)
 
-- Abra o terminal e entre na pasta do projeto: `cd server`.
-
-- Para usar as configurações padrões de ambiente, rode o comando: `mv .env.example .env`.
-
-- Para instalar as dependências do projeto, rode o comando: `composer install`.
-
-- Para rodar as migrações do banco de dados, execute: `php artisan migrate`.
-
-- Para rodar o servidor, execute: `vendor/bin/sail up`.
+- Abra o terminal e rode o comando: `cd server && make`.
 
 ### Banco de Dados
 
