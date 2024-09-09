@@ -18,50 +18,53 @@ class LoginTest extends TestCase
         $password = $this->faker->password(8);
         /** @var User $user */
         $user = User::factory()
-            ->state(['password' => Hash::make($password)])
-            ->create();
+            ->state(["password" => Hash::make($password)])
+            ->create([
+                "bio" => "test bio",
+                "image" => "https://test-image.fake/imageid",
+            ]);
 
-        $response = $this->postJson('/api/users/login', [
-            'user' => [
-                'email' => $user->email,
-                'password' => $password,
+        $response = $this->postJson("/api/users/login", [
+            "user" => [
+                "email" => $user->email,
+                "password" => $password,
             ],
         ]);
 
-        $response->assertOk()
-            ->assertJson(fn (AssertableJson $json) =>
-                $json->has('user', fn (AssertableJson $item) =>
-                    $item->whereType('token', 'string')
-                        ->whereAll([
-                            'username' => $user->username,
-                            'email' => $user->email,
-                            'bio' => $user->bio,
-                            'image' => $user->image,
-                        ])
-                )
-            );
+        $response->assertOk()->assertJson(
+            fn(AssertableJson $json) => $json->has(
+                "user",
+                fn(AssertableJson $item) => $item
+                    ->whereType("token", "string")
+                    ->whereAll([
+                        "username" => $user->username,
+                        "email" => $user->email,
+                        "bio" => $user->bio,
+                        "image" => $user->image,
+                    ])
+            )
+        );
 
-        $token = Jwt\Parser::parse($response['user']['token']);
+        $token = Jwt\Parser::parse($response["user"]["token"]);
         $this->assertTrue(Jwt\Validator::validate($token));
     }
 
     public function testLoginUserFail(): void
     {
-        $password = 'knownPassword';
+        $password = "knownPassword";
         /** @var User $user */
         $user = User::factory()
-            ->state(['password' => Hash::make($password)])
+            ->state(["password" => Hash::make($password)])
             ->create();
 
-        $response = $this->postJson('/api/users/login', [
-            'user' => [
-                'email' => $user->email,
-                'password' => 'differentPassword',
+        $response = $this->postJson("/api/users/login", [
+            "user" => [
+                "email" => $user->email,
+                "password" => "differentPassword",
             ],
         ]);
 
-        $response->assertUnprocessable()
-            ->assertInvalid('user');
+        $response->assertUnprocessable()->assertInvalid("user");
     }
 
     /**
@@ -71,10 +74,9 @@ class LoginTest extends TestCase
      */
     public function testLoginUserValidation(array $data, $errors): void
     {
-        $response = $this->postJson('/api/users/login', $data);
+        $response = $this->postJson("/api/users/login", $data);
 
-        $response->assertUnprocessable()
-            ->assertInvalid($errors);
+        $response->assertUnprocessable()->assertInvalid($errors);
     }
 
     /**
@@ -82,23 +84,29 @@ class LoginTest extends TestCase
      */
     public static function credentialsProvider(): array
     {
-        $errors = ['email', 'password'];
+        $errors = ["email", "password"];
 
         return [
-            'required' => [[], $errors],
-            'not strings' => [[
-                'user' => [
-                    'email' => [],
-                    'password' => null,
+            "required" => [[], $errors],
+            "not strings" => [
+                [
+                    "user" => [
+                        "email" => [],
+                        "password" => null,
+                    ],
                 ],
-            ], $errors],
-            'empty strings' => [[
-                'user' => [
-                    'email' => '',
-                    'password' => '',
+                $errors,
+            ],
+            "empty strings" => [
+                [
+                    "user" => [
+                        "email" => "",
+                        "password" => "",
+                    ],
                 ],
-            ], $errors],
-            'not email' => [['user' => ['email' => 'not an email']], 'email'],
+                $errors,
+            ],
+            "not email" => [["user" => ["email" => "not an email"]], "email"],
         ];
     }
 }

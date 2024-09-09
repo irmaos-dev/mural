@@ -17,7 +17,7 @@ class CommentResource extends JsonResource
      *
      * @var string
      */
-    public static $wrap = 'comment';
+    public static $wrap = "comment";
 
     /**
      * Transform the resource into an array.
@@ -28,11 +28,11 @@ class CommentResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'id' => $this->resource->getKey(),
-            'createdAt' => $this->resource->created_at,
-            'updatedAt' => $this->resource->updated_at,
-            'body' => $this->resource->body,
-            'author' => new ProfileResource($this->resource->author),
+            "id" => $this->resource->getKey(),
+            "createdAt" => $this->resource->created_at,
+            "updatedAt" => $this->resource->updated_at,
+            "body" => $this->resource->body,
+            "author" => new ProfileResource($this->resource->author),
         ];
     }
 }
