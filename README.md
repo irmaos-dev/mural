@@ -4,7 +4,7 @@ Mural App é um software de rede social criada pelo <u>Clube de Desenvolvimento 
 
 Essa iniciativa tem como propósito fornecer uma experiência real de desenvolvimento de software em equipe para jovens programadores.
 
-Para participar, preencha o formulário: https://forms.gle/mxC9LdM4ckJThFno9 
+Para participar, [preencha o formulário: http://eepurl.com/iYwzu6](http://eepurl.com/iYwzu6)
 
 ## Escopo do Projeto
 
