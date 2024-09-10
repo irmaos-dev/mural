@@ -1,4 +1,4 @@
-default: env prepare up key-generate migrate test
+default: env prepare up key-generate migrate
 	@echo "--> Your environment is ready to use! Access http://localhost:8081/api/ and enjoy it!"
 
 .PHONY: env
