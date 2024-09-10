@@ -87,11 +87,13 @@ Neste momento, o projeto do Mural App estará aberto no seu Visual Studio Code.
 
 - Para instalar as dependências do projeto, rode o comando: `npm install`.
 
-- Para compilar o codigo, execute: `npm run dev`.
+- Para rodar o projeto, execute: `npm run dev`.
 
 ### Dependências do Back-End (Server)
 
-- Abra o terminal e rode o comando: `cd server && make`.
+- Abra o terminal e rode o comando para instalar tudo: `sudo apt install make && cd server && make`.
+
+- Para rodar o projeto, execute apenas: "make up" dentro da pasta "server".
 
 ### Banco de Dados
 
