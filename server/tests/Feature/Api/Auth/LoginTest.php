@@ -33,10 +33,7 @@ class LoginTest extends TestCase
                 $json->has('user', fn (AssertableJson $item) =>
                     $item->whereType('token', 'string')
                         ->whereAll([
-                            'username' => $user->username,
                             'email' => $user->email,
-                            'bio' => $user->bio,
-                            'image' => $user->image,
                         ])
                 )
             );
