@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace Tests\Feature\Api\Auth;
 
 use App\Jwt;
@@ -9,38 +11,32 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Testing\Fluent\AssertableJson;
 use Tests\TestCase;
 
-class LoginTest extends TestCase
+final class LoginTest extends TestCase
 {
     use WithFaker;
 
     public function testLoginUser(): void
     {
-        $password = $this->faker->password(8);
         /** @var User $user */
-        $user = User::factory()
-            ->state(["password" => Hash::make($password)])
-            ->create([
-                "bio" => "test bio",
-                "image" => "https://test-image.fake/imageid",
-            ]);
+        $user = User::factory()->create();
 
         $response = $this->postJson("/api/users/login", [
             "user" => [
-                "email" => $user->email,
-                "password" => $password,
+                "email"    => $user->email,
+                "password" => 'password',
             ],
         ]);
 
         $response->assertOk()->assertJson(
-            fn(AssertableJson $json) => $json->has(
+            fn (AssertableJson $json) => $json->has(
                 "user",
-                fn(AssertableJson $item) => $item
+                fn (AssertableJson $item) => $item
                     ->whereType("token", "string")
                     ->whereAll([
                         "username" => $user->username,
-                        "email" => $user->email,
-                        "bio" => $user->bio,
-                        "image" => $user->image,
+                        "email"    => $user->email,
+                        "bio"      => $user->bio,
+                        "image"    => $user->image,
                     ])
             )
         );
@@ -59,7 +55,7 @@ class LoginTest extends TestCase
 
         $response = $this->postJson("/api/users/login", [
             "user" => [
-                "email" => $user->email,
+                "email"    => $user->email,
                 "password" => "differentPassword",
             ],
         ]);
@@ -87,11 +83,11 @@ class LoginTest extends TestCase
         $errors = ["email", "password"];
 
         return [
-            "required" => [[], $errors],
+            "required"    => [[], $errors],
             "not strings" => [
                 [
                     "user" => [
-                        "email" => [],
+                        "email"    => [],
                         "password" => null,
                     ],
                 ],
@@ -100,7 +96,7 @@ class LoginTest extends TestCase
             "empty strings" => [
                 [
                     "user" => [
-                        "email" => "",
+                        "email"    => "",
                         "password" => "",
                     ],
                 ],
