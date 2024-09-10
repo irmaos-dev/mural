@@ -51,7 +51,7 @@ Sim! Essa é a lista de ferramentas que iremos considerar na criação dos guias
 
 ## Documentação do Projeto Base
 
-https://realworld-docs.netlify.app/docs/intro
+https://realworld-docs.netlify.app/introduction/
 
 ## Instalação do Projeto
 
