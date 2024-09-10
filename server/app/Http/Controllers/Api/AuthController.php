@@ -28,13 +28,11 @@ class AuthController extends Controller
      */
     public function register(NewUserRequest $request): JsonResponse
     {
-        $attributes = $request->validated();
+        $user = User::create($request->validated());
 
-        $user = User::create($attributes);
-
-        return (new UserResource($user))
-            ->response()
-            ->setStatusCode(201);
+        return response()->json([
+            'user' => new UserResource($user)
+        ], 201);
     }
 
     /**

@@ -21,7 +21,7 @@ class RegisterTest extends TestCase
             'user' => [
                 'username' => $username,
                 'email' => $email,
-                'password' => $this->faker->password(8),
+                'password' => 'password',
             ],
         ]);
 

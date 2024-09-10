@@ -22,8 +22,11 @@ class UserResource extends BaseUserResource
     public function toArray($request): array
     {
         return [
+            'username' => $this->resource->username,
             'email' => $this->resource->email,
             'token' => Jwt\Generator::token($this->resource),
+            'bio' => $this->resource->bio,
+            'image' => $this->resource->image,
         ];
     }
 }
