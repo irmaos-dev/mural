@@ -4,7 +4,7 @@ Mural App é um software de rede social criada pelo <u>Clube de Desenvolvimento 
 
 Essa iniciativa tem como propósito fornecer uma experiência real de desenvolvimento de software em equipe para jovens programadores.
 
-Para participar, preencha o formulário: https://forms.gle/mxC9LdM4ckJThFno9 
+Para participar, [preencha o formulário: http://eepurl.com/iYwzu6](http://eepurl.com/iYwzu6)
 
 ## Escopo do Projeto
 
@@ -51,7 +51,7 @@ Sim! Essa é a lista de ferramentas que iremos considerar na criação dos guias
 
 ## Documentação do Projeto Base
 
-https://realworld-docs.netlify.app/docs/intro
+https://realworld-docs.netlify.app/introduction/
 
 ## Instalação do Projeto
 
@@ -87,23 +87,13 @@ Neste momento, o projeto do Mural App estará aberto no seu Visual Studio Code.
 
 - Para instalar as dependências do projeto, rode o comando: `npm install`.
 
-- Para compilar o codigo, execute: `npm start`.
+- Para rodar o projeto, execute: `npm run dev`.
 
 ### Dependências do Back-End (Server)
 
-- Abra o terminal e entre na pasta do projeto: `cd server`.
+- Abra o terminal e rode o comando para instalar tudo: `sudo apt install make && cd server && make`.
 
-- Com o WSL já configurado e o docker instalado(ambiente Mac e Linux), rode o comando: `make`
-
-- Para ambientes sem ser com o docker siga os passos abaixo:
-
-- Para usar as configurações padrões de ambiente, rode o comando: `mv .env.example .env`.
-
-- Para instalar as dependências do projeto, rode o comando: `composer install`.
-
-- Para rodar as migrações do banco de dados, execute: `php artisan migrate`.
-
-- Para rodar o servidor, execute: `vendor/bin/sail up`.
+- Para rodar o projeto, execute apenas: "make up" dentro da pasta "server".
 
 ### Banco de Dados
 
