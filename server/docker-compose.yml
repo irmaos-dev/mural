@@ -7,6 +7,7 @@ services:
             context: ./vendor/laravel/sail/runtimes/8.1
             dockerfile: Dockerfile
             args:
+                NODE_VERSION: 20
                 WWWGROUP: '${WWWGROUP}'
         image: sail-8.1/app
         platform: linux/amd64
