@@ -9,6 +9,7 @@ services:
             args:
                 WWWGROUP: '${WWWGROUP}'
         image: sail-8.1/app
+        platform: linux/amd64
         extra_hosts:
             - 'host.docker.internal:host-gateway'
         ports:
