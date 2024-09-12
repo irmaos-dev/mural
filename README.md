@@ -91,9 +91,17 @@ Neste momento, o projeto do Mural App estará aberto no seu Visual Studio Code.
 
 ### Dependências do Back-End (Server)
 
-- Abra o terminal e rode o comando para instalar tudo: `sudo apt install make && cd server && make`.
+- Abra o terminal e rode o comando para instalar a ferramenta "make": `sudo apt install make`.
 
-- Para rodar o projeto, execute apenas: "make up" dentro da pasta "server".
+- Altere a pasta atual do terminal com o comando `cd server` e rode o comando `make` que irá instalar o servidor.
+
+- Configure o seu terminal segundo o passo a passo descrito no tópico [Configuring A Shell Alias](https://laravel.com/docs/11.x/sail#configuring-a-shell-alias)
+
+- Para rodar o projeto, execute: `sail up` dentro da pasta "server".
+
+- Para parar a execução, rode o comando: `sail down` dentro da pasta "server".
+
+A ferramenta "Sail" facilita o uso dos containers do servidor. Para entender melhor, acesse a [documentação](https://laravel.com/docs/11.x/sail).
 
 ### Banco de Dados
 
