@@ -1,4 +1,4 @@
-default: env prepare up key-generate migrate
+default: env prepare up key-generate migrate down
 	@echo "--> Your environment is ready to use! Access http://localhost:8081/api/ and enjoy it!"
 
 .PHONY: env
@@ -15,6 +15,11 @@ prepare:
 up:
 	@echo "--> Starting all Docker containers..."
 	@./vendor/bin/sail up -d
+
+.PHONY: down
+down:
+	@echo "--> Starting all Docker containers..."
+	@./vendor/bin/sail down
 
 .PHONY: key-generate
 key-generate:
