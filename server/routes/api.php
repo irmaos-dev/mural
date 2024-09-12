@@ -77,11 +77,12 @@ Route::name('api.')->group(function (): void {
 
     Route::name('auth.')->group(function () {
         Route::get('auth/redirect', function () {
-            return Socialite::driver('google')->redirect();
+            return Socialite::driver('google')->stateless()->redirect();
         });
 
         Route::get('auth/callback', function () {
             $user = Socialite::driver('google')->user();
+            dd($user);
             // $user->token
         });
     });
