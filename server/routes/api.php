@@ -10,6 +10,7 @@ use App\Http\Controllers\Api\ProfileController;
 use App\Http\Controllers\Api\TagsController;
 use App\Http\Controllers\Api\UserController;
 use Illuminate\Support\Facades\Route;
+use Laravel\Socialite\Facades\Socialite;
 
 /*
 |--------------------------------------------------------------------------
@@ -72,5 +73,16 @@ Route::name('api.')->group(function (): void {
 
     Route::name('tags.')->group(function (): void {
         Route::get('tags', [TagsController::class, 'list'])->name('list');
+    });
+
+    Route::name('auth.')->group(function () {
+        Route::get('auth/redirect', function () {
+            return Socialite::driver('google')->redirect();
+        });
+
+        Route::get('auth/callback', function () {
+            $user = Socialite::driver('google')->user();
+            // $user->token
+        });
     });
 });
