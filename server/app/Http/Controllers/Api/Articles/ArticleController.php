@@ -10,6 +10,7 @@ use App\Http\Requests\Api\UpdateArticleRequest;
 use App\Http\Resources\Api\ArticleResource;
 use App\Http\Resources\Api\ArticlesCollection;
 use App\Models\Article;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 
@@ -74,9 +75,9 @@ class ArticleController extends Controller
      * Store a newly created resource in storage.
      *
      * @param \App\Http\Requests\Api\NewArticleRequest $request
-     * @return \Illuminate\Http\JsonResponse
+     * @return JsonResponse
      */
-    public function create(NewArticleRequest $request): \Illuminate\Http\JsonResponse
+    public function create(NewArticleRequest $request): JsonResponse
     {
         /** @var \App\Models\User $user */
         $user = $request->user();
@@ -102,7 +103,7 @@ class ArticleController extends Controller
      * @param string $slug
      * @return \App\Http\Resources\Api\ArticleResource
      */
-    public function show(string $slug)
+    public function show(string $slug): ArticleResource
     {
         $article = Article::whereSlug($slug)
             ->firstOrFail();
@@ -118,7 +119,7 @@ class ArticleController extends Controller
      * @return \App\Http\Resources\Api\ArticleResource
      * @throws \Illuminate\Auth\Access\AuthorizationException
      */
-    public function update(UpdateArticleRequest $request, string $slug)
+    public function update(UpdateArticleRequest $request, string $slug): ArticleResource
     {
         $article = Article::whereSlug($slug)
             ->firstOrFail();
@@ -134,10 +135,10 @@ class ArticleController extends Controller
      * Remove the specified resource from storage.
      *
      * @param string $slug
-     * @return \Illuminate\Http\JsonResponse
+     * @return JsonResponse
      * @throws \Illuminate\Auth\Access\AuthorizationException
      */
-    public function delete(string $slug)
+    public function delete(string $slug): JsonResponse
     {
         $article = Article::whereSlug($slug)
             ->firstOrFail();

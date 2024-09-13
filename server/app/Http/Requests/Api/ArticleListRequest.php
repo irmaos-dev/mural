@@ -1,17 +1,11 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace App\Http\Requests\Api;
 
 class ArticleListRequest extends FeedRequest
 {
-    /**
-     * Determine if the user is authorized to make this request.
-     */
-    public function authorize(): bool
-    {
-        return true;
-    }
-
     /**
      * Get the validation rules that apply to the request.
      *
@@ -20,8 +14,10 @@ class ArticleListRequest extends FeedRequest
     public function rules(): array
     {
         return [
-            'tag' => 'sometimes|string',
-            'author' => 'sometimes|string',
+            'limit'     => 'sometimes|integer|min:1',
+            'offset'    => 'sometimes|integer|min:0',
+            'tag'       => 'sometimes|string',
+            'author'    => 'sometimes|string',
             'favorited' => 'sometimes|string',
         ];
     }
