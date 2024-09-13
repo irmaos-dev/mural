@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace Tests\Feature\Api\Article;
 
 use App\Models\Article;
@@ -23,35 +25,35 @@ class ListArticlesTest extends TestCase
         $response = $this->getJson("/api/articles");
 
         $response->assertOk()->assertJson(
-            fn(AssertableJson $json) => $json
+            fn (AssertableJson $json) => $json
                 ->where("articlesCount", 20)
                 ->count("articles", 20)
                 ->has(
                     "articles",
-                    fn(AssertableJson $items) => $items->each(
-                        fn(AssertableJson $item) => $item
+                    fn (AssertableJson $items) => $items->each(
+                        fn (AssertableJson $item) => $item
                             ->whereAllType([
-                                "slug" => "string",
-                                "title" => "string",
+                                "slug"        => "string",
+                                "title"       => "string",
                                 "description" => "string",
-                                "body" => "string",
-                                "createdAt" => "string",
-                                "updatedAt" => "string",
-                                "favorited" => "boolean",
+                                "body"        => "string",
+                                "createdAt"   => "string",
+                                "updatedAt"   => "string",
+                                "favorited"   => "boolean",
                             ])
                             ->whereAll([
-                                "tagList" => [],
+                                "tagList"        => [],
                                 "favoritesCount" => 0,
                             ])
                             ->has(
                                 "author",
-                                fn(
+                                fn (
                                     AssertableJson $subItem
                                 ) => $subItem->whereAllType([
-                                    "username" => "string",
-                                    "bio" => "string|null",
+                                    "username"  => "string",
+                                    "bio"       => "string|null",
                                     "following" => "boolean",
-                                    "image" => "string|null",
+                                    "image"     => "string|null",
                                 ])
                             )
                     )
@@ -179,10 +181,10 @@ class ListArticlesTest extends TestCase
                 $errors,
             ],
             "less than zero" => [["limit" => -123, "offset" => -321], $errors],
-            "not strings" => [
+            "not strings"    => [
                 [
-                    "tag" => 123,
-                    "author" => [],
+                    "tag"       => 123,
+                    "author"    => [],
                     "favorited" => null,
                 ],
                 ["tag", "author", "favorited"],

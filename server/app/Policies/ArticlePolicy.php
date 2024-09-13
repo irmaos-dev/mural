@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace App\Policies;
 
 use App\Models\Article;
@@ -13,8 +15,8 @@ class ArticlePolicy
     /**
      * Determine whether the user can update the model.
      *
-     * @param  \App\Models\User  $user
-     * @param  \App\Models\Article  $article
+     * @param  User  $user
+     * @param  Article  $article
      * @return bool
      */
     public function update(User $user, Article $article): bool
@@ -25,8 +27,8 @@ class ArticlePolicy
     /**
      * Determine whether the user can delete the model.
      *
-     * @param  \App\Models\User  $user
-     * @param  \App\Models\Article  $article
+     * @param  User  $user
+     * @param  Article  $article
      * @return bool
      */
     public function delete(User $user, Article $article): bool

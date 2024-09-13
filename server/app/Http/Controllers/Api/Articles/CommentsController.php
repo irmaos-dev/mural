@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace App\Http\Controllers\Api\Articles;
 
 use App\Http\Controllers\Controller;
@@ -28,7 +30,7 @@ class CommentsController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param \App\Http\Requests\Api\NewCommentRequest $request
+     * @param NewCommentRequest $request
      * @param string $slug
      * @return \Illuminate\Http\JsonResponse
      */
@@ -42,8 +44,8 @@ class CommentsController extends Controller
 
         $comment = Comment::create([
             'article_id' => $article->getKey(),
-            'author_id' => $user->getKey(),
-            'body' => $request->input('comment.body'),
+            'author_id'  => $user->getKey(),
+            'body'       => $request->input('comment.body'),
         ]);
 
         return (new CommentResource($comment))

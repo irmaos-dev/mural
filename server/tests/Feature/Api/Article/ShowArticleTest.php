@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace Tests\Feature\Api\Article;
 
 use App\Models\Article;
@@ -17,7 +19,7 @@ class ShowArticleTest extends TestCase
             ->has(Tag::factory()->count(5), "tags")
             ->for(
                 User::factory()->state([
-                    "bio" => "not-null",
+                    "bio"   => "not-null",
                     "image" => "https://example.com/image.png",
                 ]),
                 "author"
@@ -29,27 +31,27 @@ class ShowArticleTest extends TestCase
         $response = $this->getJson("/api/articles/{$article->slug}");
 
         $response->assertOk()->assertJson(
-            fn(AssertableJson $json) => $json->has(
+            fn (AssertableJson $json) => $json->has(
                 "article",
-                fn(AssertableJson $item) => $item
+                fn (AssertableJson $item) => $item
                     ->whereAll([
-                        "slug" => $article->slug,
-                        "title" => $article->title,
-                        "description" => $article->description,
-                        "body" => $article->body,
-                        "tagList" => $tags->pluck("name"),
-                        "createdAt" => $article->created_at?->toISOString(),
-                        "updatedAt" => $article->updated_at?->toISOString(),
+                        "slug"           => $article->slug,
+                        "title"          => $article->title,
+                        "description"    => $article->description,
+                        "body"           => $article->body,
+                        "tagList"        => $tags->pluck("name"),
+                        "createdAt"      => $article->created_at?->toISOString(),
+                        "updatedAt"      => $article->updated_at?->toISOString(),
                         "favoritesCount" => 0,
-                        "favorited" => false,
+                        "favorited"      => false,
                     ])
                     ->has(
                         "author",
-                        fn(AssertableJson $subItem) => $subItem->whereAll([
-                            "username" => $author->username,
-                            "bio" => $author->bio,
+                        fn (AssertableJson $subItem) => $subItem->whereAll([
+                            "username"  => $author->username,
+                            "bio"       => $author->bio,
                             "following" => false,
-                            "image" => $author->image,
+                            "image"     => $author->image,
                         ])
                     )
             )

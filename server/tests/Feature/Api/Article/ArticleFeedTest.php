@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace Tests\Feature\Api\Article;
 
 use App\Models\Article;
@@ -38,30 +40,32 @@ class ArticleFeedTest extends TestCase
             ->getJson('/api/articles/feed');
 
         $response->assertOk()
-            ->assertJson(fn (AssertableJson $json) =>
-                $json->where('articlesCount', 20)
+            ->assertJson(
+                fn (AssertableJson $json) => $json->where('articlesCount', 20)
                     ->count('articles', 20)
-                    ->has('articles', fn (AssertableJson $items) =>
-                        $items->each(fn (AssertableJson $item) =>
-                            $item->where('tagList', [])
+                    ->has(
+                        'articles',
+                        fn (AssertableJson $items) => $items->each(
+                            fn (AssertableJson $item) => $item->where('tagList', [])
                                 ->whereAllType([
-                                    'slug' => 'string',
-                                    'title' => 'string',
+                                    'slug'        => 'string',
+                                    'title'       => 'string',
                                     'description' => 'string',
-                                    'body' => 'string',
-                                    'createdAt' => 'string',
-                                    'updatedAt' => 'string',
+                                    'body'        => 'string',
+                                    'createdAt'   => 'string',
+                                    'updatedAt'   => 'string',
                                 ])
                                 ->whereAll([
-                                    'favorited' => false,
+                                    'favorited'      => false,
                                     'favoritesCount' => 0,
                                 ])
-                                ->has('author', fn (AssertableJson $subItem) =>
-                                    $subItem->where('following', true)
+                                ->has(
+                                    'author',
+                                    fn (AssertableJson $subItem) => $subItem->where('following', true)
                                         ->whereAllType([
                                             'username' => 'string',
-                                            'bio' => 'string|null',
-                                            'image' => 'string|null',
+                                            'bio'      => 'string|null',
+                                            'image'    => 'string|null',
                                         ])
                                 )
                         )
@@ -125,7 +129,7 @@ class ArticleFeedTest extends TestCase
         $errors = ['limit', 'offset'];
 
         return [
-            'not integer' => [['limit' => 'string', 'offset' => 0.123], $errors],
+            'not integer'    => [['limit' => 'string', 'offset' => 0.123], $errors],
             'less than zero' => [['limit' => -123, 'offset' => -321], $errors],
         ];
     }

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace App\Http\Requests\Api;
 
 use App\Models\User;
@@ -32,7 +34,7 @@ class NewUserRequest extends FormRequest
                 "max:255",
                 "unique:users,username",
             ],
-            "email" => "required|string|email|max:255|unique:users,email",
+            "email"    => "required|string|email|max:255|unique:users,email",
             "password" => [
                 "required",
                 "string",
@@ -40,7 +42,7 @@ class NewUserRequest extends FormRequest
                 // we can set additional password requirements below
                 Password::min(8),
             ],
-            "bio" => "sometimes|nullable|string",
+            "bio"   => "sometimes|nullable|string",
             "image" => "sometimes|nullable|string|url",
         ];
     }

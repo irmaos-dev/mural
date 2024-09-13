@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace App\Http\Resources\Api;
 
 use Illuminate\Http\Resources\Json\JsonResource;
@@ -28,11 +30,11 @@ class CommentResource extends JsonResource
     public function toArray($request)
     {
         return [
-            "id" => $this->resource->getKey(),
+            "id"        => $this->resource->getKey(),
             "createdAt" => $this->resource->created_at,
             "updatedAt" => $this->resource->updated_at,
-            "body" => $this->resource->body,
-            "author" => new ProfileResource($this->resource->author),
+            "body"      => $this->resource->body,
+            "author"    => new ProfileResource($this->resource->author),
         ];
     }
 }

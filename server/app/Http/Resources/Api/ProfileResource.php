@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace App\Http\Resources\Api;
 
 class ProfileResource extends BaseUserResource
@@ -26,7 +28,7 @@ class ProfileResource extends BaseUserResource
             // 'following' => $this->when($user !== null, fn() =>
             //     $user->following($this->resource)
             // ),
-            'following' => $user !== null ? $user->following($this->resource) : false
+            'following' => null !== $user ? $user->following($this->resource) : false,
         ]);
     }
 }

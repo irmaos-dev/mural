@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace Tests\Feature\Api\Auth;
 
 use App\Jwt;
@@ -20,23 +22,23 @@ class RegisterTest extends TestCase
         $response = $this->postJson("/api/users", [
             "user" => [
                 "username" => $username,
-                "email" => $email,
+                "email"    => $email,
                 "password" => $this->faker->password(8),
-                "bio" => "test bio",
-                "image" => "https://test-image.fake/imageid",
+                "bio"      => "test bio",
+                "image"    => "https://test-image.fake/imageid",
             ],
         ]);
 
         $response->assertCreated()->assertJson(
-            fn(AssertableJson $json) => $json->has(
+            fn (AssertableJson $json) => $json->has(
                 "user",
-                fn(AssertableJson $item) => $item
+                fn (AssertableJson $item) => $item
                     ->whereType("token", "string")
                     ->whereAll([
                         "username" => $username,
-                        "email" => $email,
-                        "bio" => "test bio",
-                        "image" => "https://test-image.fake/imageid",
+                        "email"    => $email,
+                        "bio"      => "test bio",
+                        "image"    => "https://test-image.fake/imageid",
                     ])
             )
         );
@@ -65,7 +67,7 @@ class RegisterTest extends TestCase
         $response = $this->postJson("/api/users", [
             "user" => [
                 "username" => $user->username,
-                "email" => $user->email,
+                "email"    => $user->email,
                 "password" => $this->faker->password(8),
             ],
         ]);
@@ -81,12 +83,12 @@ class RegisterTest extends TestCase
         $errors = ["username", "email", "password"];
 
         return [
-            "required" => [[], $errors],
+            "required"    => [[], $errors],
             "not strings" => [
                 [
                     "user" => [
                         "username" => 123,
-                        "email" => [],
+                        "email"    => [],
                         "password" => null,
                     ],
                 ],
@@ -96,7 +98,7 @@ class RegisterTest extends TestCase
                 [
                     "user" => [
                         "username" => "",
-                        "email" => "",
+                        "email"    => "",
                         "password" => "",
                     ],
                 ],
@@ -106,7 +108,7 @@ class RegisterTest extends TestCase
                 ["user" => ["username" => "user n@me"]],
                 "username",
             ],
-            "not email" => [["user" => ["email" => "not an email"]], "email"],
+            "not email"      => [["user" => ["email" => "not an email"]], "email"],
             "small password" => [
                 ["user" => ["password" => "small"]],
                 "password",

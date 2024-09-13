@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace Tests\Feature\Api\Comments;
 
 use App\Models\Article;
@@ -10,6 +12,7 @@ use Tests\TestCase;
 class DeleteCommentTest extends TestCase
 {
     private Comment $comment;
+
     private Article $article;
 
     protected function setUp(): void
@@ -96,7 +99,7 @@ class DeleteCommentTest extends TestCase
     public static function nonExistentIdProvider(): array
     {
         return [
-            'int key' => [123],
+            'int key'    => [123],
             'string key' => ['non-existent'],
         ];
     }

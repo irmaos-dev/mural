@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace Tests\Feature\Api\User;
 
 use App\Jwt;
@@ -13,22 +15,22 @@ class ShowUserTest extends TestCase
     {
         /** @var User $user */
         $user = User::factory()->create([
-            "bio" => "test bio",
+            "bio"   => "test bio",
             "image" => "https://test-image.fake/imageid",
         ]);
 
         $response = $this->actingAs($user)->getJson("/api/user");
 
         $response->assertOk()->assertJson(
-            fn(AssertableJson $json) => $json->has(
+            fn (AssertableJson $json) => $json->has(
                 "user",
-                fn(AssertableJson $item) => $item
+                fn (AssertableJson $item) => $item
                     ->whereType("token", "string")
                     ->whereAll([
                         "username" => $user->username,
-                        "email" => $user->email,
-                        "bio" => $user->bio,
-                        "image" => $user->image,
+                        "email"    => $user->email,
+                        "bio"      => $user->bio,
+                        "image"    => $user->image,
                     ])
             )
         );

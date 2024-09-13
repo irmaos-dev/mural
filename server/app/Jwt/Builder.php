@@ -1,10 +1,12 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace App\Jwt;
 
 use App\Contracts\JwtBuilderInterface;
-use App\Contracts\JwtTokenInterface;
 use App\Contracts\JwtSubjectInterface;
+use App\Contracts\JwtTokenInterface;
 
 class Builder implements JwtBuilderInterface
 {

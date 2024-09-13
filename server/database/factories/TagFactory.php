@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
@@ -19,7 +21,7 @@ class TagFactory extends Factory
         $createdAt = $this->faker->dateTimeThisDecade();
 
         return [
-            'name' => $this->faker->unique()->word(),
+            'name'       => $this->faker->unique()->word(),
             'created_at' => $createdAt,
             'updated_at' => $createdAt,
         ];

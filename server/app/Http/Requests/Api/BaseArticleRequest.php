@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace App\Http\Requests\Api;
 
 use App\Models\Article;
@@ -48,15 +50,16 @@ abstract class BaseArticleRequest extends FormRequest
             ->first();
 
         $unique = Rule::unique('articles', 'slug');
-        if ($article !== null) {
+
+        if (null !== $article) {
             $unique->ignoreModel($article);
         }
 
         return [
-            'title' => ['string', 'max:255'],
-            'slug' => ['string', 'max:255', $unique],
+            'title'       => ['string', 'max:255'],
+            'slug'        => ['string', 'max:255', $unique],
             'description' => ['string', 'max:510'],
-            'body' => ['string'],
+            'body'        => ['string'],
         ];
     }
 

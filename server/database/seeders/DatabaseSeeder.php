@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace Database\Seeders;
 
 use App\Models\Article;
@@ -16,7 +18,7 @@ class DatabaseSeeder extends Seeder
      *
      * @return void
      */
-    public function run()
+    public function run(): void
     {
         /** @var array<User>|\Illuminate\Database\Eloquent\Collection<User> $users */
         $users = User::factory()->count(20)->create();
@@ -28,7 +30,7 @@ class DatabaseSeeder extends Seeder
         /** @var array<Article>|\Illuminate\Database\Eloquent\Collection<Article> $articles */
         $articles = Article::factory()
             ->count(30)
-            ->state(new Sequence(fn() => [
+            ->state(new Sequence(fn () => [
                 'author_id' => $users->random(),
             ]))
             ->create();
@@ -43,9 +45,9 @@ class DatabaseSeeder extends Seeder
 
         Comment::factory()
             ->count(60)
-            ->state(new Sequence(fn() => [
+            ->state(new Sequence(fn () => [
                 'article_id' => $articles->random(),
-                'author_id' => $users->random(),
+                'author_id'  => $users->random(),
             ]))
             ->create();
     }
