@@ -7,6 +7,8 @@ use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\ProfileController;
 use App\Http\Controllers\Api\TagsController;
 use App\Http\Controllers\Api\UserController;
+use App\Http\Resources\Api\UserResource;
+use App\Models\User;
 use Illuminate\Support\Facades\Route;
 use Laravel\Socialite\Facades\Socialite;
 
@@ -79,9 +81,33 @@ Route::name('api.')->group(function () {
         });
 
         Route::get('auth/callback', function () {
-            $user = Socialite::driver('google')->user();
-            dd($user);
-            // $user->token
+            $googleUser = Socialite::driver('google')->stateless()->user();
+
+            $user = User::updateOrCreate([
+                    'google_id' => $googleUser->id,
+                ], [
+                    'name' => $googleUser->name,
+                    'email' => $googleUser->email,
+                    'google_token' => $googleUser->token,
+                    'google_refresh_token' => $googleUser->refreshToken,
+                ]);
+             
+                Auth::login($user);
+
+                return (redirect()->with(new UserResource($user))->intended("http://127.0.0.1:5173/"));
+
+                // return (new UserResource($user))
+                //     ->response()
+                //     ->setStatusCode(201);
+             
+                // return (
+                //     // redirect()->intended("http://127.0.0.1:5173/");
+                //     new UserResource($user)
+                //     ->response() 
+                //     ->setStatusCode(201);
+                // )
+                
+            });
+
         });
     });
-});
