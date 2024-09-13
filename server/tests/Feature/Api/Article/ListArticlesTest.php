@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace Tests\Feature\Api\Article;
 
 use App\Models\Article;
@@ -9,7 +11,7 @@ use Illuminate\Support\Arr;
 use Illuminate\Testing\Fluent\AssertableJson;
 use Tests\TestCase;
 
-class ListArticlesTest extends TestCase
+final class ListArticlesTest extends TestCase
 {
     protected function setUp(): void
     {
@@ -20,63 +22,67 @@ class ListArticlesTest extends TestCase
 
     public function testListArticles(): void
     {
-        $response = $this->getJson('/api/articles');
+        $response = $this->getJson("/api/articles");
 
-        $response->assertOk()
-            ->assertJson(fn (AssertableJson $json) =>
-                $json->where('articlesCount', 20)
-                    ->count('articles', 20)
-                    ->has('articles', fn (AssertableJson $items) =>
-                        $items->each(fn (AssertableJson $item) =>
-                            $item->missing('favorited')
-                                ->whereAllType([
-                                    'slug' => 'string',
-                                    'title' => 'string',
-                                    'description' => 'string',
-                                    'body' => 'string',
-                                    'createdAt' => 'string',
-                                    'updatedAt' => 'string',
+        $response->assertOk()->assertJson(
+            fn (AssertableJson $json) => $json
+                ->where("articlesCount", 20)
+                ->count("articles", 20)
+                ->has(
+                    "articles",
+                    fn (AssertableJson $items) => $items->each(
+                        fn (AssertableJson $item) => $item
+                            ->whereAllType([
+                                "slug"        => "string",
+                                "title"       => "string",
+                                "description" => "string",
+                                "body"        => "string",
+                                "createdAt"   => "string",
+                                "updatedAt"   => "string",
+                                "favorited"   => "boolean",
+                            ])
+                            ->whereAll([
+                                "tagList"        => [],
+                                "favoritesCount" => 0,
+                            ])
+                            ->has(
+                                "author",
+                                fn (
+                                    AssertableJson $subItem
+                                ) => $subItem->whereAllType([
+                                    "username"  => "string",
+                                    "bio"       => "string|null",
+                                    "following" => "boolean",
+                                    "image"     => "string|null",
                                 ])
-                                ->whereAll([
-                                    'tagList' => [],
-                                    'favoritesCount' => 0,
-                                ])
-                                ->has('author', fn (AssertableJson $subItem) =>
-                                    $subItem->missing('following')
-                                        ->whereAllType([
-                                            'username' => 'string',
-                                            'bio' => 'string|null',
-                                            'image' => 'string|null',
-                                        ])
-                                )
-                        )
+                            )
                     )
-            );
+                )
+        );
     }
 
     public function testListArticlesByTag(): void
     {
         // dummy articles shouldn't be returned
-        Article::factory()
-            ->has(Tag::factory()->count(3))
-            ->count(20)
-            ->create();
+        Article::factory()->has(Tag::factory()->count(3))->count(20)->create();
 
         /** @var Tag $tag */
         $tag = Tag::factory()
-            ->has(Article::factory()->count(10), 'articles')
+            ->has(Article::factory()->count(10), "articles")
             ->create();
 
         $response = $this->getJson("/api/articles?tag={$tag->name}");
 
-        $response->assertOk()
-            ->assertJsonPath('articlesCount', 10)
-            ->assertJsonCount(10, 'articles');
+        $response
+            ->assertOk()
+            ->assertJsonPath("articlesCount", 10)
+            ->assertJsonCount(10, "articles");
 
         // verify has tag
-        foreach ($response['articles'] as $article) {
+        foreach ($response["articles"] as $article) {
             $this->assertContains(
-                $tag->name, Arr::get($article, 'tagList'),
+                $tag->name,
+                Arr::get($article, "tagList"),
                 "Article must have tag {$tag->name}"
             );
         }
@@ -86,20 +92,21 @@ class ListArticlesTest extends TestCase
     {
         /** @var User $author */
         $author = User::factory()
-            ->has(Article::factory()->count(5), 'articles')
+            ->has(Article::factory()->count(5), "articles")
             ->create();
 
         $response = $this->getJson("/api/articles?author={$author->username}");
 
-        $response->assertOk()
-            ->assertJsonPath('articlesCount', 5)
-            ->assertJsonCount(5, 'articles');
+        $response
+            ->assertOk()
+            ->assertJsonPath("articlesCount", 5)
+            ->assertJsonCount(5, "articles");
 
         // verify same author
-        foreach ($response['articles'] as $article) {
+        foreach ($response["articles"] as $article) {
             $this->assertSame(
                 $author->username,
-                Arr::get($article, 'author.username'),
+                Arr::get($article, "author.username"),
                 "Author must be {$author->username}."
             );
         }
@@ -109,19 +116,21 @@ class ListArticlesTest extends TestCase
     {
         /** @var User $user */
         $user = User::factory()
-            ->has(Article::factory()->count(15), 'favorites')
+            ->has(Article::factory()->count(15), "favorites")
             ->create();
 
         $response = $this->getJson("/api/articles?favorited={$user->username}");
 
-        $response->assertOk()
-            ->assertJsonPath('articlesCount', 15)
-            ->assertJsonCount(15, 'articles');
+        $response
+            ->assertOk()
+            ->assertJsonPath("articlesCount", 15)
+            ->assertJsonCount(15, "articles");
 
         // verify favored
-        foreach ($response['articles'] as $article) {
+        foreach ($response["articles"] as $article) {
             $this->assertSame(
-                1, Arr::get($article, 'favoritesCount'),
+                1,
+                Arr::get($article, "favoritesCount"),
                 "Article must be favored by {$user->username}."
             );
         }
@@ -129,20 +138,22 @@ class ListArticlesTest extends TestCase
 
     public function testArticleFeedLimit(): void
     {
-        $response = $this->getJson('/api/articles?limit=25');
+        $response = $this->getJson("/api/articles?limit=25");
 
-        $response->assertOk()
-            ->assertJsonPath('articlesCount', 25)
-            ->assertJsonCount(25, 'articles');
+        $response
+            ->assertOk()
+            ->assertJsonPath("articlesCount", 25)
+            ->assertJsonCount(25, "articles");
     }
 
     public function testArticleFeedOffset(): void
     {
-        $response = $this->getJson('/api/articles?offset=20');
+        $response = $this->getJson("/api/articles?offset=20");
 
-        $response->assertOk()
-            ->assertJsonPath('articlesCount', 10)
-            ->assertJsonCount(10, 'articles');
+        $response
+            ->assertOk()
+            ->assertJsonPath("articlesCount", 10)
+            ->assertJsonCount(10, "articles");
     }
 
     /**
@@ -150,29 +161,34 @@ class ListArticlesTest extends TestCase
      * @param array<mixed> $data
      * @param string|array<string> $errors
      */
-    public function testArticleListValidation(array $data, $errors): void
+    public function testArticleListValidation(array $data, array $errors): void
     {
-        $response = $this->json('GET', '/api/articles', $data);
+        $response = $this->json("GET", "/api/articles", $data);
 
-        $response->assertUnprocessable()
-            ->assertInvalid($errors);
+        $response->assertUnprocessable()->assertInvalid($errors);
     }
 
     /**
      * @return array<int|string, array<mixed>>
      */
-    public function queryProvider(): array
+    public static function queryProvider(): array
     {
-        $errors = ['limit', 'offset'];
+        $errors = ["limit", "offset"];
 
         return [
-            'not integer' => [['limit' => 'string', 'offset' => 0.123], $errors],
-            'less than zero' => [['limit' => -123, 'offset' => -321], $errors],
-            'not strings' => [[
-                'tag' => 123,
-                'author' => [],
-                'favorited' => null,
-            ], ['tag', 'author', 'favorited']],
+            "not integer" => [
+                ["limit" => "string", "offset" => 0.123],
+                $errors,
+            ],
+            "less than zero" => [["limit" => -123, "offset" => -321], $errors],
+            "not strings"    => [
+                [
+                    "tag"       => 123,
+                    "author"    => [],
+                    "favorited" => null,
+                ],
+                ["tag", "author", "favorited"],
+            ],
         ];
     }
 }

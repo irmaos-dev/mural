@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace App\Http\Requests\Api;
 
 use App\Models\Article;
@@ -11,11 +13,19 @@ use Illuminate\Validation\Rule;
 abstract class BaseArticleRequest extends FormRequest
 {
     /**
+     * Determine if the user is authorized to make this request.
+     */
+    public function authorize(): bool
+    {
+        return true;
+    }
+
+    /**
      * Prepare the data for validation.
      *
      * @return void
      */
-    protected function prepareForValidation()
+    protected function prepareForValidation(): void
     {
         $input = $this->input();
         $title = Arr::get($input, 'article.title');
@@ -40,15 +50,16 @@ abstract class BaseArticleRequest extends FormRequest
             ->first();
 
         $unique = Rule::unique('articles', 'slug');
-        if ($article !== null) {
+
+        if (null !== $article) {
             $unique->ignoreModel($article);
         }
 
         return [
-            'title' => ['string', 'max:255'],
-            'slug' => ['string', 'max:255', $unique],
+            'title'       => ['string', 'max:255'],
+            'slug'        => ['string', 'max:255', $unique],
             'description' => ['string', 'max:510'],
-            'body' => ['string'],
+            'body'        => ['string'],
         ];
     }
 

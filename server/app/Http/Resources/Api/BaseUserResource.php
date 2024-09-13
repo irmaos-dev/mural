@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace App\Http\Resources\Api;
 
 use Illuminate\Http\Resources\Json\JsonResource;
@@ -22,8 +24,8 @@ abstract class BaseUserResource extends JsonResource
     {
         return [
             'username' => $this->resource->username,
-            'bio' => $this->resource->bio ?? "",
-            'image' => $this->resource->image ?? "",
+            'bio'      => $this->resource->bio ?? "",
+            'image'    => $this->resource->image ?? "",
         ];
     }
 }

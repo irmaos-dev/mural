@@ -6,29 +6,32 @@
     "homepage": "https://github.com/f1amy/laravel-realworld-example-app",
     "license": "MIT",
     "require": {
-        "php": "^8.0.2",
+        "php": "^8.3",
         "ext-json": "*",
         "ext-pdo": "*",
         "darkaonline/l5-swagger": "^8.3",
+        "doctrine/dbal": "^3.0",
         "guzzlehttp/guzzle": "^7.2",
-        "laravel/framework": "^9.11",
-        "laravel/sanctum": "^2.14.1",
+        "laravel/framework": "^11.0",
+        "laravel/passport": "^12.0",
+        "laravel/sanctum": "^4.0",
         "laravel/tinker": "^2.7"
     },
     "require-dev": {
-        "barryvdh/laravel-ide-helper": "^2.12",
-        "brianium/paratest": "^6.4",
+        "barryvdh/laravel-ide-helper": "^3.1",
+        "brianium/paratest": "^7.0",
         "fakerphp/faker": "^1.9.1",
-        "laravel/sail": "^1.0.1",
+        "larastan/larastan": "^2.7.0",
+        "laravel/pint": "^1.17",
+        "laravel/sail": "^1.31",
         "mockery/mockery": "^1.4.4",
-        "nunomaduro/collision": "^6.1",
-        "nunomaduro/larastan": "^2.1",
+        "nunomaduro/collision": "^8.1",
         "phpstan/extension-installer": "^1.1",
         "phpstan/phpstan": "^1.4",
         "phpstan/phpstan-phpunit": "^1.0",
-        "phpunit/phpunit": "^9.5.10",
+        "phpunit/phpunit": "^10.0",
         "roave/security-advisories": "dev-latest",
-        "spatie/laravel-ignition": "^1.0"
+        "spatie/laravel-ignition": "^2.0"
     },
     "autoload": {
         "psr-4": {
@@ -69,7 +72,7 @@
         "preferred-install": "dist",
         "sort-packages": true,
         "platform": {
-            "php": "8.0.2"
+            "php": "8.3"
         },
         "allow-plugins": {
             "phpstan/extension-installer": true

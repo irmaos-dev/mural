@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace Tests\Feature\Api;
 
 use App\Http\Resources\Api\TagResource;
@@ -7,7 +9,7 @@ use App\Models\Tag;
 use Illuminate\Http\Request;
 use Tests\TestCase;
 
-class TagsTest extends TestCase
+final class TagsTest extends TestCase
 {
     public function testReturnsTagsList(): void
     {

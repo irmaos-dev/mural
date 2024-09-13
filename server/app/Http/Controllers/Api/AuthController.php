@@ -1,16 +1,17 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace App\Http\Controllers\Api;
 
-use OpenApi\Annotations as OA;
-
 use App\Http\Controllers\Controller;
+
 use App\Http\Requests\Api\LoginRequest;
 use App\Http\Requests\Api\NewUserRequest;
 use App\Http\Resources\Api\UserResource;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 /**
  * @OA\Info(
@@ -18,7 +19,7 @@ use Illuminate\Support\Facades\Hash;
  *     title="AuthController"
  * )
  */
-class AuthController extends Controller
+final class AuthController extends Controller
 {
     /**
      * Register new user.
@@ -26,11 +27,9 @@ class AuthController extends Controller
      * @param NewUserRequest $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function register(NewUserRequest $request)
+    public function register(NewUserRequest $request): JsonResponse
     {
         $attributes = $request->validated();
-
-        $attributes['password'] = Hash::make($attributes['password']);
 
         $user = User::create($attributes);
 
@@ -77,20 +76,22 @@ class AuthController extends Controller
      *
      * Login existing user.
      *
-     * @param \App\Http\Requests\Api\LoginRequest $request
-     * @return \App\Http\Resources\Api\UserResource|\Illuminate\Http\JsonResponse
+     * @param LoginRequest $request
+     * @return UserResource|\Illuminate\Http\JsonResponse
      */
-    public function login(LoginRequest $request)
+    public function login(LoginRequest $request): JsonResponse
     {
         Auth::shouldUse('web');
 
         if (Auth::attempt($request->validated())) {
-            return new UserResource(Auth::user());
+            return response()->json([
+                'user' => new UserResource(Auth::user()),
+            ], 200);
         }
 
         return response()->json([
             'message' => trans('validation.invalid'),
-            'errors' => [
+            'errors'  => [
                 'user' => [trans('auth.failed')],
             ],
         ], 422);

@@ -1,16 +1,32 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace App\Http\Requests\Api;
 
-class UpdateArticleRequest extends BaseArticleRequest
+use App\Models\Article;
+use Illuminate\Validation\Rule;
+
+final class UpdateArticleRequest extends BaseArticleRequest
 {
-    public function rules()
+    private mixed $id;
+
+    public function rules(): array
     {
-        return array_merge_recursive(parent::rules(), [
-            'title' => ['required_without_all:description,body'],
-            'slug' => ['required_with:title'],
+        $article = Article::whereSlug($this->route('slug'))->first();
+
+        $unique = Rule::unique('articles', 'slug');
+
+        if (null !== $article) {
+            $unique->ignoreModel($article);
+        }
+
+        return [
+
+            'title'       => ['required_without_all:description,body'],
+            'slug'        => ['required_with:title', 'alpha_dash', $unique],
             'description' => ['required_without_all:title,body'],
-            'body' => ['required_without_all:title,description'],
-        ]);
+            'body'        => ['required_without_all:title,description'],
+        ];
     }
 }

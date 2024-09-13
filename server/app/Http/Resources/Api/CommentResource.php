@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace App\Http\Resources\Api;
 
 use Illuminate\Http\Resources\Json\JsonResource;
@@ -10,14 +12,14 @@ use Illuminate\Http\Resources\Json\JsonResource;
  * @package App\Http\Resources
  * @property \App\Models\Comment $resource
  */
-class CommentResource extends JsonResource
+final class CommentResource extends JsonResource
 {
     /**
      * The "data" wrapper that should be applied.
      *
      * @var string
      */
-    public static $wrap = 'comment';
+    public static $wrap = "comment";
 
     /**
      * Transform the resource into an array.
@@ -28,11 +30,11 @@ class CommentResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'id' => $this->resource->getKey(),
-            'createdAt' => $this->resource->created_at,
-            'updatedAt' => $this->resource->updated_at,
-            'body' => $this->resource->body,
-            'author' => new ProfileResource($this->resource->author),
+            "id"        => $this->resource->getKey(),
+            "createdAt" => $this->resource->created_at,
+            "updatedAt" => $this->resource->updated_at,
+            "body"      => $this->resource->body,
+            "author"    => new ProfileResource($this->resource->author),
         ];
     }
 }

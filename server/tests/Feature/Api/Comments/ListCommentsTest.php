@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace Tests\Feature\Api\Comments;
 
 use App\Models\Article;
@@ -8,13 +10,24 @@ use App\Models\User;
 use Illuminate\Testing\Fluent\AssertableJson;
 use Tests\TestCase;
 
-class ListCommentsTest extends TestCase
+final class ListCommentsTest extends TestCase
 {
     public function testListArticleCommentsWithoutAuth(): void
     {
         /** @var Article $article */
         $article = Article::factory()
-            ->has(Comment::factory()->count(5), 'comments')
+            ->has(
+                Comment::factory()
+                    ->count(5)
+                    ->for(
+                        User::factory()->state([
+                            "bio"   => "not-null",
+                            "image" => "https://example.com/image.png",
+                        ]),
+                        "author"
+                    ),
+                "comments"
+            )
             ->create();
         /** @var Comment $comment */
         $comment = $article->comments->first();
@@ -22,25 +35,28 @@ class ListCommentsTest extends TestCase
 
         $response = $this->getJson("/api/articles/{$article->slug}/comments");
 
-        $response->assertOk()
-            ->assertJson(fn (AssertableJson $json) =>
-                $json->has('comments', 5, fn (AssertableJson $item) =>
-                    $item->where('id', $comment->getKey())
-                        ->whereAll([
-                            'createdAt' => $comment->created_at?->toISOString(),
-                            'updatedAt' => $comment->updated_at?->toISOString(),
-                            'body' => $comment->body,
+        $response->assertOk()->assertJson(
+            fn (AssertableJson $json) => $json->has(
+                "comments",
+                5,
+                fn (AssertableJson $item) => $item
+                    ->where("id", $comment->getKey())
+                    ->whereAll([
+                        "createdAt" => $comment->created_at?->toISOString(),
+                        "updatedAt" => $comment->updated_at?->toISOString(),
+                        "body"      => $comment->body,
+                    ])
+                    ->has(
+                        "author",
+                        fn (AssertableJson $subItem) => $subItem->whereAll([
+                            "username"  => $author->username,
+                            "bio"       => $author->bio,
+                            "following" => false,
+                            "image"     => $author->image,
                         ])
-                        ->has('author', fn (AssertableJson $subItem) =>
-                            $subItem->missing('following')
-                                ->whereAll([
-                                    'username' => $author->username,
-                                    'bio' => $author->bio,
-                                    'image' => $author->image,
-                                ])
-                        )
-                )
-            );
+                    )
+            )
+        );
     }
 
     public function testListArticleCommentsFollowedAuthor(): void
@@ -50,15 +66,17 @@ class ListCommentsTest extends TestCase
         $author = $comment->author;
         /** @var User $follower */
         $follower = User::factory()
-            ->hasAttached($author, [], 'authors')
+            ->hasAttached($author, [], "authors")
             ->create();
         $article = $comment->article;
 
-        $response = $this->actingAs($follower)
-            ->getJson("/api/articles/{$article->slug}/comments");
+        $response = $this->actingAs($follower)->getJson(
+            "/api/articles/{$article->slug}/comments"
+        );
 
-        $response->assertOk()
-            ->assertJsonPath('comments.0.author.following', true);
+        $response
+            ->assertOk()
+            ->assertJsonPath("comments.0.author.following", true);
     }
 
     public function testListArticleCommentsUnfollowedAuthor(): void
@@ -67,14 +85,16 @@ class ListCommentsTest extends TestCase
         $user = User::factory()->create();
         /** @var Article $article */
         $article = Article::factory()
-            ->has(Comment::factory(), 'comments')
+            ->has(Comment::factory(), "comments")
             ->create();
 
-        $response = $this->actingAs($user)
-            ->getJson("/api/articles/{$article->slug}/comments");
+        $response = $this->actingAs($user)->getJson(
+            "/api/articles/{$article->slug}/comments"
+        );
 
-        $response->assertOk()
-            ->assertJsonPath('comments.0.author.following', false);
+        $response
+            ->assertOk()
+            ->assertJsonPath("comments.0.author.following", false);
     }
 
     public function testListEmptyArticleComments(): void
@@ -84,13 +104,11 @@ class ListCommentsTest extends TestCase
 
         $response = $this->getJson("/api/articles/{$article->slug}/comments");
 
-        $response->assertOk()
-            ->assertExactJson(['comments' => []]);
+        $response->assertOk()->assertExactJson(["comments" => []]);
     }
 
     public function testListCommentsOfNonExistentArticle(): void
     {
-        $this->getJson('/api/articles/non-existent/comments')
-            ->assertNotFound();
+        $this->getJson("/api/articles/non-existent/comments")->assertNotFound();
     }
 }

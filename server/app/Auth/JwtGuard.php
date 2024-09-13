@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace App\Auth;
 
 use App\Contracts\JwtTokenInterface;
@@ -18,7 +20,7 @@ use JsonException;
  * @package App\Auth
  * @property \Illuminate\Contracts\Auth\Authenticatable|null $user
  */
-class JwtGuard implements Guard
+final class JwtGuard implements Guard
 {
     use GuardHelpers;
 
@@ -35,8 +37,8 @@ class JwtGuard implements Guard
     /**
      * Create a new authentication guard.
      *
-     * @param  \Illuminate\Contracts\Auth\UserProvider  $provider
-     * @param  \Illuminate\Http\Request  $request
+     * @param  UserProvider  $provider
+     * @param  Request  $request
      * @param  string $inputKey
      * @return void
      */
@@ -60,7 +62,7 @@ class JwtGuard implements Guard
         // If we've already retrieved the user for the current request we can just
         // return it back immediately. We do not want to fetch the user data on
         // every call to this method because that would be tremendously slow.
-        if (!is_null($this->user)) {
+        if (null !== $this->user) {
             return $this->user;
         }
 
@@ -68,7 +70,7 @@ class JwtGuard implements Guard
 
         $token = $this->getTokenForRequest();
 
-        if (!empty($token) && is_string($token)) {
+        if ( ! empty($token) && is_string($token)) {
             try {
                 $jwt = Jwt\Parser::parse($token);
             } catch (JwtParseException | JsonException) {
@@ -76,7 +78,7 @@ class JwtGuard implements Guard
             }
 
             if ($this->validate([$this->inputKey => $jwt])) {
-                /** @var \App\Contracts\JwtTokenInterface $jwt */
+                /** @var JwtTokenInterface $jwt */
                 $user = $this->provider->retrieveById(
                     $jwt->getSubject()
                 );
@@ -100,7 +102,7 @@ class JwtGuard implements Guard
 
         $token = $credentials[$this->inputKey];
 
-        if (!$token instanceof JwtTokenInterface) {
+        if ( ! $token instanceof JwtTokenInterface) {
             return false;
         }
 

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace App\Http\Controllers\Api\Articles;
 
 use App\Http\Controllers\Controller;
@@ -10,10 +12,11 @@ use App\Http\Requests\Api\UpdateArticleRequest;
 use App\Http\Resources\Api\ArticleResource;
 use App\Http\Resources\Api\ArticlesCollection;
 use App\Models\Article;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 
-class ArticleController extends Controller
+final class ArticleController extends Controller
 {
     /** @var int Default limit for feed listing. */
     protected const FILTER_LIMIT = 20;
@@ -24,10 +27,10 @@ class ArticleController extends Controller
     /**
      * Display global listing of the articles.
      *
-     * @param \App\Http\Requests\Api\ArticleListRequest $request
+     * @param ArticleListRequest $request
      * @return \App\Http\Resources\Api\ArticlesCollection<Article>
      */
-    public function list(ArticleListRequest $request)
+    public function list(ArticleListRequest $request): ArticlesCollection
     {
         $filter = collect($request->validated());
 
@@ -54,10 +57,10 @@ class ArticleController extends Controller
     /**
      * Display article feed for the user.
      *
-     * @param \App\Http\Requests\Api\FeedRequest $request
+     * @param FeedRequest $request
      * @return \App\Http\Resources\Api\ArticlesCollection<Article>
      */
-    public function feed(FeedRequest $request)
+    public function feed(FeedRequest $request): ArticlesCollection
     {
         $filter = collect($request->validated());
 
@@ -73,10 +76,10 @@ class ArticleController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param \App\Http\Requests\Api\NewArticleRequest $request
-     * @return \Illuminate\Http\JsonResponse
+     * @param NewArticleRequest $request
+     * @return JsonResponse
      */
-    public function create(NewArticleRequest $request)
+    public function create(NewArticleRequest $request): JsonResponse
     {
         /** @var \App\Models\User $user */
         $user = $request->user();
@@ -100,9 +103,9 @@ class ArticleController extends Controller
      * Display the specified resource.
      *
      * @param string $slug
-     * @return \App\Http\Resources\Api\ArticleResource
+     * @return ArticleResource
      */
-    public function show(string $slug)
+    public function show(string $slug): ArticleResource
     {
         $article = Article::whereSlug($slug)
             ->firstOrFail();
@@ -113,12 +116,12 @@ class ArticleController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param \App\Http\Requests\Api\UpdateArticleRequest $request
+     * @param UpdateArticleRequest $request
      * @param string $slug
-     * @return \App\Http\Resources\Api\ArticleResource
+     * @return ArticleResource
      * @throws \Illuminate\Auth\Access\AuthorizationException
      */
-    public function update(UpdateArticleRequest $request, string $slug)
+    public function update(UpdateArticleRequest $request, string $slug): ArticleResource
     {
         $article = Article::whereSlug($slug)
             ->firstOrFail();
@@ -134,10 +137,10 @@ class ArticleController extends Controller
      * Remove the specified resource from storage.
      *
      * @param string $slug
-     * @return \Illuminate\Http\JsonResponse
+     * @return JsonResponse
      * @throws \Illuminate\Auth\Access\AuthorizationException
      */
-    public function delete(string $slug)
+    public function delete(string $slug): JsonResponse
     {
         $article = Article::whereSlug($slug)
             ->firstOrFail();
