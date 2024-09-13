@@ -19,7 +19,7 @@ final class Validator implements JwtValidatorInterface
             return false;
         }
 
-        if ( ! hash_equals(Generator::signature($token), $signature)) {
+        if (!hash_equals(Generator::signature($token), $signature)) {
             return false;
         }
 
@@ -44,7 +44,7 @@ final class Validator implements JwtValidatorInterface
 
         $subject = $token->getSubject();
 
-        return ! (User::whereKey($subject)->doesntExist())
+        return !(User::whereKey($subject)->doesntExist())
 
         ;
     }

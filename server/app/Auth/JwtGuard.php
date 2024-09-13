@@ -70,7 +70,7 @@ final class JwtGuard implements Guard
 
         $token = $this->getTokenForRequest();
 
-        if ( ! empty($token) && is_string($token)) {
+        if (!empty($token) && is_string($token)) {
             try {
                 $jwt = Jwt\Parser::parse($token);
             } catch (JwtParseException | JsonException) {
@@ -102,7 +102,7 @@ final class JwtGuard implements Guard
 
         $token = $credentials[$this->inputKey];
 
-        if ( ! $token instanceof JwtTokenInterface) {
+        if (!$token instanceof JwtTokenInterface) {
             return false;
         }
 
