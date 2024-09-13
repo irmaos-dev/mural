@@ -8,7 +8,7 @@ export function LoginPage() {
     <div className="auth-page">
       <div className="container page">
         <div className="row">
-          <div className="col-md-6 offset-md-3 col-xs-12">
+          <div className="col-md-6 offset-md-3 col-xs-12 text-xs-center">
             <h1 className="text-xs-center">Sign up with Google</h1>
             <BtnGoogle />
           </div>
