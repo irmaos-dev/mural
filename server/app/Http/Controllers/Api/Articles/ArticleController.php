@@ -27,7 +27,7 @@ class ArticleController extends Controller
      * @param \App\Http\Requests\Api\ArticleListRequest $request
      * @return \App\Http\Resources\Api\ArticlesCollection<Article>
      */
-    public function list(ArticleListRequest $request)
+    public function list(ArticleListRequest $request): ArticlesCollection
     {
         $filter = collect($request->validated());
 
@@ -57,7 +57,7 @@ class ArticleController extends Controller
      * @param \App\Http\Requests\Api\FeedRequest $request
      * @return \App\Http\Resources\Api\ArticlesCollection<Article>
      */
-    public function feed(FeedRequest $request)
+    public function feed(FeedRequest $request): ArticlesCollection
     {
         $filter = collect($request->validated());
 
@@ -76,7 +76,7 @@ class ArticleController extends Controller
      * @param \App\Http\Requests\Api\NewArticleRequest $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function create(NewArticleRequest $request)
+    public function create(NewArticleRequest $request): \Illuminate\Http\JsonResponse
     {
         /** @var \App\Models\User $user */
         $user = $request->user();

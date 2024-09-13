@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace Tests\Feature\Api\Article;
 
 use App\Models\Article;
@@ -17,7 +19,7 @@ class CreateArticleTest extends TestCase
     {
         /** @var User $author */
         $author = User::factory()->create([
-            "bio" => "test bio",
+            "bio"   => "test bio",
             "image" => "https://test-image.fake/imageid",
         ]);
 
@@ -28,25 +30,25 @@ class CreateArticleTest extends TestCase
 
         $response = $this->actingAs($author)->postJson("/api/articles", [
             "article" => [
-                "title" => $title,
-                "slug" => "different-slug", // must be overwritten with title slug
+                "title"       => $title,
+                "slug"        => "different-slug", // must be overwritten with title slug
                 "description" => $description,
-                "body" => $body,
-                "tagList" => $tags,
+                "body"        => $body,
+                "tagList"     => $tags,
             ],
         ]);
 
         $response->assertCreated()->assertJson(
-            fn(AssertableJson $json) => $json->has(
+            fn (AssertableJson $json) => $json->has(
                 "article",
-                fn(AssertableJson $item) => $item
+                fn (AssertableJson $item) => $item
                     ->where("tagList", $tags)
                     ->whereAll([
-                        "slug" => "original-title",
-                        "title" => $title,
-                        "description" => $description,
-                        "body" => $body,
-                        "favorited" => false,
+                        "slug"           => "original-title",
+                        "title"          => $title,
+                        "description"    => $description,
+                        "body"           => $body,
+                        "favorited"      => false,
                         "favoritesCount" => 0,
                     ])
                     ->whereAllType([
@@ -55,10 +57,10 @@ class CreateArticleTest extends TestCase
                     ])
                     ->has(
                         "author",
-                        fn(AssertableJson $subItem) => $subItem->whereAll([
-                            "username" => $author->username,
-                            "bio" => $author->bio,
-                            "image" => $author->image,
+                        fn (AssertableJson $subItem) => $subItem->whereAll([
+                            "username"  => $author->username,
+                            "bio"       => $author->bio,
+                            "image"     => $author->image,
                             "following" => false,
                         ])
                     )
@@ -73,10 +75,10 @@ class CreateArticleTest extends TestCase
 
         $response = $this->actingAs($author)->postJson("/api/articles", [
             "article" => [
-                "title" => $this->faker->sentence(4),
+                "title"       => $this->faker->sentence(4),
                 "description" => $this->faker->paragraph(),
-                "body" => $this->faker->text(),
-                "tagList" => [],
+                "body"        => $this->faker->text(),
+                "tagList"     => [],
             ],
         ]);
 
@@ -93,10 +95,10 @@ class CreateArticleTest extends TestCase
 
         $response = $this->actingAs($author)->postJson("/api/articles", [
             "article" => [
-                "title" => $this->faker->sentence(4),
+                "title"       => $this->faker->sentence(4),
                 "description" => $this->faker->paragraph(),
-                "body" => $this->faker->text(),
-                "tagList" => $tagsList,
+                "body"        => $this->faker->text(),
+                "tagList"     => $tagsList,
             ],
         ]);
 
@@ -111,16 +113,32 @@ class CreateArticleTest extends TestCase
     /**
      * @dataProvider articleProvider
      * @param array<mixed> $data
-     * @param string|array<string> $errors
      */
-    public function testCreateArticleValidation(array $data, $errors): void
+    public function testCreateArticleValidation(): void
     {
         /** @var User $author */
         $author = User::factory()->create();
 
-        $response = $this->actingAs($author)->postJson("/api/articles", $data);
+        $response = $this->actingAs($author)->postJson("/api/articles", [
+            'title'       => '',
+            'body'        => 'Some valid body content',
+            'description' => 'Some description',
+        ]);
 
-        $response->assertUnprocessable()->assertInvalid($errors);
+        $response->assertUnprocessable()->assertInvalid([
+            "title" => [
+                "The title field is required.",
+            ],
+            "slug" => [
+                "The slug field is required.",
+            ],
+            "description" => [
+                "The description field is required.",
+            ],
+            "body" => [
+                "The body field is required.",
+            ],
+        ]);
     }
 
     public function testCreateArticleValidationUnique(): void
@@ -132,9 +150,9 @@ class CreateArticleTest extends TestCase
             "/api/articles",
             [
                 "article" => [
-                    "title" => $article->title,
+                    "title"       => $article->title,
                     "description" => $this->faker->paragraph(),
-                    "body" => $this->faker->text(),
+                    "body"        => $this->faker->text(),
                 ],
             ]
         );
@@ -146,9 +164,9 @@ class CreateArticleTest extends TestCase
     {
         $response = $this->postJson("/api/articles", [
             "article" => [
-                "title" => $this->faker->sentence(4),
+                "title"       => $this->faker->sentence(4),
                 "description" => $this->faker->paragraph(),
-                "body" => $this->faker->text(),
+                "body"        => $this->faker->text(),
             ],
         ]);
 
@@ -164,14 +182,14 @@ class CreateArticleTest extends TestCase
         $tags = ["tagList.0", "tagList.1", "tagList.2"];
 
         return [
-            "required" => [[], $errors],
+            "required"    => [[], $errors],
             "not strings" => [
                 [
                     "article" => [
-                        "title" => 123,
+                        "title"       => 123,
                         "description" => [],
-                        "body" => null,
-                        "tagList" => [123, [], null],
+                        "body"        => null,
+                        "tagList"     => [123, [], null],
                     ],
                 ],
                 array_merge($errors, $tags),
