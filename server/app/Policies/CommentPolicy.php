@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types = 1);
-
 namespace App\Policies;
 
 use App\Models\Comment;
@@ -15,8 +13,8 @@ class CommentPolicy
     /**
      * Determine whether the user can delete the model.
      *
-     * @param  User  $user
-     * @param  Comment  $comment
+     * @param  \App\Models\User  $user
+     * @param  \App\Models\Comment  $comment
      * @return bool
      */
     public function delete(User $user, Comment $comment): bool

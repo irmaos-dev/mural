@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types = 1);
-
 namespace App\Contracts;
 
 interface JwtBuilderInterface
@@ -9,7 +7,7 @@ interface JwtBuilderInterface
     /**
      * Start building JwtToken.
      *
-     * @return JwtBuilderInterface
+     * @return \App\Contracts\JwtBuilderInterface
      */
     public static function build(): JwtBuilderInterface;
 
@@ -17,7 +15,7 @@ interface JwtBuilderInterface
      * Add issued at (iat) claim to the payload.
      *
      * @param int $timestamp
-     * @return JwtBuilderInterface
+     * @return \App\Contracts\JwtBuilderInterface
      */
     public function issuedAt(int $timestamp): JwtBuilderInterface;
 
@@ -25,7 +23,7 @@ interface JwtBuilderInterface
      * Add expires at (exp) claim to the payload.
      *
      * @param int $timestamp
-     * @return JwtBuilderInterface
+     * @return \App\Contracts\JwtBuilderInterface
      */
     public function expiresAt(int $timestamp): JwtBuilderInterface;
 
@@ -33,7 +31,7 @@ interface JwtBuilderInterface
      * Add subject (sub) claim to the payload.
      *
      * @param JwtSubjectInterface|mixed $identifier
-     * @return JwtBuilderInterface
+     * @return \App\Contracts\JwtBuilderInterface
      */
     public function subject(mixed $identifier): JwtBuilderInterface;
 
@@ -42,7 +40,7 @@ interface JwtBuilderInterface
      *
      * @param string $key
      * @param mixed|null $value
-     * @return JwtBuilderInterface
+     * @return \App\Contracts\JwtBuilderInterface
      */
     public function withClaim(string $key, mixed $value = null): JwtBuilderInterface;
 
@@ -51,14 +49,14 @@ interface JwtBuilderInterface
      *
      * @param string $key
      * @param mixed|null $value
-     * @return JwtBuilderInterface
+     * @return \App\Contracts\JwtBuilderInterface
      */
     public function withHeader(string $key, mixed $value = null): JwtBuilderInterface;
 
     /**
      * Get JwtToken built.
      *
-     * @return JwtTokenInterface
+     * @return \App\Contracts\JwtTokenInterface
      */
     public function getToken(): JwtTokenInterface;
 }

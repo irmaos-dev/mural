@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types = 1);
-
 namespace App\Providers;
 
 use App\Auth\JwtGuard;
@@ -25,14 +23,14 @@ class AuthServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function boot(): void
+    public function boot()
     {
         $this->registerPolicies();
 
         Auth::extend('jwt', function ($app, $name, array $config) {
             $provider = Auth::createUserProvider($config['provider'] ?? null);
 
-            if (null === $provider) {
+            if ($provider === null) {
                 throw new InvalidArgumentException('Invalid UserProvider config specified.');
             }
 

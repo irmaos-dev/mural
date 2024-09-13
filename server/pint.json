@@ -57,7 +57,7 @@
             "elseif": false,
             "encoding": true,
             "explicit_string_variable": true,
-            "final_class": false,
+            "final_class": true,
             "final_internal_class": false,
             "fully_qualified_strict_types": true,
             "global_namespace_import": {
@@ -82,7 +82,7 @@
             "no_unused_imports": true,
             "no_useless_else": false,
             "no_useless_return": true,
-            "not_operator_with_space": false,
+            "not_operator_with_space": true,
             "ordered_imports": true,
             "ordered_traits": true,
             "simplified_if_return": true,

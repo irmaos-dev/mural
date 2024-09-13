@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types = 1);
-
 namespace App\Contracts;
 
 interface JwtParserInterface
@@ -11,7 +9,7 @@ interface JwtParserInterface
      * Use JwtValidator to verify the token.
      *
      * @param string $token
-     * @return JwtTokenInterface
+     * @return \App\Contracts\JwtTokenInterface
      * @see \App\Contracts\JwtValidatorInterface::validate()
      */
     public static function parse(string $token): JwtTokenInterface;

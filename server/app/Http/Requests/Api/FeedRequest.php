@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types = 1);
-
 namespace App\Http\Requests\Api;
 
 use Illuminate\Foundation\Http\FormRequest;
@@ -24,7 +22,7 @@ class FeedRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'limit'  => 'sometimes|integer|min:0',
+            'limit' => 'sometimes|integer|min:0',
             'offset' => 'sometimes|integer|min:0',
         ];
     }

@@ -1,12 +1,10 @@
 <?php
 
-declare(strict_types = 1);
-
 namespace App\Jwt;
 
 use App\Contracts\JwtGeneratorInterface;
-use App\Contracts\JwtSubjectInterface;
 use App\Contracts\JwtTokenInterface;
+use App\Contracts\JwtSubjectInterface;
 use Illuminate\Support\Carbon;
 use InvalidArgumentException;
 
@@ -16,7 +14,7 @@ class Generator implements JwtGeneratorInterface
     {
         $secret = config('app.key');
 
-        if (null === $secret) {
+        if ($secret === null) {
             throw new InvalidArgumentException('No APP_KEY specified.');
         }
 
@@ -48,7 +46,7 @@ class Generator implements JwtGeneratorInterface
     /**
      * Encode JwtToken headers and payload.
      *
-     * @param JwtTokenInterface $token
+     * @param \App\Contracts\JwtTokenInterface $token
      * @return string
      */
     private static function encodeData(JwtTokenInterface $token): string

@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types = 1);
-
 namespace Tests\Feature\Api\Article;
 
 use App\Models\Article;
@@ -11,7 +9,6 @@ use Tests\TestCase;
 class DeleteArticleTest extends TestCase
 {
     private Article $article;
-
     private User $user;
 
     protected function setUp(): void

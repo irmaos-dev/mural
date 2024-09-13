@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types = 1);
-
 namespace App\Http\Requests\Api;
 
 use App\Models\User;
@@ -27,10 +25,10 @@ class UpdateUserRequest extends FormRequest
      */
     public function rules(): array
     {
-        /** @var User|null $user */
+        /** @var \App\Models\User|null $user */
         $user = $this->user();
 
-        if (null === $user) {
+        if ($user === null) {
             throw new InvalidArgumentException('User not authenticated.');
         }
 
@@ -51,7 +49,7 @@ class UpdateUserRequest extends FormRequest
                 Rule::unique('users', 'email')
                     ->ignore($user->getKey()),
             ],
-            'bio'   => 'sometimes|nullable|string',
+            'bio' => 'sometimes|nullable|string',
             'image' => 'sometimes|nullable|string|url',
         ];
     }

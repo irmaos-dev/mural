@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types = 1);
-
 namespace Tests\Feature\Api\Auth;
 
 use App\Jwt;
@@ -11,7 +9,6 @@ use Tests\TestCase;
 class JwtGuardTest extends TestCase
 {
     private User $user;
-
     private string $token;
 
     protected function setUp(): void

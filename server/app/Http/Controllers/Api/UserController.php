@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types = 1);
-
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
@@ -14,7 +12,7 @@ class UserController extends Controller
     /**
      * Display the specified resource.
      *
-     * @return UserResource
+     * @return \App\Http\Resources\Api\UserResource
      */
     public function show(Request $request)
     {
@@ -24,15 +22,15 @@ class UserController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param UpdateUserRequest $request
-     * @return UserResource|\Illuminate\Http\JsonResponse
+     * @param \App\Http\Requests\Api\UpdateUserRequest $request
+     * @return \App\Http\Resources\Api\UserResource|\Illuminate\Http\JsonResponse
      */
     public function update(UpdateUserRequest $request)
     {
         if (empty($attrs = $request->validated())) {
             return response()->json([
                 'message' => trans('validation.invalid'),
-                'errors'  => [
+                'errors' => [
                     'any' => [trans('validation.required_at_least_one')],
                 ],
             ], 422);

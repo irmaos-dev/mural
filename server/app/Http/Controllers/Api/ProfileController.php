@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types = 1);
-
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
@@ -15,7 +13,7 @@ class ProfileController extends Controller
      * Display the specified resource.
      *
      * @param string $username
-     * @return ProfileResource
+     * @return \App\Http\Resources\Api\ProfileResource
      */
     public function show(string $username)
     {
@@ -28,9 +26,9 @@ class ProfileController extends Controller
     /**
      * Follow an author.
      *
-     * @param Request $request
+     * @param \Illuminate\Http\Request $request
      * @param string $username
-     * @return ProfileResource
+     * @return \App\Http\Resources\Api\ProfileResource
      */
     public function follow(Request $request, string $username)
     {
@@ -46,9 +44,9 @@ class ProfileController extends Controller
     /**
      * Unfollow an author.
      *
-     * @param Request $request
+     * @param \Illuminate\Http\Request $request
      * @param string $username
-     * @return ProfileResource
+     * @return \App\Http\Resources\Api\ProfileResource
      */
     public function unfollow(Request $request, string $username)
     {

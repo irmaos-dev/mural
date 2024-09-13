@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types = 1);
-
 namespace App\Auth;
 
 use App\Contracts\JwtTokenInterface;
@@ -37,8 +35,8 @@ class JwtGuard implements Guard
     /**
      * Create a new authentication guard.
      *
-     * @param  UserProvider  $provider
-     * @param  Request  $request
+     * @param  \Illuminate\Contracts\Auth\UserProvider  $provider
+     * @param  \Illuminate\Http\Request  $request
      * @param  string $inputKey
      * @return void
      */
@@ -62,7 +60,7 @@ class JwtGuard implements Guard
         // If we've already retrieved the user for the current request we can just
         // return it back immediately. We do not want to fetch the user data on
         // every call to this method because that would be tremendously slow.
-        if (null !== $this->user) {
+        if (!is_null($this->user)) {
             return $this->user;
         }
 
@@ -78,7 +76,7 @@ class JwtGuard implements Guard
             }
 
             if ($this->validate([$this->inputKey => $jwt])) {
-                /** @var JwtTokenInterface $jwt */
+                /** @var \App\Contracts\JwtTokenInterface $jwt */
                 $user = $this->provider->retrieveById(
                     $jwt->getSubject()
                 );

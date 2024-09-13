@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types = 1);
-
 namespace App\Exceptions;
 
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -21,7 +19,7 @@ class Handler extends ExceptionHandler
      * @var array<class-string<Throwable>, LogLevel::*>
      */
     protected $levels = [
-
+        //
     ];
 
     /**
@@ -30,7 +28,7 @@ class Handler extends ExceptionHandler
      * @var array<int, class-string<Throwable>>
      */
     protected $dontReport = [
-
+        //
     ];
 
     /**
@@ -49,7 +47,7 @@ class Handler extends ExceptionHandler
      *
      * @return void
      */
-    public function register(): void
+    public function register()
     {
         $this->renderable(function (NotFoundHttpException $e) {
             if ($e->getPrevious() instanceof ModelNotFoundException) {

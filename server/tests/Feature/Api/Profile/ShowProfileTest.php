@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types = 1);
-
 namespace Tests\Feature\Api\Profile;
 
 use App\Models\User;
@@ -24,7 +22,7 @@ class ShowProfileTest extends TestCase
     {
         /** @var User $profile */
         $profile = User::factory()->create([
-            "bio"   => "test bio",
+            "bio" => "test bio",
             "image" => "https://test-image.fake/imageid",
         ]);
 
@@ -32,10 +30,10 @@ class ShowProfileTest extends TestCase
 
         $response->assertOk()->assertExactJson([
             "profile" => [
-                "username"  => $profile->username,
-                "bio"       => $profile->bio,
+                "username" => $profile->username,
+                "bio" => $profile->bio,
                 "following" => false,
-                "image"     => $profile->image,
+                "image" => $profile->image,
             ],
         ]);
     }

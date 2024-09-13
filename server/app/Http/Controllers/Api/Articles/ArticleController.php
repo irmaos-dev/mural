@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types = 1);
-
 namespace App\Http\Controllers\Api\Articles;
 
 use App\Http\Controllers\Controller;
@@ -27,7 +25,7 @@ class ArticleController extends Controller
     /**
      * Display global listing of the articles.
      *
-     * @param ArticleListRequest $request
+     * @param \App\Http\Requests\Api\ArticleListRequest $request
      * @return \App\Http\Resources\Api\ArticlesCollection<Article>
      */
     public function list(ArticleListRequest $request): ArticlesCollection
@@ -57,7 +55,7 @@ class ArticleController extends Controller
     /**
      * Display article feed for the user.
      *
-     * @param FeedRequest $request
+     * @param \App\Http\Requests\Api\FeedRequest $request
      * @return \App\Http\Resources\Api\ArticlesCollection<Article>
      */
     public function feed(FeedRequest $request): ArticlesCollection
@@ -76,7 +74,7 @@ class ArticleController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param NewArticleRequest $request
+     * @param \App\Http\Requests\Api\NewArticleRequest $request
      * @return JsonResponse
      */
     public function create(NewArticleRequest $request): JsonResponse
@@ -103,7 +101,7 @@ class ArticleController extends Controller
      * Display the specified resource.
      *
      * @param string $slug
-     * @return ArticleResource
+     * @return \App\Http\Resources\Api\ArticleResource
      */
     public function show(string $slug): ArticleResource
     {
@@ -116,9 +114,9 @@ class ArticleController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param UpdateArticleRequest $request
+     * @param \App\Http\Requests\Api\UpdateArticleRequest $request
      * @param string $slug
-     * @return ArticleResource
+     * @return \App\Http\Resources\Api\ArticleResource
      * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function update(UpdateArticleRequest $request, string $slug): ArticleResource

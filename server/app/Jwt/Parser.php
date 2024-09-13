@@ -1,27 +1,24 @@
 <?php
 
-declare(strict_types = 1);
-
 namespace App\Jwt;
 
-use App\Contracts\JwtParserInterface;
 use App\Contracts\JwtTokenInterface;
+use App\Contracts\JwtParserInterface;
 use App\Exceptions\JwtParseException;
-use JsonException;
 
 class Parser implements JwtParserInterface
 {
     /**
      * @param string $token
-     * @return JwtTokenInterface
-     * @throws JwtParseException
-     * @throws JsonException
+     * @return \App\Contracts\JwtTokenInterface
+     * @throws \App\Exceptions\JwtParseException
+     * @throws \JsonException
      */
     public static function parse(string $token): JwtTokenInterface
     {
         $parts = explode('.', $token);
 
-        if (3 !== count($parts)) {
+        if (count($parts) !== 3) {
             throw new JwtParseException('JwtToken parts count does not match.');
         }
 
@@ -29,7 +26,7 @@ class Parser implements JwtParserInterface
             /** @var false|string $decoded */
             $decoded = base64_decode($part, true);
 
-            if (false === $decoded) {
+            if ($decoded === false) {
                 throw new JwtParseException('JwtToken parts base64 decode error.');
             }
 
@@ -38,8 +35,8 @@ class Parser implements JwtParserInterface
 
         [$jsonHeader, $jsonPayload, $signature] = $base64Decoded;
 
-        $jsonDecoded = array_map(
-            fn (string $part) => json_decode($part, true, 512, JSON_THROW_ON_ERROR),
+        $jsonDecoded = array_map(fn (string $part) =>
+            json_decode($part, true, 512, JSON_THROW_ON_ERROR),
             [$jsonHeader, $jsonPayload]
         );
 
