@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace Tests\Feature\Api\Comments;
 
 use App\Models\Article;
@@ -8,11 +10,12 @@ use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Testing\Fluent\AssertableJson;
 use Tests\TestCase;
 
-class CreateCommentTest extends TestCase
+final class CreateCommentTest extends TestCase
 {
     use WithFaker;
 
     private Article $article;
+
     private User $user;
 
     protected function setUp(): void
@@ -23,7 +26,7 @@ class CreateCommentTest extends TestCase
         $article = Article::factory()->create();
         /** @var User $user */
         $user = User::factory()->create([
-            "bio" => "test bio",
+            "bio"   => "test bio",
             "image" => "https://test-image.fake/imageid",
         ]);
 
@@ -45,21 +48,21 @@ class CreateCommentTest extends TestCase
         );
 
         $response->assertCreated()->assertJson(
-            fn(AssertableJson $json) => $json->has(
+            fn (AssertableJson $json) => $json->has(
                 "comment",
-                fn(AssertableJson $comment) => $comment
+                fn (AssertableJson $comment) => $comment
                     ->where("body", $message)
                     ->whereAllType([
-                        "id" => "integer",
+                        "id"        => "integer",
                         "createdAt" => "string",
                         "updatedAt" => "string",
                     ])
                     ->has(
                         "author",
-                        fn(AssertableJson $author) => $author->whereAll([
-                            "username" => $this->user->username,
-                            "bio" => $this->user->bio,
-                            "image" => $this->user->image,
+                        fn (AssertableJson $author) => $author->whereAll([
+                            "username"  => $this->user->username,
+                            "bio"       => $this->user->bio,
+                            "image"     => $this->user->image,
                             "following" => false,
                         ])
                     )
@@ -115,11 +118,11 @@ class CreateCommentTest extends TestCase
     public static function commentProvider(): array
     {
         return [
-            "empty data" => [[]],
+            "empty data"      => [[]],
             "no comment wrap" => [["body" => "example-message"]],
-            "empty message" => [["comment" => ["body" => ""]]],
+            "empty message"   => [["comment" => ["body" => ""]]],
             "integer message" => [["comment" => ["body" => 123]]],
-            "array message" => [["comment" => ["body" => []]]],
+            "array message"   => [["comment" => ["body" => []]]],
         ];
     }
 }

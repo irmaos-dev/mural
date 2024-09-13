@@ -1,20 +1,22 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace App\Policies;
 
 use App\Models\Comment;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
-class CommentPolicy
+final class CommentPolicy
 {
     use HandlesAuthorization;
 
     /**
      * Determine whether the user can delete the model.
      *
-     * @param  \App\Models\User  $user
-     * @param  \App\Models\Comment  $comment
+     * @param  User  $user
+     * @param  Comment  $comment
      * @return bool
      */
     public function delete(User $user, Comment $comment): bool

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace Tests\Feature\Api\Comments;
 
 use App\Models\Article;
@@ -8,7 +10,7 @@ use App\Models\User;
 use Illuminate\Testing\Fluent\AssertableJson;
 use Tests\TestCase;
 
-class ListCommentsTest extends TestCase
+final class ListCommentsTest extends TestCase
 {
     public function testListArticleCommentsWithoutAuth(): void
     {
@@ -19,7 +21,7 @@ class ListCommentsTest extends TestCase
                     ->count(5)
                     ->for(
                         User::factory()->state([
-                            "bio" => "not-null",
+                            "bio"   => "not-null",
                             "image" => "https://example.com/image.png",
                         ]),
                         "author"
@@ -34,23 +36,23 @@ class ListCommentsTest extends TestCase
         $response = $this->getJson("/api/articles/{$article->slug}/comments");
 
         $response->assertOk()->assertJson(
-            fn(AssertableJson $json) => $json->has(
+            fn (AssertableJson $json) => $json->has(
                 "comments",
                 5,
-                fn(AssertableJson $item) => $item
+                fn (AssertableJson $item) => $item
                     ->where("id", $comment->getKey())
                     ->whereAll([
                         "createdAt" => $comment->created_at?->toISOString(),
                         "updatedAt" => $comment->updated_at?->toISOString(),
-                        "body" => $comment->body,
+                        "body"      => $comment->body,
                     ])
                     ->has(
                         "author",
-                        fn(AssertableJson $subItem) => $subItem->whereAll([
-                            "username" => $author->username,
-                            "bio" => $author->bio,
+                        fn (AssertableJson $subItem) => $subItem->whereAll([
+                            "username"  => $author->username,
+                            "bio"       => $author->bio,
                             "following" => false,
-                            "image" => $author->image,
+                            "image"     => $author->image,
                         ])
                     )
             )

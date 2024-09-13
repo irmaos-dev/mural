@@ -3,10 +3,11 @@
 declare(strict_types = 1);
 
 namespace App\Http\Requests\Api;
+
 use App\Models\Article;
 use Illuminate\Validation\Rule;
 
-class UpdateArticleRequest extends BaseArticleRequest
+final class UpdateArticleRequest extends BaseArticleRequest
 {
     private mixed $id;
 

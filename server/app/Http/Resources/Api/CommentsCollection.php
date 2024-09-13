@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace App\Http\Resources\Api;
 
 use Illuminate\Http\Resources\Json\ResourceCollection;
@@ -10,7 +12,7 @@ use Illuminate\Http\Resources\Json\ResourceCollection;
  * @package App\Http\Resources
  * @property \Illuminate\Support\Collection<\App\Models\Comment> $collection
  */
-class CommentsCollection extends ResourceCollection
+final class CommentsCollection extends ResourceCollection
 {
     /**
      * The "data" wrapper that should be applied.

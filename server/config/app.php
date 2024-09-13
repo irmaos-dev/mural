@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 use Illuminate\Support\Facades\Facade;
 
 return [
@@ -185,7 +187,7 @@ return [
         /*
          * Package Service Providers...
          */
-        \L5Swagger\L5SwaggerServiceProvider::class,
+        L5Swagger\L5SwaggerServiceProvider::class,
 
         /*
          * Application Service Providers...

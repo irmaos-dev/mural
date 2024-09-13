@@ -7,7 +7,7 @@ namespace App\Http\Requests\Api;
 use App\Models\Article;
 use Illuminate\Validation\Rule;
 
-class NewArticleRequest extends BaseArticleRequest
+final class NewArticleRequest extends BaseArticleRequest
 {
     /**
      * Determine if the user is authorized to make this request.

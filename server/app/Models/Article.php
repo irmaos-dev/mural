@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Builder;
@@ -17,7 +19,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $body
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
- * @property-read \App\Models\User $author
+ * @property-read User $author
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Comment[] $comments
  * @property-read int|null $comments_count
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\User[] $favoredUsers
@@ -43,7 +45,7 @@ use Illuminate\Database\Eloquent\Model;
  * @method static Builder|Article whereUpdatedAt($value)
  * @mixin \Eloquent
  */
-class Article extends Model
+final class Article extends Model
 {
     use HasFactory;
 
@@ -63,7 +65,7 @@ class Article extends Model
     /**
      * Determine if user favored the article.
      *
-     * @param \App\Models\User $user
+     * @param User $user
      * @return bool
      */
     public function favoredBy(User $user): bool
@@ -97,8 +99,9 @@ class Article extends Model
      */
     public function scopeHavingTag(Builder $query, string $tag): Builder
     {
-        return $query->whereHas('tags', fn (Builder $builder) =>
-            $builder->where('name', $tag)
+        return $query->whereHas(
+            'tags',
+            fn (Builder $builder) => $builder->where('name', $tag)
         );
     }
 
@@ -111,8 +114,9 @@ class Article extends Model
      */
     public function scopeOfAuthor(Builder $query, string $username): Builder
     {
-        return $query->whereHas('author', fn (Builder $builder) =>
-            $builder->where('username', $username)
+        return $query->whereHas(
+            'author',
+            fn (Builder $builder) => $builder->where('username', $username)
         );
     }
 
@@ -125,8 +129,9 @@ class Article extends Model
      */
     public function scopeFavoredByUser(Builder $query, string $username): Builder
     {
-        return $query->whereHas('favoredUsers', fn (Builder $builder) =>
-            $builder->where('username', $username)
+        return $query->whereHas(
+            'favoredUsers',
+            fn (Builder $builder) => $builder->where('username', $username)
         );
     }
 
@@ -134,13 +139,14 @@ class Article extends Model
      * Scope articles to author's of a user.
      *
      * @param \Illuminate\Database\Eloquent\Builder<self> $query
-     * @param \App\Models\User $user
+     * @param User $user
      * @return \Illuminate\Database\Eloquent\Builder<self>
      */
     public function scopeFollowedAuthorsOf(Builder $query, User $user): Builder
     {
-        return $query->whereHas('author', fn (Builder $builder) =>
-            $builder->whereIn('id', $user->authors->pluck('id'))
+        return $query->whereHas(
+            'author',
+            fn (Builder $builder) => $builder->whereIn('id', $user->authors->pluck('id'))
         );
     }
 

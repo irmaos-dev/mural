@@ -1,12 +1,14 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace Tests\Feature\Api\User;
 
 use App\Models\User;
 use Illuminate\Testing\Fluent\AssertableJson;
 use Tests\TestCase;
 
-class UpdateUserTest extends TestCase
+final class UpdateUserTest extends TestCase
 {
     private User $user;
 
@@ -50,15 +52,15 @@ class UpdateUserTest extends TestCase
         ]);
 
         $response->assertOk()->assertJson(
-            fn(AssertableJson $json) => $json->has(
+            fn (AssertableJson $json) => $json->has(
                 "user",
-                fn(AssertableJson $item) => $item
+                fn (AssertableJson $item) => $item
                     ->whereType("token", "string")
                     ->whereAll([
                         "username" => $username,
-                        "email" => $email,
-                        "bio" => $bio,
-                        "image" => $image,
+                        "email"    => $email,
+                        "bio"      => $bio,
+                        "image"    => $image,
                     ])
             )
         );
@@ -84,7 +86,7 @@ class UpdateUserTest extends TestCase
         $response = $this->actingAs($this->user)->putJson("/api/user", [
             "user" => [
                 "username" => $anotherUser->username,
-                "email" => $anotherUser->email,
+                "email"    => $anotherUser->email,
             ],
         ]);
 
@@ -96,7 +98,7 @@ class UpdateUserTest extends TestCase
         $response = $this->actingAs($this->user)->putJson("/api/user", [
             "user" => [
                 "username" => $this->user->username,
-                "email" => $this->user->email,
+                "email"    => $this->user->email,
             ],
         ]);
 
@@ -108,14 +110,14 @@ class UpdateUserTest extends TestCase
         /** @var User $user */
         $user = User::factory()
             ->state([
-                "bio" => "not-null",
+                "bio"   => "not-null",
                 "image" => "https://example.com/image.png",
             ])
             ->create();
 
         $response = $this->actingAs($user)->putJson("/api/user", [
             "user" => [
-                "bio" => "test bio",
+                "bio"   => "test bio",
                 "image" => "https://test-image.fake/imageid",
             ],
         ]);
@@ -140,14 +142,14 @@ class UpdateUserTest extends TestCase
         $allErrors = array_merge($strErrors, ["bio", "image"]);
 
         return [
-            "required" => [[], "any"],
+            "required"   => [[], "any"],
             "wrong type" => [
                 [
                     "user" => [
                         "username" => 123,
-                        "email" => null,
-                        "bio" => [],
-                        "image" => 123.0,
+                        "email"    => null,
+                        "bio"      => [],
+                        "image"    => 123.0,
                     ],
                 ],
                 $allErrors,
@@ -156,7 +158,7 @@ class UpdateUserTest extends TestCase
                 [
                     "user" => [
                         "username" => "",
-                        "email" => "",
+                        "email"    => "",
                     ],
                 ],
                 $strErrors,
@@ -166,7 +168,7 @@ class UpdateUserTest extends TestCase
                 "username",
             ],
             "not email" => [["user" => ["email" => "not an email"]], "email"],
-            "not url" => [["user" => ["image" => "string"]], "image"],
+            "not url"   => [["user" => ["image" => "string"]], "image"],
         ];
     }
 }

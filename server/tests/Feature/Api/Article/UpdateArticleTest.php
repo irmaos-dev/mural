@@ -10,7 +10,7 @@ use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Testing\Fluent\AssertableJson;
 use Tests\TestCase;
 
-class UpdateArticleTest extends TestCase
+final class UpdateArticleTest extends TestCase
 {
     use WithFaker;
 
