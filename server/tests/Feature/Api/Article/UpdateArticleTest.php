@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace Tests\Feature\Api\Article;
 
 use App\Models\Article;
@@ -22,7 +24,7 @@ class UpdateArticleTest extends TestCase
         $article = Article::factory()
             ->for(
                 User::factory()->state([
-                    "bio" => "not-null",
+                    "bio"   => "not-null",
                     "image" => "https://example.com/image.png",
                 ]),
                 "author"
@@ -64,32 +66,32 @@ class UpdateArticleTest extends TestCase
             [
                 "article" => [
                     "title" => $title,
-                    "slug" => $fakeSlug, // must be overwritten with title slug
+                    "slug"  => $fakeSlug, // must be overwritten with title slug
                 ],
             ]
         );
 
         $response->assertOk()->assertJson(
-            fn(AssertableJson $json) => $json->has(
+            fn (AssertableJson $json) => $json->has(
                 "article",
-                fn(AssertableJson $item) => $item
+                fn (AssertableJson $item) => $item
                     ->whereType("updatedAt", "string")
                     ->whereAll([
-                        "slug" => "updated-title",
-                        "title" => $title,
-                        "description" => $description,
-                        "body" => $body,
-                        "tagList" => [],
-                        "createdAt" => $this->article->created_at?->toISOString(),
-                        "favorited" => false,
+                        "slug"           => "updated-title",
+                        "title"          => $title,
+                        "description"    => $description,
+                        "body"           => $body,
+                        "tagList"        => [],
+                        "createdAt"      => $this->article->created_at?->toISOString(),
+                        "favorited"      => false,
                         "favoritesCount" => 0,
                     ])
                     ->has(
                         "author",
-                        fn(AssertableJson $subItem) => $subItem->whereAll([
-                            "username" => $author->username,
-                            "bio" => $author->bio,
-                            "image" => $author->image,
+                        fn (AssertableJson $subItem) => $subItem->whereAll([
+                            "username"  => $author->username,
+                            "bio"       => $author->bio,
+                            "image"     => $author->image,
                             "following" => false,
                         ])
                     )
@@ -121,6 +123,12 @@ class UpdateArticleTest extends TestCase
      */
     public function testUpdateArticleValidation(array $data, $errors): void
     {
+        $data = [
+            'title'       => '',
+            'body'        => 'Some valid body content',
+            'description' => 'Some description',
+        ];
+
         $response = $this->actingAs($this->article->author)->putJson(
             "/api/articles/{$this->article->slug}",
             $data
@@ -198,13 +206,13 @@ class UpdateArticleTest extends TestCase
         $errors = ["title", "description", "body"];
 
         return [
-            "required" => [[], $errors],
+            "required"    => [[], $errors],
             "not strings" => [
                 [
                     "article" => [
-                        "title" => 123,
+                        "title"       => 123,
                         "description" => [],
-                        "body" => null,
+                        "body"        => null,
                     ],
                 ],
                 $errors,
@@ -212,9 +220,9 @@ class UpdateArticleTest extends TestCase
             "empty strings" => [
                 [
                     "article" => [
-                        "title" => "",
+                        "title"       => "",
                         "description" => "",
-                        "body" => "",
+                        "body"        => "",
                     ],
                 ],
                 $errors,

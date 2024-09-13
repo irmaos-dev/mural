@@ -1,7 +1,10 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace App\Http\Resources\Api;
 
+use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\ResourceCollection;
 
 /**
@@ -29,10 +32,10 @@ class ArticlesCollection extends ResourceCollection
     /**
      * Get additional data that should be returned with the resource array.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  Request  $request
      * @return array<string, mixed>
      */
-    public function with($request)
+    public function with(Request $request): array
     {
         return [
             'articlesCount' => $this->collection->count(),
