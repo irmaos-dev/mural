@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace Tests\Unit\Jwt;
 
 use App\Exceptions\JwtParseException;
@@ -7,7 +9,7 @@ use App\Jwt\Parser;
 use JsonException;
 use PHPUnit\Framework\TestCase;
 
-class JwtParserTest extends TestCase
+final class JwtParserTest extends TestCase
 {
     public function testParseParts(): void
     {

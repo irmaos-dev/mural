@@ -11,7 +11,7 @@ use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Testing\Fluent\AssertableJson;
 use Tests\TestCase;
 
-class CreateArticleTest extends TestCase
+final class CreateArticleTest extends TestCase
 {
     use WithFaker;
 

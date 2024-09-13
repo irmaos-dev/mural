@@ -13,7 +13,7 @@ use Illuminate\Http\Resources\Json\ResourceCollection;
  * @package App\Http\Resources
  * @property \Illuminate\Support\Collection<\App\Models\Article> $collection
  */
-class ArticlesCollection extends ResourceCollection
+final class ArticlesCollection extends ResourceCollection
 {
     /**
      * The "data" wrapper that should be applied.

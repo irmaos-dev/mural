@@ -1,11 +1,13 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace App\Jwt;
 
 use App\Contracts\JwtTokenInterface;
 use Illuminate\Support\Collection;
 
-class Token implements JwtTokenInterface
+final class Token implements JwtTokenInterface
 {
     /** User-supplied signature */
     private ?string $signature;
@@ -26,8 +28,8 @@ class Token implements JwtTokenInterface
     public function __construct(
         array $headers = null,
         array $claims = null,
-        string $signature = null)
-    {
+        string $signature = null
+    ) {
         $this->header = collect(
             array_merge($this->getDefaultHeaders(), $headers ?? [])
         );

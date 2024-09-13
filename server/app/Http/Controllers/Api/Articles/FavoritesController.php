@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace App\Http\Controllers\Api\Articles;
 
 use App\Http\Controllers\Controller;
@@ -7,14 +9,14 @@ use App\Http\Resources\Api\ArticleResource;
 use App\Models\Article;
 use Illuminate\Http\Request;
 
-class FavoritesController extends Controller
+final class FavoritesController extends Controller
 {
     /**
      * Add article to user's favorites.
      *
-     * @param \Illuminate\Http\Request $request
+     * @param Request $request
      * @param string $slug
-     * @return \App\Http\Resources\Api\ArticleResource
+     * @return ArticleResource
      */
     public function add(Request $request, string $slug)
     {
@@ -32,9 +34,9 @@ class FavoritesController extends Controller
     /**
      * Remove article from user's favorites.
      *
-     * @param \Illuminate\Http\Request $request
+     * @param Request $request
      * @param string $slug
-     * @return \App\Http\Resources\Api\ArticleResource
+     * @return ArticleResource
      */
     public function remove(Request $request, string $slug)
     {

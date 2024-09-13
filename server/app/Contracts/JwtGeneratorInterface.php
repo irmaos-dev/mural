@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace App\Contracts;
 
 interface JwtGeneratorInterface
@@ -7,7 +9,7 @@ interface JwtGeneratorInterface
     /**
      * Generate JWT signature.
      *
-     * @param \App\Contracts\JwtTokenInterface $token
+     * @param JwtTokenInterface $token
      * @return string
      */
     public static function signature(JwtTokenInterface $token): string;
@@ -15,7 +17,7 @@ interface JwtGeneratorInterface
     /**
      * Generate JWT string.
      *
-     * @param \App\Contracts\JwtSubjectInterface $user
+     * @param JwtSubjectInterface $user
      * @return string
      */
     public static function token(JwtSubjectInterface $user): string;

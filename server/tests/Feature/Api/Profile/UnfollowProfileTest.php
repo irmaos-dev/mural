@@ -1,11 +1,13 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace Tests\Feature\Api\Profile;
 
 use App\Models\User;
 use Tests\TestCase;
 
-class UnfollowProfileTest extends TestCase
+final class UnfollowProfileTest extends TestCase
 {
     private User $user;
 

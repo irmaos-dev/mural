@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace App\Models;
 
 use App\Contracts\JwtSubjectInterface;
@@ -55,9 +57,11 @@ use Laravel\Passport\HasApiTokens;
  * @method static \Illuminate\Database\Eloquent\Builder|User whereUsername($value)
  * @mixin \Eloquent
  */
-class User extends Authenticatable implements JwtSubjectInterface
+final class User extends Authenticatable implements JwtSubjectInterface
 {
-    use HasApiTokens, HasFactory, Notifiable;
+    use HasApiTokens;
+    use HasFactory;
+    use Notifiable;
 
     /**
      * Regular expression for username.
@@ -96,7 +100,7 @@ class User extends Authenticatable implements JwtSubjectInterface
     {
         return [
             'email_verified_at' => 'datetime',
-            'password' => 'hashed'
+            'password'          => 'hashed',
 
         ];
     }

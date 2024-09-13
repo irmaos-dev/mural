@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace App\Http\Requests\Api;
 
 use App\Models\User;
@@ -8,7 +10,7 @@ use Illuminate\Support\Arr;
 use Illuminate\Validation\Rule;
 use InvalidArgumentException;
 
-class UpdateUserRequest extends FormRequest
+final class UpdateUserRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,10 +27,10 @@ class UpdateUserRequest extends FormRequest
      */
     public function rules(): array
     {
-        /** @var \App\Models\User|null $user */
+        /** @var User|null $user */
         $user = $this->user();
 
-        if ($user === null) {
+        if (null === $user) {
             throw new InvalidArgumentException('User not authenticated.');
         }
 
@@ -49,7 +51,7 @@ class UpdateUserRequest extends FormRequest
                 Rule::unique('users', 'email')
                     ->ignore($user->getKey()),
             ],
-            'bio' => 'sometimes|nullable|string',
+            'bio'   => 'sometimes|nullable|string',
             'image' => 'sometimes|nullable|string|url',
         ];
     }
