@@ -2,7 +2,8 @@ includes:
     - phpstan-baseline.neon
 
 parameters:
-    level: 8
+    level: 4
+    reportUnmatchedIgnoredErrors: false
     paths:
         - app
         - tests

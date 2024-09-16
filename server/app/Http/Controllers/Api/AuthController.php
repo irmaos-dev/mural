@@ -10,8 +10,8 @@ use App\Http\Requests\Api\LoginRequest;
 use App\Http\Requests\Api\NewUserRequest;
 use App\Http\Resources\Api\UserResource;
 use App\Models\User;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
-use Symfony\Component\HttpFoundation\JsonResponse;
 
 /**
  * @OA\Info(
@@ -25,7 +25,7 @@ final class AuthController extends Controller
      * Register new user.
      *
      * @param NewUserRequest $request
-     * @return \Illuminate\Http\JsonResponse
+     * @return JsonResponse
      */
     public function register(NewUserRequest $request): JsonResponse
     {
@@ -77,9 +77,9 @@ final class AuthController extends Controller
      * Login existing user.
      *
      * @param LoginRequest $request
-     * @return UserResource|\Illuminate\Http\JsonResponse
+     * @return UserResource|JsonResponse
      */
-    public function login(LoginRequest $request): JsonResponse
+    public function login(LoginRequest $request): UserResource|JsonResponse
     {
         Auth::shouldUse('web');
 

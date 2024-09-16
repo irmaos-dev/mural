@@ -33,17 +33,14 @@ final class ArticleResource extends JsonResource
         $user = $request->user();
 
         return [
-            'slug'        => $this->resource->slug,
-            'title'       => $this->resource->title,
-            'description' => $this->resource->description,
-            'body'        => $this->resource->body,
-            'tagList'     => new TagsCollection($this->resource->tags),
-            'createdAt'   => $this->resource->created_at,
-            'updatedAt'   => $this->resource->updated_at,
-            // 'favorited' => $this->when($user !== null, fn() =>
-            //     $this->resource->favoredBy($user)
-            // ),
-            'favorited'      => $user && $this->resource->favoredBy($user) ?? false,
+            'slug'           => $this->resource->slug,
+            'title'          => $this->resource->title,
+            'description'    => $this->resource->description,
+            'body'           => $this->resource->body,
+            'tagList'        => new TagsCollection($this->resource->tags),
+            'createdAt'      => $this->resource->created_at,
+            'updatedAt'      => $this->resource->updated_at,
+            'favorited'      => $user && $this->resource->favoredBy($user),
             'favoritesCount' => $this->resource->favoredUsers->count(),
             'author'         => new ProfileResource($this->resource->author),
         ];

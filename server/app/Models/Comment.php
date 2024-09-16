@@ -36,8 +36,6 @@ final class Comment extends Model
 
     /**
      * The attributes that are mass assignable.
-     *
-     * @var string[]
      */
     protected $fillable = [
         'article_id',

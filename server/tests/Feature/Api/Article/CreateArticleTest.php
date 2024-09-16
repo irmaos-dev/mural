@@ -112,7 +112,6 @@ final class CreateArticleTest extends TestCase
 
     /**
      * @dataProvider articleProvider
-     * @param array<mixed> $data
      */
     public function testCreateArticleValidation(): void
     {
