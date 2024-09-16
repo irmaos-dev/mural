@@ -9,8 +9,6 @@ use Illuminate\Validation\Rule;
 
 final class UpdateArticleRequest extends BaseArticleRequest
 {
-    private mixed $id;
-
     public function rules(): array
     {
         $article = Article::whereSlug($this->route('slug'))->first();

@@ -161,7 +161,7 @@ final class ListArticlesTest extends TestCase
      * @param array<mixed> $data
      * @param string|array<string> $errors
      */
-    public function testArticleListValidation(array $data, array $errors): void
+    public function testArticleListValidation(array $data, string|array $errors): void
     {
         $response = $this->json("GET", "/api/articles", $data);
 
