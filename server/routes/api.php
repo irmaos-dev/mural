@@ -9,6 +9,7 @@ use App\Http\Controllers\Api\TagsController;
 use App\Http\Controllers\Api\UserController;
 use App\Http\Resources\Api\UserResource;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Laravel\Socialite\Facades\Socialite;
 
@@ -77,37 +78,48 @@ Route::name('api.')->group(function () {
 
     Route::name('auth.')->group(function () {
         Route::get('auth/redirect', function () {
-            return Socialite::driver('google')->stateless()->redirect();
+            return Socialite::driver('google')
+                ->stateless()
+                ->with (['access_type'=>'offline'])
+                ->redirect();
         });
 
         Route::get('auth/callback', function () {
             $googleUser = Socialite::driver('google')->stateless()->user();
+            
 
             $user = User::updateOrCreate([
                     'google_id' => $googleUser->id,
-                ], [
+            ],[
                     'name' => $googleUser->name,
                     'email' => $googleUser->email,
                     'google_token' => $googleUser->token,
                     'google_refresh_token' => $googleUser->refreshToken,
+                    'username' => $googleUser->email,
                 ]);
-             
-                Auth::login($user);
 
-                return (redirect()->with(new UserResource($user))->intended("http://127.0.0.1:5173/"));
+                $userData = urlencode(json_encode(new UserResource($user)));
+
+
+                // Auth::login($user);
+
+                // new UserResource(Auth::user());
+
+                // [AuthController::class, 'login'];
+
+                return redirect()->to("http://127.0.0.1:5173/?user={$userData}");
 
                 // return (new UserResource($user))
                 //     ->response()
                 //     ->setStatusCode(201);
              
                 // return (
-                //     // redirect()->intended("http://127.0.0.1:5173/");
-                //     new UserResource($user)
+                //     redirect()
+                //     ->with ('user', new UserResource(Auth::user()))
+                //     ->intended("http://127.0.0.1:5173/")                   
                 //     ->response() 
-                //     ->setStatusCode(201);
-                // )
-                
-            });
-
+                //     ->setStatusCode(201)
+                // );
         });
     });
+});

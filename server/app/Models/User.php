@@ -73,6 +73,10 @@ class User extends Authenticatable implements JwtSubjectInterface
         'password',
         'bio',
         'image',
+        'google_id',
+        'google_token',
+        'google_refresh_token',
+        'name'
     ];
 
     /**
