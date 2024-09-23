@@ -27,6 +27,5 @@ jobs:
           docker buildx build ./ \
             --platform linux/amd64,linux/arm64/v8 \
             --file ./docs/docker/Dockerfile \
-            --tag irmaosdev/mural:${{ env.VERSION }} \
             --tag irmaosdev/mural:latest \
             --push
