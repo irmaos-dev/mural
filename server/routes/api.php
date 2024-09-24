@@ -80,13 +80,14 @@ Route::name('api.')->group(function () {
         Route::get('auth/redirect', function () {
             return Socialite::driver('google')
                 ->stateless()
-                ->with (['access_type'=>'offline'])
+                ->with (['access_type'=>'offline','prompt' => 'consent',])
                 ->redirect();
         });
 
         Route::get('auth/callback', function () {
             $googleUser = Socialite::driver('google')->stateless()->user();
-            
+
+            // dd($googleUser);
 
             $user = User::updateOrCreate([
                     'google_id' => $googleUser->id,
@@ -100,7 +101,6 @@ Route::name('api.')->group(function () {
 
                 $userData = urlencode(json_encode(new UserResource($user)));
 
-
                 // Auth::login($user);
 
                 // new UserResource(Auth::user());
@@ -108,6 +108,8 @@ Route::name('api.')->group(function () {
                 // [AuthController::class, 'login'];
 
                 return redirect()->to("http://127.0.0.1:5173/?user={$userData}");
+
+                // return redirect()->to("http://127.0.0.1:5173/profile/{$googleUser->email}");
 
                 // return (new UserResource($user))
                 //     ->response()
