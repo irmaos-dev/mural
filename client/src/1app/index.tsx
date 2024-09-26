@@ -40,7 +40,6 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <Provider />,
 )
 
-
 const url_params = JSON.parse(decodeURIComponent(window.location.search.substring(1)).replace(/=([^&]+)\&/g, "=\"$1\",\n\r").replace(/(^|\r)([^=]+)=/g, "\"$2\":").replace(/^/, '{').replace(/$/, '}')) //eslint-disable-line
 
 const { setSession } = useSessionStore.getState();

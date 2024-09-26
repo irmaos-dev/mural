@@ -3276,7 +3276,7 @@ queue-microtask@^1.2.2:
   resolved "https://registry.yarnpkg.com/queue-microtask/-/queue-microtask-1.2.3.tgz"
   integrity sha1-SSkii7xyTfrEPg77BYyve2z7YkM= sha512-NuaNSa6flKT5JaSYQzJok04JzTL1CA6aGhv5rfLW3PgqA+M2ChpZQnAC8h8i4ZFkBS8X5RqkDBHA7r4hej3K9A==
 
-react-dom@^18.0.0, react-dom@^18.3.1, react-dom@>=16.8:
+react-dom@^18.0.0, react-dom@^18.3.1, react-dom@>=16.8, react-dom@>=16.8.0:
   version "18.3.1"
   resolved "https://registry.yarnpkg.com/react-dom/-/react-dom-18.3.1.tgz"
   integrity sha1-wiZdeVEbV9R5s90/36UVNklMXLQ= sha512-5m4nQKp+rZRb09LNH59GM4BxTh9251/ylbKIbpe7TpGxfJ+9kv6BLkLBXIjjspbgbnIBNqlI23tRnTWT0snUIw==
@@ -3290,6 +3290,13 @@ react-error-boundary@^4.0.13:
   integrity sha1-gDhreyexExxfu3NouMDZgzVMeUc= sha512-b6PwbdSv8XeOSYvjt8LpgpKrZ0yGdtZokYwkwV2wlcZbxgopHX/hgPl5VgpnoVOWd868n1hktM8Qm4b+02MiLQ==
   dependencies:
     "@babel/runtime" "^7.12.5"
+
+react-google-button@^0.8.0:
+  version "0.8.0"
+  resolved "https://registry.npmjs.org/react-google-button/-/react-google-button-0.8.0.tgz"
+  integrity sha512-0u6mbDcTUmWzgXsld8FJpbrXP+zDsNQVYPIt225aBqwgJ/CdrDiep1PZOpnyntyjsejWG0TtQr6uZB4eIaXlJQ==
+  dependencies:
+    prop-types "^15.8.1"
 
 react-hook-form@^7.0.0, react-hook-form@^7.51.5:
   version "7.51.5"
@@ -3345,7 +3352,7 @@ react-router@6.23.1:
   dependencies:
     "@remix-run/router" "1.16.1"
 
-react@*, "react@^16.8.0 || ^17 || ^18", "react@^16.8.0 || ^17.0.0 || ^18.0.0", "react@^18 || ^19", react@^18.0.0, react@^18.3.1, react@>=16.13.1, react@>=16.8:
+react@*, "react@^16.8.0 || ^17 || ^18", "react@^16.8.0 || ^17.0.0 || ^18.0.0", "react@^18 || ^19", react@^18.0.0, react@^18.3.1, "react@>= 16.8.0", react@>=16.13.1, react@>=16.8, react@>=16.8.0:
   version "18.3.1"
   resolved "https://registry.yarnpkg.com/react/-/react-18.3.1.tgz"
   integrity sha1-SauJIAnFOTNiW9FrJTP8dUyrKJE= sha512-wS+hAgJShR0KhEvPJArfuPVN1+Hz1t0Y6n5jLrGQbkb4urgPE/0Rve+1kMB1v/oWgHgm4WIcV+i7F2pTVj+2iQ==
