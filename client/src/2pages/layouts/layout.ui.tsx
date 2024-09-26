@@ -3,6 +3,7 @@ import { IoCreateOutline, IoSettingsSharp } from 'react-icons/io5'
 import { NavLink } from 'react-router-dom'
 import { pathKeys } from '~6shared/lib/react-router'
 import { SessionQueries } from '~6shared/session'
+import { ButtonGoogle } from '~6shared/ui/button'
 
 export function Footer() {
   return (
@@ -54,23 +55,7 @@ export function HomeLink() {
 
 export function SignInLink() {
   return (
-    <NavLink
-      className="nav-link"
-      to={pathKeys.login()}
-    >
-      Sign in
-    </NavLink>
-  )
-}
-
-export function SignUpLink() {
-  return (
-    <NavLink
-      className="nav-link"
-      to={pathKeys.register()}
-    >
-      Sign up
-    </NavLink>
+    <ButtonGoogle/>
   )
 }
 

@@ -4,7 +4,6 @@ import {
   BrandLink,
   HomeLink,
   SignInLink,
-  SignUpLink,
 } from './layout.ui'
 
 export function GuestLayout() {
@@ -20,9 +19,6 @@ export function GuestLayout() {
             </li>
             <li className="nav-item">
               <SignInLink />
-            </li>
-            <li className="nav-item">
-              <SignUpLink />
             </li>
           </ul>
         </div>

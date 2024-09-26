@@ -80,48 +80,45 @@ Route::name('api.')->group(function () {
         Route::get('auth/redirect', function () {
             return Socialite::driver('google')
                 ->stateless()
-                ->with (['access_type'=>'offline','prompt' => 'consent',])
+                ->with(['access_type' => 'offline', 'prompt' => 'consent',])
                 ->redirect();
         });
 
         Route::get('auth/callback', function () {
             $googleUser = Socialite::driver('google')->stateless()->user();
 
-            // dd($googleUser);
+            $name = explode(" ", $googleUser->name);
 
-            $user = User::updateOrCreate([
+            do {
+                $num_rand = rand(10000000, 99999999);
+                $username = $name[0] . "@" . $num_rand;
+            } while (User::where(['username' => $username])->exists());
+
+            if (User::where(['google_id' => $googleUser->id])->exists()) {
+                $user = User::where(['google_id' => $googleUser->id])->first();
+                $user->update([
+                    'name' => $googleUser->name,
+                    'google_token' => $googleUser->token,
+                    'google_refresh_token' => $googleUser->refreshToken,
+                    'image' => $googleUser->avatar,
+                ]);
+            } else {
+                $user = User::create([
                     'google_id' => $googleUser->id,
-            ],[
+                    'username' => $username,
                     'name' => $googleUser->name,
                     'email' => $googleUser->email,
                     'google_token' => $googleUser->token,
                     'google_refresh_token' => $googleUser->refreshToken,
-                    'username' => $googleUser->email,
+                    'image' => $googleUser->avatar,
                 ]);
+            }
 
-                $userData = urlencode(json_encode(new UserResource($user)));
 
-                // Auth::login($user);
+            $userData = urlencode(json_encode(new UserResource($user)));
 
-                // new UserResource(Auth::user());
+            return redirect()->to("http://127.0.0.1:5173/?user={$userData}");
 
-                // [AuthController::class, 'login'];
-
-                return redirect()->to("http://127.0.0.1:5173/?user={$userData}");
-
-                // return redirect()->to("http://127.0.0.1:5173/profile/{$googleUser->email}");
-
-                // return (new UserResource($user))
-                //     ->response()
-                //     ->setStatusCode(201);
-             
-                // return (
-                //     redirect()
-                //     ->with ('user', new UserResource(Auth::user()))
-                //     ->intended("http://127.0.0.1:5173/")                   
-                //     ->response() 
-                //     ->setStatusCode(201)
-                // );
         });
     });
 });
