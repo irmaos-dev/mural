@@ -4,6 +4,7 @@ use App\Http\Controllers\Api\Articles\ArticleController;
 use App\Http\Controllers\Api\Articles\CommentsController;
 use App\Http\Controllers\Api\Articles\FavoritesController;
 use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\Api\LoginController;
 use App\Http\Controllers\Api\ProfileController;
 use App\Http\Controllers\Api\TagsController;
 use App\Http\Controllers\Api\UserController;
@@ -31,8 +32,8 @@ Route::name('api.')->group(function () {
             Route::put('user', [UserController::class, 'update'])->name('update');
         });
 
-        Route::post('users/login', [AuthController::class, 'login'])->name('login');
-        Route::post('users', [AuthController::class, 'register'])->name('register');
+        // Route::post('users/login', [AuthController::class, 'login'])->name('login');
+        // Route::post('users', [AuthController::class, 'register'])->name('register');
     });
 
     Route::name('profiles.')->group(function () {
@@ -77,48 +78,8 @@ Route::name('api.')->group(function () {
     });
 
     Route::name('auth.')->group(function () {
-        Route::get('auth/redirect', function () {
-            return Socialite::driver('google')
-                ->stateless()
-                ->with(['access_type' => 'offline', 'prompt' => 'consent',])
-                ->redirect();
-        });
+        Route::get('auth/redirect', [LoginController::class, 'redirect']);
 
-        Route::get('auth/callback', function () {
-            $googleUser = Socialite::driver('google')->stateless()->user();
-
-            $name = explode(" ", $googleUser->name);
-
-            do {
-                $num_rand = rand(10000000, 99999999);
-                $username = $name[0] . "@" . $num_rand;
-            } while (User::where(['username' => $username])->exists());
-
-            if (User::where(['google_id' => $googleUser->id])->exists()) {
-                $user = User::where(['google_id' => $googleUser->id])->first();
-                $user->update([
-                    'name' => $googleUser->name,
-                    'google_token' => $googleUser->token,
-                    'google_refresh_token' => $googleUser->refreshToken,
-                    'image' => $googleUser->avatar,
-                ]);
-            } else {
-                $user = User::create([
-                    'google_id' => $googleUser->id,
-                    'username' => $username,
-                    'name' => $googleUser->name,
-                    'email' => $googleUser->email,
-                    'google_token' => $googleUser->token,
-                    'google_refresh_token' => $googleUser->refreshToken,
-                    'image' => $googleUser->avatar,
-                ]);
-            }
-
-
-            $userData = urlencode(json_encode(new UserResource($user)));
-
-            return redirect()->to("http://127.0.0.1:5173/?user={$userData}");
-
-        });
+        Route::get('auth/callback', [LoginController::class, 'callback']);
     });
 });
