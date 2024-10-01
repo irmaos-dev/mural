@@ -37,7 +37,7 @@ class LoginController extends Controller
                     'name' => $googleUser->name,
                     'google_token' => $googleUser->token,
                     'google_refresh_token' => $googleUser->refreshToken,
-                    'image' => $googleUser->avatar,
+                    // 'image' => $googleUser->avatar,
                 ]);
             } else {
                 $user = User::create([
@@ -50,7 +50,6 @@ class LoginController extends Controller
                     'image' => $googleUser->avatar,
                 ]);
             }
-
 
             $userData = urlencode(json_encode(new UserResource($user)));
 
