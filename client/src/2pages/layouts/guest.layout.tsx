@@ -2,7 +2,6 @@ import { Outlet } from 'react-router-dom'
 import {
   Footer,
   BrandLink,
-  HomeLink,
   SignInLink,
 } from './layout.ui'
 
@@ -14,9 +13,6 @@ export function GuestLayout() {
           <BrandLink />
 
           <ul className="nav navbar-nav pull-xs-right">
-            <li className="nav-item">
-              <HomeLink />
-            </li>
             <li className="nav-item">
               <SignInLink />
             </li>
