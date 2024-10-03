@@ -3,7 +3,7 @@ import { IoCreateOutline, IoSettingsSharp } from 'react-icons/io5'
 import { NavLink } from 'react-router-dom'
 import { pathKeys } from '~6shared/lib/react-router'
 import { SessionQueries } from '~6shared/session'
-import { ButtonGoogle } from '~6shared/ui/button'
+import { GoogleButton } from '~6shared/ui/button-google'
 
 export function Footer() {
   return (
@@ -36,26 +36,19 @@ export function BrandLink() {
     <NavLink
       className="navbar-brand"
       to={pathKeys.home()}
+      style={{padding:0}}
     >
       conduit
     </NavLink>
   )
 }
 
-export function HomeLink() {
-  return (
-    <NavLink
-      className="nav-link"
-      to={pathKeys.home()}
-    >
-      Home
-    </NavLink>
-  )
-}
-
 export function SignInLink() {
+  const onSubmit = async () => {
+    window.location.href = 'http://localhost:8081/api/auth/redirect'
+  }
   return (
-    <ButtonGoogle/>
+    <GoogleButton onClick={onSubmit} />
   )
 }
 
