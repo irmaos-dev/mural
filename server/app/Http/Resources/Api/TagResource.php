@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace App\Http\Resources\Api;
 
 use Illuminate\Http\Resources\Json\JsonResource;
@@ -10,7 +12,7 @@ use Illuminate\Http\Resources\Json\JsonResource;
  * @package App\Http\Resources
  * @property \App\Models\Tag $resource
  */
-class TagResource extends JsonResource
+final class TagResource extends JsonResource
 {
     /**
      * Transform the resource into an array.

@@ -1,10 +1,12 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace App\Http\Resources\Api;
 
 use App\Jwt;
 
-class UserResource extends BaseUserResource
+final class UserResource extends BaseUserResource
 {
     /**
      * The "data" wrapper that should be applied.
@@ -19,11 +21,14 @@ class UserResource extends BaseUserResource
      * @param  \Illuminate\Http\Request  $request
      * @return array<string, mixed>
      */
-    public function toArray($request)
+    public function toArray($request): array
     {
-        return array_merge(parent::toArray($request), [
-            'email' => $this->resource->email,
-            'token' => Jwt\Generator::token($this->resource),
-        ]);
+        return [
+            'username' => $this->resource->username ?? null,
+            'email'    => $this->resource->email,
+            'bio'      => $this->resource->bio ?? null,
+            'image'    => $this->resource->image ?? null,
+            'token'    => Jwt\Generator::token($this->resource),
+        ];
     }
 }

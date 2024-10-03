@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace App\Http\Resources\Api;
 
 use Illuminate\Http\Resources\Json\ResourceCollection;
@@ -10,7 +12,7 @@ use Illuminate\Http\Resources\Json\ResourceCollection;
  * @package App\Http\Resources
  * @property \Illuminate\Support\Collection<\App\Models\Tag> $collection
  */
-class TagsCollection extends ResourceCollection
+final class TagsCollection extends ResourceCollection
 {
     /**
      * The "data" wrapper that should be applied.

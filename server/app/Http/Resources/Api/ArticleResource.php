@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace App\Http\Resources\Api;
 
 use Illuminate\Http\Resources\Json\JsonResource;
@@ -10,7 +12,7 @@ use Illuminate\Http\Resources\Json\JsonResource;
  * @package App\Http\Resources
  * @property \App\Models\Article $resource
  */
-class ArticleResource extends JsonResource
+final class ArticleResource extends JsonResource
 {
     /**
      * The "data" wrapper that should be applied.
@@ -31,19 +33,16 @@ class ArticleResource extends JsonResource
         $user = $request->user();
 
         return [
-            'slug' => $this->resource->slug,
-            'title' => $this->resource->title,
-            'description' => $this->resource->description,
-            'body' => $this->resource->body,
-            'tagList' => new TagsCollection($this->resource->tags),
-            'createdAt' => $this->resource->created_at,
-            'updatedAt' => $this->resource->updated_at,
-            // 'favorited' => $this->when($user !== null, fn() =>
-            //     $this->resource->favoredBy($user)
-            // ),
-            'favorited' => $user && $this->resource->favoredBy($user) ?? false,
+            'slug'           => $this->resource->slug,
+            'title'          => $this->resource->title,
+            'description'    => $this->resource->description,
+            'body'           => $this->resource->body,
+            'tagList'        => new TagsCollection($this->resource->tags),
+            'createdAt'      => $this->resource->created_at,
+            'updatedAt'      => $this->resource->updated_at,
+            'favorited'      => $user && $this->resource->favoredBy($user),
             'favoritesCount' => $this->resource->favoredUsers->count(),
-            'author' => new ProfileResource($this->resource->author),
+            'author'         => new ProfileResource($this->resource->author),
         ];
     }
 }

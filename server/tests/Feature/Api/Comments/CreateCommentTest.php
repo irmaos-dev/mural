@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace Tests\Feature\Api\Comments;
 
 use App\Models\Article;
@@ -8,11 +10,12 @@ use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Testing\Fluent\AssertableJson;
 use Tests\TestCase;
 
-class CreateCommentTest extends TestCase
+final class CreateCommentTest extends TestCase
 {
     use WithFaker;
 
     private Article $article;
+
     private User $user;
 
     protected function setUp(): void
@@ -22,7 +25,10 @@ class CreateCommentTest extends TestCase
         /** @var Article $article */
         $article = Article::factory()->create();
         /** @var User $user */
-        $user = User::factory()->create();
+        $user = User::factory()->create([
+            "bio"   => "test bio",
+            "image" => "https://test-image.fake/imageid",
+        ]);
 
         $this->article = $article;
         $this->user = $user;
@@ -32,32 +38,36 @@ class CreateCommentTest extends TestCase
     {
         $message = $this->faker->sentence();
 
-        $response = $this->actingAs($this->user)
-            ->postJson("/api/articles/{$this->article->slug}/comments", [
-                'comment' => [
-                    'body' => $message,
+        $response = $this->actingAs($this->user)->postJson(
+            "/api/articles/{$this->article->slug}/comments",
+            [
+                "comment" => [
+                    "body" => $message,
                 ],
-            ]);
+            ]
+        );
 
-        $response->assertCreated()
-            ->assertJson(fn (AssertableJson $json) =>
-                $json->has('comment', fn (AssertableJson $comment) =>
-                    $comment->where('body', $message)
-                        ->whereAllType([
-                            'id' => 'integer',
-                            'createdAt' => 'string',
-                            'updatedAt' => 'string',
+        $response->assertCreated()->assertJson(
+            fn (AssertableJson $json) => $json->has(
+                "comment",
+                fn (AssertableJson $comment) => $comment
+                    ->where("body", $message)
+                    ->whereAllType([
+                        "id"        => "integer",
+                        "createdAt" => "string",
+                        "updatedAt" => "string",
+                    ])
+                    ->has(
+                        "author",
+                        fn (AssertableJson $author) => $author->whereAll([
+                            "username"  => $this->user->username,
+                            "bio"       => $this->user->bio,
+                            "image"     => $this->user->image,
+                            "following" => false,
                         ])
-                        ->has('author', fn (AssertableJson $author) =>
-                            $author->whereAll([
-                                'username' => $this->user->username,
-                                'bio' => $this->user->bio,
-                                'image' => $this->user->image,
-                                'following' => false,
-                            ])
-                        )
-                )
-            );
+                    )
+            )
+        );
     }
 
     /**
@@ -66,32 +76,38 @@ class CreateCommentTest extends TestCase
      */
     public function testCreateCommentValidation(array $data): void
     {
-        $response = $this->actingAs($this->user)
-            ->postJson("/api/articles/{$this->article->slug}/comments", $data);
+        $response = $this->actingAs($this->user)->postJson(
+            "/api/articles/{$this->article->slug}/comments",
+            $data
+        );
 
-        $response->assertUnprocessable()
-            ->assertInvalid('body');
+        $response->assertUnprocessable()->assertInvalid("body");
     }
 
     public function testCreateCommentForNonExistentArticle(): void
     {
-        $response = $this->actingAs($this->user)
-            ->postJson("/api/articles/non-existent/comments", [
-                'comment' => [
-                    'body' => $this->faker->sentence(),
+        $response = $this->actingAs($this->user)->postJson(
+            "/api/articles/non-existent/comments",
+            [
+                "comment" => [
+                    "body" => $this->faker->sentence(),
                 ],
-            ]);
+            ]
+        );
 
         $response->assertNotFound();
     }
 
     public function testCreateCommentWithoutAuth(): void
     {
-        $response = $this->postJson("/api/articles/{$this->article->slug}/comments", [
-            'comment' => [
-                'body' => $this->faker->sentence(),
-            ],
-        ]);
+        $response = $this->postJson(
+            "/api/articles/{$this->article->slug}/comments",
+            [
+                "comment" => [
+                    "body" => $this->faker->sentence(),
+                ],
+            ]
+        );
 
         $response->assertUnauthorized();
     }
@@ -99,14 +115,14 @@ class CreateCommentTest extends TestCase
     /**
      * @return array<int|string, array<mixed>>
      */
-    public function commentProvider(): array
+    public static function commentProvider(): array
     {
         return [
-            'empty data' => [[]],
-            'no comment wrap' => [['body' => 'example-message']],
-            'empty message' => [['comment' => ['body' => '']]],
-            'integer message' => [['comment' => ['body' => 123]]],
-            'array message' => [['comment' => ['body' => []]]],
+            "empty data"      => [[]],
+            "no comment wrap" => [["body" => "example-message"]],
+            "empty message"   => [["comment" => ["body" => ""]]],
+            "integer message" => [["comment" => ["body" => 123]]],
+            "array message"   => [["comment" => ["body" => []]]],
         ];
     }
 }

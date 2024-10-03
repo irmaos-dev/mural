@@ -1,12 +1,16 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace App\Models;
 
 use App\Contracts\JwtSubjectInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Laravel\Sanctum\HasApiTokens;
+use Laravel\Passport\HasApiTokens;
 
 /**
  * App\Models\User
@@ -53,9 +57,11 @@ use Laravel\Sanctum\HasApiTokens;
  * @method static \Illuminate\Database\Eloquent\Builder|User whereUsername($value)
  * @mixin \Eloquent
  */
-class User extends Authenticatable implements JwtSubjectInterface
+final class User extends Authenticatable implements JwtSubjectInterface
 {
-    use HasApiTokens, HasFactory, Notifiable;
+    use HasApiTokens;
+    use HasFactory;
+    use Notifiable;
 
     /**
      * Regular expression for username.
@@ -66,8 +72,6 @@ class User extends Authenticatable implements JwtSubjectInterface
 
     /**
      * The attributes that are mass assignable.
-     *
-     * @var array<int, string>
      */
     protected $fillable = [
         'username',
@@ -92,13 +96,18 @@ class User extends Authenticatable implements JwtSubjectInterface
     ];
 
     /**
-     * The attributes that should be cast.
+     * Get the attributes that should be cast.
      *
-     * @var array<string, string>
+     * @return array<string, string>
      */
-    protected $casts = [
-        'email_verified_at' => 'datetime',
-    ];
+    protected function casts(): array
+    {
+        return [
+            'email_verified_at' => 'datetime',
+            'password'          => 'hashed',
+
+        ];
+    }
 
     public function getJwtIdentifier(): mixed
     {
@@ -108,7 +117,7 @@ class User extends Authenticatable implements JwtSubjectInterface
     /**
      * Determine if user is following an author.
      *
-     * @param \App\Models\User $author
+     * @param User $author
      * @return bool
      */
     public function following(User $author): bool
@@ -121,7 +130,7 @@ class User extends Authenticatable implements JwtSubjectInterface
     /**
      * Determine if author followed by a user.
      *
-     * @param \App\Models\User $follower
+     * @param User $follower
      * @return bool
      */
     public function followedBy(User $follower): bool
@@ -134,9 +143,9 @@ class User extends Authenticatable implements JwtSubjectInterface
     /**
      * The authors that the user follows.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany<User>
+     * @return BelongsToMany<User>
      */
-    public function authors()
+    public function authors(): BelongsToMany
     {
         return $this->belongsToMany(User::class, 'author_follower', 'author_id', 'follower_id');
     }
@@ -144,9 +153,9 @@ class User extends Authenticatable implements JwtSubjectInterface
     /**
      * The followers of the author.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany<User>
+     * @return BelongsToMany<User>
      */
-    public function followers()
+    public function followers(): BelongsToMany
     {
         return $this->belongsToMany(User::class, 'author_follower', 'follower_id', 'author_id');
     }
@@ -154,9 +163,9 @@ class User extends Authenticatable implements JwtSubjectInterface
     /**
      * Get the comments of the user.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany<Comment>
+     * @return HasMany<Comment>
      */
-    public function comments()
+    public function comments(): HasMany
     {
         return $this->hasMany(Comment::class, 'author_id');
     }
@@ -164,9 +173,9 @@ class User extends Authenticatable implements JwtSubjectInterface
     /**
      * Get user written articles.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany<Article>
+     * @return HasMany<Article>
      */
-    public function articles()
+    public function articles(): HasMany
     {
         return $this->hasMany(Article::class, 'author_id');
     }
@@ -174,9 +183,9 @@ class User extends Authenticatable implements JwtSubjectInterface
     /**
      * Get user favorite articles.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany<Article>
+     * @return BelongsToMany<Article>
      */
-    public function favorites()
+    public function favorites(): BelongsToMany
     {
         return $this->belongsToMany(Article::class, 'article_favorite');
     }

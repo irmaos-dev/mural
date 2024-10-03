@@ -43,7 +43,7 @@ Para mais informações, leia o [OVERVIEW.md](https://github.com/irmaos-dev/mura
 - Visual Studio Code;
 - Docker Desktop;
 - Windows Subsystem for Linux;
-- Node.JS;
+- DBeaver.
 
 ### Posso usar alguma outra ferramenta fora essas?
 
@@ -69,9 +69,9 @@ https://www.certificacaolinux.com.br/como-instalar-ubuntu-no-windows-usando-wsl/
 
 ```sudo apt update && sudo apt upgrade```
 
-- Instale o Node com o comando abaixo
+- Instale as dependências do projeto com o comando abaixo
 
-```sudo apt-get install -y curl && curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/master/install.sh | bash && nvm install 20```
+```sudo apt-get install -y curl make && curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/master/install.sh | bash && nvm install 20```
 
 - Instale a extensão do WSL dentro do Visual Studio Code.
 
@@ -81,7 +81,7 @@ https://www.certificacaolinux.com.br/como-instalar-ubuntu-no-windows-usando-wsl/
 
 Neste momento, o projeto do Mural App estará aberto no seu Visual Studio Code.
 
-### Dependências do Front-End (Client)
+### Instalação do Front-End (Client)
 
 - Abra o terminal e entre na pasta do projeto: `cd client`.
 
@@ -89,34 +89,23 @@ Neste momento, o projeto do Mural App estará aberto no seu Visual Studio Code.
 
 - Para rodar o projeto, execute: `npm run dev`.
 
-### Dependências do Back-End (Server)
+### Instalação do Back-End (Server)
 
-- Abra o terminal e rode o comando para instalar tudo: `sudo apt install make && cd server && make`.
+- Altere a pasta atual do terminal com o comando `cd server` e rode o comando `make` que irá instalar o servidor.
 
-- Para rodar o projeto, execute apenas: "make up" dentro da pasta "server".
+- Configure o seu terminal segundo o passo a passo descrito no tópico [Configuring A Shell Alias](https://laravel.com/docs/11.x/sail#configuring-a-shell-alias)
 
-### Banco de Dados
+- Para rodar o projeto, execute: `sail up` dentro da pasta "server".
 
-- Baixe e instale o DBeaver Community
+- Para parar a execução, rode o comando: `sail down` dentro da pasta "server".
 
-https://dbeaver.io/download/
+A ferramenta "Sail" facilita o uso dos containers do servidor. Para entender melhor, acesse a [documentação](https://laravel.com/docs/11.x/sail).
 
-- Configure uma conexão Postgres para conectar com o banco de dados do server.
+### Outras informações
 
-- Verifique as credenciais do servidor no arquivo `.env`.
+[Instruções de como utilizar as outras ferramentas](https://github.com/irmaos-dev/mural/blob/main/docs/outras_ferramentas.md) usadas no projeto.
 
-### Testes com Playwright
-
-Playwright é uma ferramenta que simula a interação de um usuário com o site no navegador.
-Você cria código em Javascript que executa comandos no navegador, como preencher um campo ou apertar um botão.
-
-Para instalar e executar os testes:
-
-- Abra o terminal e entre na pasta do Playwright: `cd playwright`.
-
-- Para instalar as dependências do projeto, rode o comando: `npm install`.
-
-- Para executar a suite de testes, primeiro garanta que ambos os server e client estejam rodando e execute: `npx playwright test`.
+Veja nesse outro link, [problemas comuns](https://github.com/irmaos-dev/mural/blob/main/docs/problemas_comuns.md) que você pode encontrar no projeto.
 
 ### Screenshot da aplicação base
 

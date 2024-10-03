@@ -1,14 +1,17 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace Tests\Feature\Api\Auth;
 
 use App\Jwt;
 use App\Models\User;
 use Tests\TestCase;
 
-class JwtGuardTest extends TestCase
+final class JwtGuardTest extends TestCase
 {
     private User $user;
+
     private string $token;
 
     protected function setUp(): void
@@ -24,22 +27,20 @@ class JwtGuardTest extends TestCase
 
     public function testGuardTokenParse(): void
     {
-        $this->getJson('/api/user?token=string')
-            ->assertUnauthorized();
+        $this->getJson("/api/user?token=string")->assertUnauthorized();
     }
 
     public function testGuardTokenValidation(): void
     {
         $this->user->delete();
 
-        $this->getJson("/api/user?token={$this->token}")
-            ->assertUnauthorized();
+        $this->getJson("/api/user?token={$this->token}")->assertUnauthorized();
     }
 
     public function testGuardWithHeaderToken(): void
     {
-        $response = $this->getJson('/api/user', [
-            'Authorization' => "Token {$this->token}",
+        $response = $this->getJson("/api/user", [
+            "Authorization" => "Bearer {$this->token}",
         ]);
 
         $response->assertOk();
@@ -47,14 +48,13 @@ class JwtGuardTest extends TestCase
 
     public function testGuardWithQueryToken(): void
     {
-        $this->getJson("/api/user?token={$this->token}")
-            ->assertOk();
+        $this->getJson("/api/user?token={$this->token}")->assertOk();
     }
 
     public function testGuardWithJsonBodyToken(): void
     {
-        $response = $this->json('GET', '/api/user', [
-            'token' => $this->token,
+        $response = $this->json("GET", "/api/user", [
+            "token" => $this->token,
         ]);
 
         $response->assertOk();

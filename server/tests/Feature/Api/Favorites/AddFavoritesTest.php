@@ -1,12 +1,14 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace Tests\Feature\Api\Favorites;
 
 use App\Models\Article;
 use App\Models\User;
 use Tests\TestCase;
 
-class AddFavoritesTest extends TestCase
+final class AddFavoritesTest extends TestCase
 {
     private User $user;
 

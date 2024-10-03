@@ -16,6 +16,11 @@ up:
 	@echo "--> Starting all Docker containers..."
 	@./vendor/bin/sail up -d
 
+.PHONY: down
+down:
+	@echo "--> Starting all Docker containers..."
+	@./vendor/bin/sail down
+
 .PHONY: key-generate
 key-generate:
 	@echo "--> Generating new laravel key..."
