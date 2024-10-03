@@ -80,6 +80,14 @@ final class User extends Authenticatable implements JwtSubjectInterface
     ];
 
     /**
+     * The default attributes value.
+     */
+    protected $attributes = [
+        'bio'   => '',
+        'image' => '',
+    ];
+
+    /**
      * The attributes that should be hidden for serialization.
      *
      * @var array<int, string>

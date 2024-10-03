@@ -26,8 +26,8 @@ final class UserResource extends BaseUserResource
         return [
             'username' => $this->resource->username ?? null,
             'email'    => $this->resource->email,
-            'bio'      => $this->resource->bio ?? '',
-            'image'    => $this->resource->image ?? '',
+            'bio'      => $this->resource->bio,
+            'image'    => $this->resource->image,
             'token'    => Jwt\Generator::token($this->resource),
         ];
     }
