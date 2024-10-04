@@ -26,11 +26,14 @@ realworld.interceptors.request.use(
 realworld.interceptors.response.use(
   (response) => response,
   (error) => {
-    if (!axios.isAxiosError(error)) {
+    if (error.response && [401, 403].includes(error.response.status)) {
+      useSessionStore.getState().resetSession();
+      window.location.href = '/';
+    }else if (!axios.isAxiosError(error)) {
       return Promise.reject(error)
-    }
-
-    return Promise.reject(handleGenericError(error))
+    } else {
+      return Promise.reject(handleGenericError(error))
+    }    
   },
 )
 
