@@ -20,13 +20,12 @@ class LoginController extends Controller
     public function callback(){
         try {
             $googleUser = Socialite::driver('google')->stateless()->user();
-            dd ($googleUser);
-            } catch (\Exception){
-                return redirect()->to(config('frontend.url'));
-            }
+        } catch (\Exception){
+            return redirect()->to(config('frontend.url'));
+        }
 
             $name = explode(" ", $googleUser->name);
-
+            
             do {
                 $num_rand = rand(10000000, 99999999);
                 $username = $name[0] . "@" . $num_rand;
@@ -38,7 +37,6 @@ class LoginController extends Controller
                     'name' => $googleUser->name,
                     'google_token' => $googleUser->token,
                     'google_refresh_token' => $googleUser->refreshToken,
-                    // 'image' => $googleUser->avatar,
                 ]);
             } else {
                 $user = User::create([

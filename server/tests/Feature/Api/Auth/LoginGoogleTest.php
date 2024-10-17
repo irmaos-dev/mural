@@ -4,6 +4,7 @@ declare(strict_types = 1);
 
 namespace Tests\Feature\Api\Auth;
 
+use App\Http\Resources\Api\UserResource;
 use App\Models\User;
 use Database\Factories\UserFactory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -29,76 +30,63 @@ final class LoginGoogleTest extends TestCase
 
         $socialiteUser = Mockery::mock('Laravel\Socialite\Two\User');
 
-        $socialiteUser
-            ->shouldReceive('getId')->andReturn('12345654321345')
-            ->shouldReceive('getName')->andReturn("Nome Teste")
-            ->shouldReceive('getEmail')->andReturn("email@test.com")
-            ->shouldReceive('getAvatar')->andReturn('https://en.gravatar.com/userimage');
+        $socialiteUser->name='Teste';
+        $socialiteUser->id='123';
+        $socialiteUser->email='email@test.dev';
+        $socialiteUser->token='123';
+        $socialiteUser->refreshToken='123';
 
-        Socialite::shouldReceive('driver->user')->andReturn($socialiteUser);
+        Socialite::shouldReceive('driver->stateless->user')->andReturn($socialiteUser);
+--------->AQUIIIII<-----------
+        $response = $this->getJson("/api/auth/callback");
 
-        $this->postJson("/api/auth/callback");
+        $token = User::where(['google_id' => $socialiteUser->id])->get('attributes>id');
+        dd($token);
 
-        // $this-> assertDatabaseHas ('users', [
-        //         'username' => "Nome Teste",
-        //         'email' => "email@test.com",
-        //         'google_id' => "12345654321345",
-        //         // 'google_token' => $user->google_token,
-        //         // 'google_refresh_token' => $user->google_refresh_token,
-        //         ] );
+        $response ->assertRedirectContains(config('frontend.url'));
+            // -> assertRedirectContains($socialiteUser->name);
 
-        // $this->get(route('oauth.callback', 'google'))->assertRedirect(route('dashboard'));
-        // expect(auth()->check())->toBeTrue();
+        $this-> assertDatabaseHas ('users', [
+                'name' => "Teste",
+                'email' => "email@test.dev",
+                'google_id' => "123",
+                'google_token' => "123",
+                'google_refresh_token' => "123",
+                ] );
+    }
 
+    public function testLoginWithGoogle(): void{
 
+        $user = User::factory()->create();
 
+        $socialiteUser = Mockery::mock('Laravel\Socialite\Two\User');
 
+        $socialiteUser->id=$user->google_id;
+        $socialiteUser->name="Teste Login";
+        $socialiteUser->email=$user->email;
+        $socialiteUser->token="login123";
+        $socialiteUser->refreshToken="login123";
+        $socialiteUser->avatar="https://irmaos.dev/logo.png";
+        $socialiteUser->username="Teste Username";       
+            
+        Socialite::shouldReceive('driver->stateless->user')->andReturn($socialiteUser);
 
+        $this->getJson("/api/auth/callback")->assertRedirectContains(config('frontend.url'));
 
+        $this-> assertDatabaseHas ('users', [
+                'google_id' => $user->google_id,
+                'name' => "Teste Login",
+                'email' => $user->email,
+                'google_token' => "login123",
+                'google_refresh_token' => "login123",
+                'image' => $user->image,
+                'username' => $user->username
+                ] );
+    }
 
-
-
-
-
-
-
-
-
-
-        // $user = Socialite::driver('google');
-        // ->andReturn($socialiteUser);
-
-        //  = User::factory()->create();
-
-        // $this->postJson("/api/auth/callback");
-        //  ->assertRedirect(config('frontend.url'));
-
-        // $this-> assertDatabaseHas ('users', [
-        //     'username' => $user->username,
-        //     'email' => $user->email,
-        //     'google_id' => $user->google_id,
-        //     'google_token' => $user->google_token,
-        //     'google_refresh_token' => $user->google_refresh_token,
-        //     ] );
-
-
-
-        // $googleId = '12345654321345';
-    
-        // $socialiteUser
-        // ->shouldReceive('getId')->andReturn($googleId = '12345654321345')
-        // ->shouldReceive('getName')->andReturn($user->name)
-        // ->shouldReceive('getEmail')->andReturn($user->email)
-        // ->shouldReceive('getAvatar')->andReturn($avatarUrl = 'https://en.gravatar.com/userimage');
-
-        // Socialite::shouldReceive('driver->user')->andReturn($socialiteUser);
-    
-        
-    
-        // $this->getJson(route("api/auth/callback", 'google'))->assertRedirect(route(config('frontend.url')));
-        // expect(auth()->check())->toBeTrue();
-    
-        
-
+    public function testRedirectsToException(): void
+    {
+        $this->getJson("/api/auth/callback")
+            ->assertRedirect(config('frontend.url'));
     }
 }
