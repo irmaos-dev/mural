@@ -22,6 +22,7 @@ module.exports = {
     'vite.config.ts',
   ],
   rules: {
+    'no-console': 'off',
     'react/react-in-jsx-scope': 'off',
     'react/jsx-props-no-spreading': 'off',
     'react/function-component-definition': 'off',
