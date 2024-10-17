@@ -56,8 +56,7 @@ final class UpdateUserRequest extends FormRequest
                 'sometimes',
                 'nullable',
                 'string',
-                'url',
-                'regex:' . User::REGEX_IMAGE,]
+                'url',]
         ];
     }
 

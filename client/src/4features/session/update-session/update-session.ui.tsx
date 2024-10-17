@@ -102,7 +102,7 @@ export const UpdateSessionForm = enhance(() => {
               className="form-control"
               type="text"
               placeholder="URL of profile picture"
-              {...register('image')}
+              // {...register('image')}
             />
           </fieldset>
           <fieldset

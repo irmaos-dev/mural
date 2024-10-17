@@ -19,8 +19,9 @@ class LoginController extends Controller
 
     public function callback(){
         try {
-            $googleUser = Socialite::driver('google')->stateless()->user();}
-            catch (\Exception){
+            $googleUser = Socialite::driver('google')->stateless()->user();
+            dd ($googleUser);
+            } catch (\Exception){
                 return redirect()->to(config('frontend.url'));
             }
 
