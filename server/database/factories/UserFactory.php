@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace Database\Factories;
 
@@ -23,7 +23,10 @@ final class UserFactory extends Factory
             'email'      => $this->faker->unique()->safeEmail(),
             'bio'        => $this->faker->optional()->paragraph(),
             'image'      => $this->faker->optional()->imageUrl(),
-            'password'   => 'password',
+            // 'password'   => 'password',
+            'google_id'  => $this->faker->unique()->userName(),
+            'google_token'      => $this->faker->unique()->userName(),
+            'google_refresh_token'      => $this->faker->unique()->userName(),
             'created_at' => $createdAt = $this->faker->dateTimeThisDecade(),
             'updated_at' => $this->faker->optional(50, $createdAt)
                 ->dateTimeBetween($createdAt),

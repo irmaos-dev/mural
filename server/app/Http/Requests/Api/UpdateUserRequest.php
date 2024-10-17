@@ -51,8 +51,12 @@ final class UpdateUserRequest extends FormRequest
                 Rule::unique('users', 'email')
                     ->ignore($user->getKey()),
             ],
-            'bio'   => 'sometimes|nullable|string',
-            'image' => 'sometimes|nullable|string|url',
+            'bio' => 'sometimes|nullable|string',
+            'image' => [
+                'sometimes',
+                'nullable',
+                'string',
+                'url',]
         ];
     }
 
