@@ -15,10 +15,8 @@ import { Stack } from '~6shared/ui/stack'
 import { articlePageRoute } from '~2pages/article'
 import { editorPageRoute } from '~2pages/editor'
 import { homePageRoute } from '~2pages/home'
-import { loginPageRoute } from '~2pages/login'
 import { page404Route } from '~2pages/page-404'
 import { profilePageRoute } from '~2pages/profile'
-import { registerPageRoute } from '~2pages/register'
 import { settingsPageRoute } from '~2pages/settings'
 
 export function BrowserRouter() {
@@ -32,12 +30,6 @@ const enhance = compose((component) =>
 const GenericLayout = lazy(() =>
   import('~2pages/layouts').then((module) => ({
     default: module.GenericLayout,
-  })),
-)
-
-const GuestLayout = lazy(() =>
-  import('~2pages/layouts').then((module) => ({
-    default: module.GuestLayout,
   })),
 )
 
@@ -58,10 +50,6 @@ const browserRouter = createBrowserRouter([
       {
         element: createElement(enhance(UserLayout)),
         children: [editorPageRoute, settingsPageRoute],
-      },
-      {
-        element: createElement(enhance(GuestLayout)),
-        children: [loginPageRoute, registerPageRoute],
       },
       {
         element: createElement(Outlet),

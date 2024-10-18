@@ -37,6 +37,8 @@ export function useLoginMutation(
       const { user } = response.data
       const { setSession } = useSessionStore.getState()
 
+      console.log("Response", response.data);
+
       const session = sessionLib.transformUserDtoToSession({ user })
       setSession(session)
 

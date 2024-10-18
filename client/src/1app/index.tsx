@@ -2,6 +2,7 @@ import axios from 'axios'
 import ReactDOM from 'react-dom/client'
 import { realworld, handleGenericError } from '~6shared/api'
 import { useSessionStore } from '~6shared/session'
+import { GoogleLogin } from './auth'
 import { Provider } from './providers'
 import './main.css'
 
@@ -37,3 +38,5 @@ realworld.interceptors.response.use(
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <Provider />,
 )
+
+GoogleLogin();

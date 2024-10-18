@@ -8,7 +8,6 @@ import { Stack } from '~6shared/ui/stack'
 import {
   Footer,
   BrandLink,
-  HomeLink,
   NewArticleLink,
   SettingsProfileLink,
   ProfileLink,
@@ -55,9 +54,6 @@ const UserNavigation = enhance(() => {
 
   return (
     <ul className="nav navbar-nav pull-xs-right">
-      <li className="nav-item">
-        <HomeLink />
-      </li>
       {canCreateArticle && (
         <li className="nav-item">
           <NewArticleLink />

@@ -77,16 +77,32 @@ export const UpdateSessionForm = enhance(() => {
       {hasMessages(errors) && <ErrorList errors={errors} />}
 
       <form onSubmit={handleSubmit(onSubmit)}>
+      <div className="profile-page">
+      <div className="user-info">
+        <div className="container">
+          <div className="row">
+            <div className="col-xs-12 col-md-10 offset-md-1">
+         <img
+        src={user.image}
+        className="user-img"
+        alt={user.username}
+      />
+      </div>
+      </div>
+      </div>
+      </div>
+      </div>
         <fieldset>
           <fieldset
             className="form-group"
             disabled={isPending}
           >
+           
             <input
               className="form-control"
               type="text"
               placeholder="URL of profile picture"
-              {...register('image')}
+              // {...register('image')}
             />
           </fieldset>
           <fieldset
@@ -111,7 +127,7 @@ export const UpdateSessionForm = enhance(() => {
               {...register('bio')}
             />
           </fieldset>
-          <fieldset
+          {/* <fieldset
             className="form-group"
             disabled={isPending}
           >
@@ -132,7 +148,7 @@ export const UpdateSessionForm = enhance(() => {
               type="password"
               placeholder="Password"
             />
-          </fieldset>
+          </fieldset> */}
 
           <button
             className="btn btn-lg btn-primary pull-xs-right"
