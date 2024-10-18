@@ -37,14 +37,10 @@ final class LoginGoogleTest extends TestCase
         $socialiteUser->refreshToken='123';
 
         Socialite::shouldReceive('driver->stateless->user')->andReturn($socialiteUser);
---------->AQUIIIII<-----------
-        $response = $this->getJson("/api/auth/callback");
 
-        $token = User::where(['google_id' => $socialiteUser->id])->get('attributes>id');
-        dd($token);
-
-        $response ->assertRedirectContains(config('frontend.url'));
-            // -> assertRedirectContains($socialiteUser->name);
+        $this->getJson("/api/auth/callback")
+            ->assertRedirectContains(config('frontend.url'))
+            -> assertRedirectContains($socialiteUser->name);
 
         $this-> assertDatabaseHas ('users', [
                 'name' => "Teste",
@@ -71,7 +67,9 @@ final class LoginGoogleTest extends TestCase
             
         Socialite::shouldReceive('driver->stateless->user')->andReturn($socialiteUser);
 
-        $this->getJson("/api/auth/callback")->assertRedirectContains(config('frontend.url'));
+        $this->getJson("/api/auth/callback")
+            ->assertRedirectContains(config('frontend.url'))
+            -> assertRedirectContains($user->username);
 
         $this-> assertDatabaseHas ('users', [
                 'google_id' => $user->google_id,
