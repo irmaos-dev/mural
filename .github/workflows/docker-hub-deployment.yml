@@ -1,0 +1,31 @@
+name: Build and push Docker image to Docker Hub
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v2
+        with:
+          platforms: amd64
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - uses: actions/checkout@v4
+
+      - name: Log in to Docker Hub
+        run: echo "${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}" | docker login -u "irmaosdev" --password-stdin
+
+      - name: Build and Pushes image to Docker Hub
+        run: |
+          docker buildx create --use
+          docker buildx build ./ \
+            --platform linux/amd64 \
+            --file ./docs/docker/Dockerfile \
+            --tag irmaosdev/mural:latest \
+            --push

@@ -105,6 +105,8 @@ A ferramenta "Sail" facilita o uso dos containers do servidor. Para entender mel
 
 [Instruções de como utilizar as outras ferramentas](https://github.com/irmaos-dev/mural/blob/main/docs/outras_ferramentas.md) usadas no projeto.
 
+[Material de Apoio](https://github.com/irmaos-dev/mural/blob/main/docs/material_de_apoio.md) sobre as ferramentas utilizadas.
+
 Veja nesse outro link, [problemas comuns](https://github.com/irmaos-dev/mural/blob/main/docs/problemas_comuns.md) que você pode encontrar no projeto.
 
 ### Screenshot da aplicação base
