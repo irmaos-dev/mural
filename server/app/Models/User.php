@@ -82,7 +82,7 @@ final class User extends Authenticatable implements JwtSubjectInterface
         'google_id',
         'google_token',
         'google_refresh_token',
-        'name'
+        'name',
     ];
 
     /**

@@ -10,11 +10,7 @@ use App\Http\Controllers\Api\LoginController;
 use App\Http\Controllers\Api\ProfileController;
 use App\Http\Controllers\Api\TagsController;
 use App\Http\Controllers\Api\UserController;
-use App\Http\Resources\Api\UserResource;
-use App\Models\User;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
-use Laravel\Socialite\Facades\Socialite;
 
 /*
 |--------------------------------------------------------------------------
@@ -79,7 +75,7 @@ Route::name('api.')->group(function (): void {
         Route::get('tags', [TagsController::class, 'list'])->name('list');
     });
 
-    Route::name('auth.')->group(function () {
+    Route::name('auth.')->group(function (): void {
         Route::get('auth/redirect', [LoginController::class, 'redirect']);
 
         Route::get('auth/callback', [LoginController::class, 'callback']);
