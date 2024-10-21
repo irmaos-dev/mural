@@ -71,7 +71,7 @@ final class LoginGoogleTest extends TestCase
         // @phpstan-ignore-next-line
         $socialiteUser->refreshToken = "login123";
         // @phpstan-ignore-next-line
-        $socialiteUser->username = "TesteUsername";
+        $socialiteUser->userName = "TesteUsername";
         // @phpstan-ignore-next-line
         $socialiteUser->avatar = "https://irmaos.dev/logo.png";
 

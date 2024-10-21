@@ -24,9 +24,9 @@ final class UserFactory extends Factory
             'bio'      => $this->faker->optional()->paragraph(),
             'image'    => $this->faker->optional()->imageUrl(),
             // 'password'   => 'password',
-            'google_id'            => $this->faker->unique()->userName(),
-            'google_token'         => $this->faker->unique()->userName(),
-            'google_refresh_token' => $this->faker->unique()->userName(),
+            'google_id'            => $this->faker->unique()->uuid(),
+            'google_token'         => $this->faker->unique()->text(40),
+            'google_refresh_token' => $this->faker->unique()->text(40),
             'created_at'           => $createdAt = $this->faker->dateTimeThisDecade(),
             'updated_at'           => $this->faker->optional(50, $createdAt)
                 ->dateTimeBetween($createdAt),
