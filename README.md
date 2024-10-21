@@ -71,7 +71,11 @@ https://www.certificacaolinux.com.br/como-instalar-ubuntu-no-windows-usando-wsl/
 
 - Instale as dependências do projeto com o comando abaixo
 
-```sudo apt-get install -y curl make && curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/master/install.sh | bash && nvm install 20```
+```sudo apt-get install -y curl make && curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/master/install.sh | bash```
+
+e o comando:
+
+```nvm install 20```
 
 - Instale a extensão do WSL dentro do Visual Studio Code.
 
