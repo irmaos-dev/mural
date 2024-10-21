@@ -7,7 +7,7 @@ namespace Tests\Feature\Api\Auth;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Mockery;
-use Socialite;
+use Laravel\Socialite\Facades\Socialite;
 use Tests\TestCase;
 
 final class LoginGoogleTest extends TestCase
@@ -71,9 +71,9 @@ final class LoginGoogleTest extends TestCase
         // @phpstan-ignore-next-line
         $socialiteUser->refreshToken = "login123";
         // @phpstan-ignore-next-line
-        $socialiteUser->avatar = "https://irmaos.dev/logo.png";
+        $socialiteUser->username = "TesteUsername";
         // @phpstan-ignore-next-line
-        $socialiteUser->username = "Teste Username";
+        $socialiteUser->avatar = "https://irmaos.dev/logo.png";
 
         Socialite::shouldReceive('driver->stateless->user')->andReturn($socialiteUser);
 
