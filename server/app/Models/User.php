@@ -66,7 +66,9 @@ final class User extends Authenticatable implements JwtSubjectInterface
     /**
      * Regular expression for username.
      */
-    public const string REGEX_USERNAME = '/^[\pL\pM\pN._-]+$/u';
+    public const REGEX_USERNAME = '/^[\pL\pM\pN._@-]+$/u';
+
+    public const REGEX_IMAGE = '/\.(jpg|jpeg|png)$/i';
 
     /**
      * The attributes that are mass assignable.
@@ -77,6 +79,10 @@ final class User extends Authenticatable implements JwtSubjectInterface
         'password',
         'bio',
         'image',
+        'google_id',
+        'google_token',
+        'google_refresh_token',
+        'name',
     ];
 
     /**

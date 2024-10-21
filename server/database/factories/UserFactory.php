@@ -19,13 +19,16 @@ final class UserFactory extends Factory
     public function definition()
     {
         return [
-            'username'   => $this->faker->unique()->userName(),
-            'email'      => $this->faker->unique()->safeEmail(),
-            'bio'        => $this->faker->optional()->paragraph(),
-            'image'      => $this->faker->optional()->imageUrl(),
-            'password'   => 'password',
-            'created_at' => $createdAt = $this->faker->dateTimeThisDecade(),
-            'updated_at' => $this->faker->optional(50, $createdAt)
+            'username' => $this->faker->unique()->userName(),
+            'email'    => $this->faker->unique()->safeEmail(),
+            'bio'      => $this->faker->optional()->paragraph(),
+            'image'    => $this->faker->optional()->imageUrl(),
+            // 'password'   => 'password',
+            'google_id'            => $this->faker->unique()->userName(),
+            'google_token'         => $this->faker->unique()->userName(),
+            'google_refresh_token' => $this->faker->unique()->userName(),
+            'created_at'           => $createdAt = $this->faker->dateTimeThisDecade(),
+            'updated_at'           => $this->faker->optional(50, $createdAt)
                 ->dateTimeBetween($createdAt),
         ];
     }
