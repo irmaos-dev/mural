@@ -82,7 +82,7 @@ final class User extends Authenticatable implements JwtSubjectInterface
         'google_id',
         'google_token',
         'google_refresh_token',
-        'name',
+        'name'
     ];
 
     /**
@@ -197,4 +197,24 @@ final class User extends Authenticatable implements JwtSubjectInterface
     {
         return $this->belongsToMany(Article::class, 'article_favorite');
     }
+
+    public function groups(): BelongsToMany
+    {
+        return $this->belongsToMany(Group::class);
+    }
+
+    public function assignGroup(string $group): void
+    {
+        $group = $this->groups()->firstOrCreate([
+            'name' => $group,
+        ]);
+
+        $this->groups()->attach($group);
+    }
+
+    public function hasGroup(string $group): bool
+    {
+        return $this->groups()->where('name', $group)->exists();
+    }
+
 }

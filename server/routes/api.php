@@ -80,4 +80,8 @@ Route::name('api.')->group(function (): void {
 
         Route::get('auth/callback', [LoginController::class, 'callback']);
     });
+
+    // Route::middleware(['auth', 'role:admin'])->group(function () {
+    //     Route::get('/admin/dashboard', 'AdminController@dashboard');
+    // });
 });

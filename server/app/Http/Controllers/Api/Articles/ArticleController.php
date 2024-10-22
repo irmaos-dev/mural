@@ -140,14 +140,21 @@ final class ArticleController extends Controller
      * @return JsonResponse
      * @throws \Illuminate\Auth\Access\AuthorizationException
      */
-    public function delete(string $slug): JsonResponse
+    public function delete(string $slug, $user): JsonResponse
     {
         $article = Article::whereSlug($slug)
             ->firstOrFail();
+        
+        // $group 
+        
+        // if ($article.author_id == $user.google_id || ){
+        
+            
+        // } 
+$this->authorize('delete', $article);
 
-        $this->authorize('delete', $article);
-
-        $article->delete(); // cascade
+            $article->delete();
+         // cascade
 
         return response()->json([
             'message' => trans('models.article.deleted'),

@@ -45,4 +45,12 @@ final class UserController extends Controller
 
         return new UserResource($user);
     }
+
+    public function assignRole(Request $request, User $user, Group $group)
+    {
+        $user->assignRole($group);
+
+        return redirect()->back()->with('success', 'Group assigned successfully.');
+    }
+
 }
