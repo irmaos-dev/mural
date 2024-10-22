@@ -2,7 +2,7 @@ import axios, { AxiosError } from 'axios'
 import { z } from 'zod'
 
 export const realworld = axios.create({
-  baseURL: import.meta.env.API_BASE_URL,
+  baseURL: import.meta.env.VITE_API_BASE_URL,
 })
 
 export function handleGenericError(error: AxiosError) {
