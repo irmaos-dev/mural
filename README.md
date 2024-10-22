@@ -91,6 +91,8 @@ Neste momento, o projeto do Mural App estará aberto no seu Visual Studio Code.
 
 - Para instalar as dependências do projeto, rode o comando: `npm install`.
 
+- Para criar o arquivo de configuração, rode o comando: `cp .env.example .env`.
+
 - Para rodar o projeto, execute: `npm run dev`.
 
 ### Instalação do Back-End (Server)
