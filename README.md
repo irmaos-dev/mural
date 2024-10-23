@@ -71,7 +71,11 @@ https://www.certificacaolinux.com.br/como-instalar-ubuntu-no-windows-usando-wsl/
 
 - Instale as dependências do projeto com o comando abaixo
 
-```sudo apt-get install -y curl make && curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/master/install.sh | bash && nvm install 20```
+```sudo apt-get install -y curl make && curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/master/install.sh | bash```
+
+e o comando:
+
+```nvm install 20```
 
 - Instale a extensão do WSL dentro do Visual Studio Code.
 
@@ -86,6 +90,8 @@ Neste momento, o projeto do Mural App estará aberto no seu Visual Studio Code.
 - Abra o terminal e entre na pasta do projeto: `cd client`.
 
 - Para instalar as dependências do projeto, rode o comando: `npm install`.
+
+- Para criar o arquivo de configuração, rode o comando: `cp .env.example .env`.
 
 - Para rodar o projeto, execute: `npm run dev`.
 
