@@ -1,8 +1,8 @@
 import { queryOptions } from '@tanstack/react-query'
 import { ProfileService } from '~6shared/api/profile'
 import { queryClient } from '~6shared/lib/react-query'
-import { Profile } from './profie.types'
 import { transformProfileDtoToProfile } from './profile.lib'
+import { Profile } from './profile.types'
 
 export class ProfileQueries {
   static readonly keys = {
