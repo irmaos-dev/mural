@@ -18,10 +18,6 @@ class GroupFactory extends Factory
     {
         return [
                 'name'          => 'Admin',
-                'created_at'    => $this->faker->dateTimeThisDecade(),
         ];
-
-        /** * @return array<string, mixed> */public function definition(): array{ return [ 'name' => 'Admin', 'created_at' => $this->faker->dateTimeThisDecade(), ];}
-
     }
 }

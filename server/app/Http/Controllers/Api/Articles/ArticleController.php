@@ -140,7 +140,7 @@ final class ArticleController extends Controller
      * @return JsonResponse
      * @throws \Illuminate\Auth\Access\AuthorizationException
      */
-    public function delete(string $slug, $user): JsonResponse
+    public function delete(string $slug): JsonResponse
     {
         $article = Article::whereSlug($slug)
             ->firstOrFail();

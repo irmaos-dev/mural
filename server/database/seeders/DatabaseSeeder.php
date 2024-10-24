@@ -50,5 +50,7 @@ final class DatabaseSeeder extends Seeder
                 'author_id'  => $users->random(),
             ]))
             ->create();
+        
+            // $this->call([GroupSeeder::class]);
     }
 }
