@@ -6,8 +6,8 @@ namespace Tests\Feature\Api\Auth;
 
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Mockery;
 use Laravel\Socialite\Facades\Socialite;
+use Mockery;
 use Tests\TestCase;
 
 final class LoginGoogleTest extends TestCase
