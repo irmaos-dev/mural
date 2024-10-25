@@ -45,7 +45,7 @@ export function BrandLink() {
 
 export function SignInLink() {
   const onSubmit = async () => {
-    window.location.href = 'http://localhost:8081/api/auth/redirect'
+    window.location.href = `${import.meta.env.VITE_API_BASE_URL}/auth/redirect`
   }
   return (
     <GoogleButton onClick={onSubmit} />
