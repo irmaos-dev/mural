@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Passport\HasApiTokens;
+use Spatie\Permission\Traits\HasRoles;
 
 /**
  * App\Models\User
@@ -62,6 +63,7 @@ final class User extends Authenticatable implements JwtSubjectInterface
     use HasApiTokens;
     use HasFactory;
     use Notifiable;
+    use HasRoles;
 
     /**
      * Regular expression for username.

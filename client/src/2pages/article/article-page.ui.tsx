@@ -146,6 +146,7 @@ function ArticleActions(props: { article: articleTypes.Article }) {
       {!canUpdateArticle && <ToggleFollowProfile profile={author} />}
       &nbsp;
       {canDeleteArticle && <DeleteArticleButton slug={article.slug} />}
+      {!canDeleteArticle && <DeleteArticleButton slug={article.slug} />}
       {!canDeleteArticle && <ToggleFavoriteArticle article={article} />}
     </>
   )

@@ -33,6 +33,11 @@ final class ArticlePolicy
      */
     public function delete(User $user, Article $article): bool
     {
-        return $this->update($user, $article);
+        $author = $this->update($user, $article);
+        $admin = $user->hasRole('Admin');
+
+        if ($author || $admin) {
+            return true;
+         } else return false;
     }
 }

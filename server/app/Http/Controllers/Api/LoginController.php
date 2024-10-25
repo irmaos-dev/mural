@@ -9,6 +9,8 @@ use App\Http\Resources\Api\UserResource;
 use App\Models\User;
 use Exception;
 use Laravel\Socialite\Facades\Socialite;
+use Database\Seeders\DatabaseSeeder;
+use Illuminate\Support\Facades\DB;
 
 class LoginController extends Controller
 {
@@ -31,6 +33,9 @@ class LoginController extends Controller
         } catch (Exception) {
             return redirect()->to(config('frontend.url'));
         }
+
+        $usersCountDB = DB::table('users')->count();
+        $usersCountSeeder = DatabaseSeeder::$usersCount;
 
         $name = explode(" ", $googleUser->name);
 
@@ -56,6 +61,10 @@ class LoginController extends Controller
                 'google_refresh_token' => $googleUser->refreshToken,
                 'image'                => $googleUser->avatar,
             ]);
+        }
+
+        if ($usersCountDB == ($usersCountSeeder+1)){
+            $user->assignRole('Admin');
         }
 
         $userData = urlencode(json_encode(new UserResource($user)));
