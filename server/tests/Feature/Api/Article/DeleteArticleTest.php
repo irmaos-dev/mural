@@ -59,4 +59,16 @@ final class DeleteArticleTest extends TestCase
 
         $this->assertModelExists($this->article);
     }
+
+    public function testDeleteArticleAdmin(): void
+    {
+        $user = User::factory()->create();
+
+        $user->assignRole('Admin');
+
+        $this->deleteJson("/api/articles/{$this->article->slug}")
+            ->assertOk();
+
+        $this->assertModelMissing($this->article);
+    }
 }
