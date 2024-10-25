@@ -11,5 +11,6 @@ export function transformUserDtoToSession(
     token: user.token,
     username: user.username,
     bio: user?.bio || '',
+    role: user.role,
   }
 }

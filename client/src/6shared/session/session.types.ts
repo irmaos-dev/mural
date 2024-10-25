@@ -53,6 +53,15 @@ export interface SessionPermission {
   author: PermissionGroup
   commenter: PermissionGroup
   owner: PermissionGroup
+  admin: PermissionGroup
+}
+
+export interface SessionPermissionAdmin {
+  user: PermissionGroup
+  guest: PermissionGroup
+  author: PermissionGroup
+  commenter: PermissionGroup
+  owner: PermissionGroup
 }
 
 type ConditionalContext<T, F extends keyof PermissionGroup> = T extends 'delete'
