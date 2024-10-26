@@ -22,7 +22,7 @@ Para mais informações, leia o [OVERVIEW.md](https://github.com/irmaos-dev/mura
 - A branch `main` é bloqueada para commits diretos, portanto faça o fork do projeto;
 - Você deverá compartilhar o progresso de suas tarefas semanalmente;
 - Um dos mentores irá disponibilizar 30 minutos diários para uma call a fim de auxiliar os membros (opcional);
-- Os membros pode solicitar tarefas e terão 1 semana para completá-las;
+- Os membros podem solicitar tarefas e terão 1 semana para completá-las;
 
 ## Requisitos Mínimos
 
