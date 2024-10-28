@@ -63,7 +63,7 @@ class LoginController extends Controller
             ]);
         }
 
-        if ($usersCountDB == ($usersCountSeeder+1)){
+        if ($usersCountDB == ($usersCountSeeder)){
             $user->assignRole('Admin');
         }
 
