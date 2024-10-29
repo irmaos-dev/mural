@@ -71,7 +71,7 @@ const sessionPermission: SessionPermission = {
     profile: { follow: true, unfollow: true, update: true },
     comment: { create: true, read: true, delete: false },
   },
-  admin: {
+  deleteAnyArticle: {
     article: {
       create: true,
       read: true,
@@ -129,7 +129,8 @@ export class PermissionService {
 
     if (this.isArticleContext(context)) {
       if (context.articleAuthorId === session.username) return 'author'
-      if (session.role.includes('Admin')) return 'admin'
+      if (session.perms.includes('delete_any_article')) return 'deleteAnyArticle'
+      // 
     }
 
     if (this.isCommentContext(context)) {

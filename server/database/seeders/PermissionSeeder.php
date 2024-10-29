@@ -18,7 +18,7 @@ class PermissionSeeder extends Seeder
         $roleAdmin = Role::create(['name' => 'Admin']);
 
         //Create Permissions
-        $PermissionDelAnyArticle = Permission::create(['name' => 'delete any article']);
+        $PermissionDelAnyArticle = Permission::create(['name' => 'delete_any_article']);
 
         //Assign a Permission to a Role
         $roleAdmin->givePermissionTo($PermissionDelAnyArticle);

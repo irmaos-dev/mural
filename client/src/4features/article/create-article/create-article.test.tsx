@@ -230,7 +230,7 @@ const userDto: authTypesDto.UserDto = {
     bio: 'A short bio',
     image: 'http://example.com/profile.jpg',
     token: 'testtoken',
-    role: [],
+    perms: [],
   },
 }
 

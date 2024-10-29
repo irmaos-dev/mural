@@ -37,8 +37,8 @@ final class UpdateUserTest extends TestCase
             $this->user->image
         );
         $this->assertNotEquals(
-            $role = [],
-            $this->user->role
+            $perms = [],
+            $this->user->perms
         );
 
         // update by one to check required_without_all rule
@@ -65,7 +65,7 @@ final class UpdateUserTest extends TestCase
                         "email"    => $email,
                         "bio"      => $bio,
                         "image"    => $image,
-                        "role"     => $role,
+                        "perms"    => $perms,
                     ])
             )
         );

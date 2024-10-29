@@ -53,10 +53,10 @@ export interface SessionPermission {
   author: PermissionGroup
   commenter: PermissionGroup
   owner: PermissionGroup
-  admin: PermissionGroup
+  deleteAnyArticle: PermissionGroup
 }
 
-export interface SessionPermissionAdmin {
+export interface SessionPermissionDeleteAnyArticle {
   user: PermissionGroup
   guest: PermissionGroup
   author: PermissionGroup

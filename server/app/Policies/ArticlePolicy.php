@@ -37,7 +37,7 @@ final class ArticlePolicy
     public function delete(User $user, Article $article): bool
     {
         $author = $this->update($user, $article);
-        $canDelete=$user->can('delete any article');
+        $canDelete=$user->can('delete_any_article');
         
         if ($author || $canDelete) {
             return true;

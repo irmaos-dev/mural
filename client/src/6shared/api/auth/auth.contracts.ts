@@ -7,7 +7,7 @@ export const UserDtoSchema = z.object({
     username: z.string(),
     bio: z.nullable(z.string()),
     image: z.string(),
-    role: z.array(z.string()),
+    perms: z.array(z.string()),
   }),
 })
 

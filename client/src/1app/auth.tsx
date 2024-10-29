@@ -11,10 +11,6 @@ export function GoogleLogin() {
 
     const { username } = urlParams.user;
 
-    const { role } = urlParams.user;
-
-    console.log(role);
-
     const { setSession } = useSessionStore.getState();
 
     const session = sessionLib.transformUserDtoToSession(urlParams);

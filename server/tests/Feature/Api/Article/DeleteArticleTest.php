@@ -65,7 +65,7 @@ final class DeleteArticleTest extends TestCase
     public function testDeleteArticleAdmin(): void
     {
         $admin = Role::create(['name' => 'Admin']);
-        $canDelete = Permission::create(['name' => 'delete any article']);
+        $canDelete = Permission::create(['name' => 'delete_any_article']);
 
         $admin->givePermissionTo($canDelete);
         $this->user->assignRole($admin);
