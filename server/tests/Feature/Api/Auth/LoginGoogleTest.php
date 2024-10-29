@@ -9,6 +9,9 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Laravel\Socialite\Facades\Socialite;
 use Mockery;
 use Tests\TestCase;
+use Illuminate\Support\Facades\DB;
+use Spatie\Permission\Models\Role;
+use Spatie\Permission\Models\Permission;
 
 final class LoginGoogleTest extends TestCase
 {
@@ -97,4 +100,41 @@ final class LoginGoogleTest extends TestCase
         $this->getJson("/api/auth/callback")
             ->assertRedirect(config('frontend.url'));
     }
+
+    public function testAssignAdmin(): void
+    {
+        /** @var User $user */
+        for ($i = 1; $i <= 20; $i++) {
+            $user = User::factory()->create();            
+        }
+        
+        Role::create(['name' => 'Admin']);
+
+        $socialiteUser = Mockery::mock('Laravel\Socialite\Two\User');
+
+        $email = 'email@test.dev';
+
+        // @phpstan-ignore-next-line
+        $socialiteUser->name = 'Teste';
+        // @phpstan-ignore-next-line
+        $socialiteUser->id = '123';
+        // @phpstan-ignore-next-line
+        $socialiteUser->email = $email;
+        // @phpstan-ignore-next-line
+        $socialiteUser->token = '123';
+        // @phpstan-ignore-next-line
+        $socialiteUser->refreshToken = '123';
+
+        Socialite::shouldReceive('driver->stateless->user')->andReturn($socialiteUser);
+
+        $this->getJson("/api/auth/callback");
+
+        $usersAdminCount = User::role('Admin')->count();
+        $this->assertEquals(1, $usersAdminCount);
+
+        $usersAdmin = User::role('Admin')->get();
+        $userEmail = $usersAdmin->first()->email;
+        $this->assertEquals($email, $userEmail);
+    }
+
 }

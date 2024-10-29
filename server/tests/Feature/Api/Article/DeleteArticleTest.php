@@ -7,6 +7,8 @@ namespace Tests\Feature\Api\Article;
 use App\Models\Article;
 use App\Models\User;
 use Tests\TestCase;
+use Spatie\Permission\Models\Role;
+use Spatie\Permission\Models\Permission;
 
 final class DeleteArticleTest extends TestCase
 {
@@ -62,11 +64,14 @@ final class DeleteArticleTest extends TestCase
 
     public function testDeleteArticleAdmin(): void
     {
-        $user = User::factory()->create();
+        $admin = Role::create(['name' => 'Admin']);
+        $canDelete = Permission::create(['name' => 'delete any article']);
 
-        $user->assignRole('Admin');
+        $admin->givePermissionTo($canDelete);
+        $this->user->assignRole($admin);
 
-        $this->deleteJson("/api/articles/{$this->article->slug}")
+        $this->actingAs($this->user)
+            ->deleteJson("/api/articles/{$this->article->slug}")
             ->assertOk();
 
         $this->assertModelMissing($this->article);
