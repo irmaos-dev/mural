@@ -15,6 +15,7 @@ import {
   filterArticleModel,
 } from '~4features/article'
 import { ArticlesFeedSkeleton } from './articles-feed.skeleton'
+import './articles-feed.css'
 
 type ArticlesFeedProps = {
   useArticleFilterStore?: filterArticleModel.ArticleFilterStore
@@ -91,6 +92,13 @@ function ArticleMeta(props: ArticleMetaProps) {
 
   return (
     <div className="article-preview">
+      <div className="mb-5">
+        <img
+          src="https://images.hdqwalls.com/download/aulii-cravalho-as-moana-2-sa-1920x1080.jpg"
+          className="article-img-feed2"
+          alt="foto"
+        />
+      </div>
       <div className="article-meta">
         <Link to={pathKeys.profile.byUsername({ username: author.username })}>
           <img
@@ -118,7 +126,20 @@ function ArticleMeta(props: ArticleMetaProps) {
         to={pathKeys.article.bySlug({ slug: article.slug })}
       >
         <h1>{article.title}</h1>
-        <p>{article.description}</p>
+        <div className="row">
+          {/* <div className="col-md-6"> */}
+          <p>{article.description}</p>
+        </div>
+        {/* <div className="col">
+            <img
+              src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSocBEBY8sdlKZf-O4fT2w2HNEFYnXxPpu3sQ&s"
+              className="article-img-feed"
+              alt="foto"
+            />
+          </div> */}
+        {/* </div> */}
+
+
         <span>Read more...</span>
         <ul className="tag-list">
           {article.tagList.map((tag) => (
