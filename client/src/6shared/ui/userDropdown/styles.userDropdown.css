@@ -1,0 +1,108 @@
+/* Estilos gerais */
+
+.user-dropdown {
+    position: relative;
+    display: inline-block;
+    padding: 0 3%;
+    border-radius: 5px;
+}
+
+.user-dropdown.open {
+    background-color: #f2f2f2;
+    outline: 2px solid #648d64;
+}
+
+.user-dropdown-toggle-split {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+.user-dropdown-toggle-split button {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    padding: 0;
+    margin-left: 5px;
+    font-size: 1.2rem;
+}
+
+button:focus {
+    outline: none;
+}
+
+.user-dropdown-toggle-split button svg {
+    color: #555;
+    transition: transform 0.3s ease;
+}
+
+.user-dropdown-toggle-split button:hover svg {
+    color: #333;
+}
+
+.user-dropdown-toggle-split .dropdown-toggle-icon {
+    font-size: 1.4em;
+}
+
+.dropdown-content {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: #fff;
+    border: 2px solid #1d6e1d;
+    box-shadow: 0 4px 20px black;
+    border-radius: 10px;
+    padding: 10px;
+    margin-top: 4px;
+    min-width: 12em;
+    z-index: 3;
+    opacity: 0;
+    transform: translateY(-10%);
+    visibility: hidden;
+    transition: opacity 0.3s ease, transform 0.3s ease, visibility 0s 0.3s;
+}
+
+.dropdown-content.open {
+    opacity: 1;
+    transform: translateY(0);
+    visibility: visible;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.dropdown-content .user-dropdown-item {
+    padding: 0 5%;
+    border-radius: 5px;
+    color: #333;
+    cursor: pointer;
+    transition: background 0.2s ease;
+}
+
+.dropdown-content .user-dropdown-item:hover {
+    background-color: #f2f2f2;
+}
+
+.dropdown-content .user-dropdown-item.logoutDropDown {
+    display: flex;
+    align-items: center;
+    color: #f00;
+}
+
+.dropdown-content>.user-dropdown-item>* {
+    width: 100%;
+    display: inline-flex;
+    align-items: center;
+}
+
+.dropdown-content .user-dropdown-item.logoutDropDown:hover {
+    background-color: #ff000034;
+}
+
+.dropdown-content .user-dropdown-item.logoutDropDown>button {
+    padding: 0;
+    padding-top: 0.425rem;
+    padding-bottom: 0.425rem;
+    background-color: transparent;
+    border: none;
+}
