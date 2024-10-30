@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { withErrorBoundary } from 'react-error-boundary'
 import { Outlet } from 'react-router-dom'
 import { compose, withSuspense } from '~6shared/lib/react'
@@ -6,11 +7,18 @@ import { ErrorHandler, logError } from '~6shared/ui/error-handler'
 import { Skeleton } from '~6shared/ui/skeleton'
 import { Stack } from '~6shared/ui/stack'
 import {
+  UserDropdown,
+  UserDropdownItem,
+  UserDropdownToggleSplit,
+  UserDropdownContent,
+} from '~6shared/ui/userDropdown'
+import {
   Footer,
   BrandLink,
   NewArticleLink,
   SettingsProfileLink,
   ProfileLink,
+  LogoutDropdownButton,
 } from './layout.ui'
 
 export function UserLayout() {
@@ -38,6 +46,34 @@ const enhance = compose(
     withSuspense(component, { FallbackComponent: UserNavigationSkeleton }),
 )
 
+function UserDropdownMenu() {
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false)
+
+  const toggleDropdown = () => {
+    setIsDropdownOpen(!isDropdownOpen)
+  }
+
+  return (
+    <UserDropdown isDropdownOpen={isDropdownOpen}>
+      <UserDropdownToggleSplit
+        toggleDropdown={toggleDropdown}
+        isDropdownOpen={isDropdownOpen}
+      >
+        <ProfileLink />
+      </UserDropdownToggleSplit>
+
+      <UserDropdownContent isDropdownOpen={isDropdownOpen}>
+        <UserDropdownItem>
+          <SettingsProfileLink />
+        </UserDropdownItem>
+        <UserDropdownItem className="logoutDropDown">
+          <LogoutDropdownButton />
+        </UserDropdownItem>
+      </UserDropdownContent>
+    </UserDropdown>
+  )
+}
+
 const UserNavigation = enhance(() => {
   const session = useSessionStore.use.session()
 
@@ -51,7 +87,6 @@ const UserNavigation = enhance(() => {
     'profile',
     { profileOwnerId: session?.username || '' },
   )
-
   return (
     <ul className="nav navbar-nav pull-xs-right">
       {canCreateArticle && (
@@ -61,12 +96,7 @@ const UserNavigation = enhance(() => {
       )}
       {canUpdateProfile && (
         <li className="nav-item">
-          <SettingsProfileLink />
-        </li>
-      )}
-      {canUpdateProfile && (
-        <li className="nav-item">
-          <ProfileLink />
+          <UserDropdownMenu />
         </li>
       )}
     </ul>
