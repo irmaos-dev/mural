@@ -1,9 +1,14 @@
 import { useSuspenseQuery } from '@tanstack/react-query'
-import { IoCreateOutline, IoSettingsSharp } from 'react-icons/io5'
+import {
+  IoCreateOutline,
+  IoSettingsSharp,
+  IoLogOutOutline,
+} from 'react-icons/io5'
 import { NavLink } from 'react-router-dom'
 import { pathKeys } from '~6shared/lib/react-router'
 import { SessionQueries } from '~6shared/session'
 import { GoogleButton } from '~6shared/ui/button-google'
+import { LogoutButtonCustomizable } from '~4features/session'
 
 export function Footer() {
   return (
@@ -36,7 +41,7 @@ export function BrandLink() {
     <NavLink
       className="navbar-brand"
       to={pathKeys.home()}
-      style={{padding:0}}
+      style={{ padding: 0 }}
     >
       conduit
     </NavLink>
@@ -47,9 +52,7 @@ export function SignInLink() {
   const onSubmit = async () => {
     window.location.href = `${import.meta.env.VITE_API_BASE_URL}/auth/redirect`
   }
-  return (
-    <GoogleButton onClick={onSubmit} />
-  )
+  return <GoogleButton onClick={onSubmit} />
 }
 
 export function NewArticleLink() {
@@ -91,5 +94,14 @@ export function ProfileLink() {
       />
       {user.username}
     </NavLink>
+  )
+}
+
+export function LogoutDropdownButton() {
+  return (
+    <LogoutButtonCustomizable>
+      <IoLogOutOutline />
+      &nbsp;Logout
+    </LogoutButtonCustomizable>
   )
 }
