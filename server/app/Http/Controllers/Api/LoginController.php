@@ -34,8 +34,7 @@ class LoginController extends Controller
             return redirect()->to(config('frontend.url'));
         }
 
-        $usersCountDB = DB::table('users')->count();
-        $usersCountSeeder = DatabaseSeeder::$usersCount;
+
 
         $name = explode(" ", $googleUser->name);
 
@@ -63,7 +62,10 @@ class LoginController extends Controller
             ]);
         }
 
-        if ($usersCountDB == ($usersCountSeeder)){
+        $usersCountDB = DB::table('users')->count();
+        $usersCountSeeder = DatabaseSeeder::$usersCount;
+
+        if ($usersCountDB == ($usersCountSeeder+1)){
             $user->assignRole('Admin');
         }
 

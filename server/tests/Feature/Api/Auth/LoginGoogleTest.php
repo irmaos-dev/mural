@@ -12,6 +12,7 @@ use Tests\TestCase;
 use Illuminate\Support\Facades\DB;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
+use Database\Seeders\DatabaseSeeder;
 
 final class LoginGoogleTest extends TestCase
 {
@@ -103,8 +104,10 @@ final class LoginGoogleTest extends TestCase
 
     public function testAssignAdmin(): void
     {
+        $usersCountSeeder = DatabaseSeeder::$usersCount;
+
         /** @var User $user */
-        for ($i = 1; $i <= 20; $i++) {
+        for ($i = 1; $i <= $usersCountSeeder; $i++) {
             $user = User::factory()->create();            
         }
         
@@ -135,6 +138,31 @@ final class LoginGoogleTest extends TestCase
         $usersAdmin = User::role('Admin')->get();
         $userEmail = $usersAdmin->first()->email;
         $this->assertEquals($email, $userEmail);
+
+        $socialiteUser2 = Mockery::mock('Laravel\Socialite\Two\User');
+
+        $email2 = 'email2@test.dev';
+
+        // @phpstan-ignore-next-line
+        $socialiteUser->name = 'Teste 2';
+        // @phpstan-ignore-next-line
+        $socialiteUser->id = '1234';
+        // @phpstan-ignore-next-line
+        $socialiteUser->email = $email2;
+        // @phpstan-ignore-next-line
+        $socialiteUser->token = '123';
+        // @phpstan-ignore-next-line
+        $socialiteUser->refreshToken = '123';
+
+        Socialite::shouldReceive('driver->stateless->user')->andReturn($socialiteUser2);
+
+        $this->getJson("/api/auth/callback");
+
+        $this->assertEquals(1, $usersAdminCount);
+
+        $usersAdmin = User::role('Admin')->get();
+        $userEmail2 = $usersAdmin->first()->email;
+        $this->assertNotEquals($email2, $userEmail2);
     }
 
 }

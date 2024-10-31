@@ -7,9 +7,7 @@ namespace App\Policies;
 use App\Models\Article;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
-use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
-use Spatie\Permission\Traits\HasRoles;
 
 final class ArticlePolicy
 {
@@ -39,8 +37,6 @@ final class ArticlePolicy
         $author = $this->update($user, $article);
         $canDelete=$user->can('delete_any_article');
         
-        if ($author || $canDelete) {
-            return true;
-         } else return false;
+        return $author || $canDelete;
     }
 }

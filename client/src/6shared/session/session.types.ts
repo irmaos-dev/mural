@@ -56,14 +56,6 @@ export interface SessionPermission {
   deleteAnyArticle: PermissionGroup
 }
 
-export interface SessionPermissionDeleteAnyArticle {
-  user: PermissionGroup
-  guest: PermissionGroup
-  author: PermissionGroup
-  commenter: PermissionGroup
-  owner: PermissionGroup
-}
-
 type ConditionalContext<T, F extends keyof PermissionGroup> = T extends 'delete'
   ? PermissionContext[F]
   : T extends 'update'
