@@ -95,7 +95,7 @@ function ArticleMeta(props: ArticleMetaProps) {
       <div className="mb-5">
         <img
           src="https://images.hdqwalls.com/download/aulii-cravalho-as-moana-2-sa-1920x1080.jpg"
-          className="article-img-feed2"
+          className="article-img-feed"
           alt="foto"
         />
       </div>
@@ -127,19 +127,8 @@ function ArticleMeta(props: ArticleMetaProps) {
       >
         <h1>{article.title}</h1>
         <div className="row">
-          {/* <div className="col-md-6"> */}
           <p>{article.description}</p>
         </div>
-        {/* <div className="col">
-            <img
-              src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSocBEBY8sdlKZf-O4fT2w2HNEFYnXxPpu3sQ&s"
-              className="article-img-feed"
-              alt="foto"
-            />
-          </div> */}
-        {/* </div> */}
-
-
         <span>Read more...</span>
         <ul className="tag-list">
           {article.tagList.map((tag) => (

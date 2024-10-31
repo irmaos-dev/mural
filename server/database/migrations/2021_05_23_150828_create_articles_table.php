@@ -19,11 +19,10 @@ return new class () extends Migration {
 
             $table->foreignId('author_id')->constrained('users')->onDelete('cascade');
             $table->string('slug')->unique();
-
             $table->string('title');
             $table->string('description', 510);
             $table->text('body');
-
+            $table->text('image')->nullable();
             $table->timestamps();
         });
     }
