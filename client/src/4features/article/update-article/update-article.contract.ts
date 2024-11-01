@@ -5,5 +5,6 @@ export const UpdateArticleSchema = z.object({
   description: z.string().optional(),
   body: z.string().optional(),
   tagList: z.string().optional(),
+  image: z.string().optional(),
 })
 export type UpdateArticle = z.infer<typeof UpdateArticleSchema>

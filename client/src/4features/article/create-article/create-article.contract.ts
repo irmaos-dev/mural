@@ -11,5 +11,6 @@ export const CreateArticleSchema = z.object({
     message: 'The article body must contain at least 1 character.',
   }),
   tagList: z.string().optional(),
+  image: z.string().optional(),
 })
 export type CreateArticle = z.infer<typeof CreateArticleSchema>

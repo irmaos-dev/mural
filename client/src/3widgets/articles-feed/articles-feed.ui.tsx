@@ -27,7 +27,8 @@ const enhance = compose<ArticlesFeedProps>(
     withErrorBoundary(component, {
       FallbackComponent: ErrorHandler,
       onError: logError,
-    }),
+      
+    } ),
   (component) =>
     withSuspense(component, { FallbackComponent: ArticlesFeedSkeleton }),
 )
@@ -92,13 +93,11 @@ function ArticleMeta(props: ArticleMetaProps) {
 
   return (
     <div className="article-preview">
-      <div className="mb-5">
-        <img
-          src="https://images.hdqwalls.com/download/aulii-cravalho-as-moana-2-sa-1920x1080.jpg"
+      {article.image && <img
+          src={article.image}
           className="article-img-feed"
           alt="foto"
-        />
-      </div>
+        />}
       <div className="article-meta">
         <Link to={pathKeys.profile.byUsername({ username: author.username })}>
           <img

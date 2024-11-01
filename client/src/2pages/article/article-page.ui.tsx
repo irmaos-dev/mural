@@ -42,11 +42,11 @@ export const ArticlePage = enhance(() => {
     <div className="article-page">
       <div className="banner">
         <div className="container">
-        <img
-          src="https://images.hdqwalls.com/download/aulii-cravalho-as-moana-2-sa-1920x1080.jpg"
+        {article.image && <img
+          src={article.image}
           className="article-img-feed"
           alt="foto"
-        />
+        />}
           <h1>{article.title}</h1>
           <ArticleMeta
             article={article}

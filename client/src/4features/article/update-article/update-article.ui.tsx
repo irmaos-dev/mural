@@ -94,6 +94,18 @@ export const UpdateArticleForm = enhance((props: UpdateArticleFormProps) => {
           {...register('title')}
         />
       </fieldset>
+
+      <fieldset className="form-group">
+        <input
+          type="text"
+          className="form-control"
+          placeholder="Image URL"
+          disabled={isPending}
+          // onBlur = 
+          {...register('image')}
+        />
+      </fieldset>
+
       <fieldset className="form-group">
         <input
           type="text"

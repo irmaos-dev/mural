@@ -34,6 +34,7 @@ final class NewArticleRequest extends BaseArticleRequest
             'body'        => ['required'],
             'tagList'     => 'sometimes|array',
             'tagList.*'   => 'required|string|max:255',
+            'image'       => "sometimes|nullable|string|url",
         ];
     }
 }

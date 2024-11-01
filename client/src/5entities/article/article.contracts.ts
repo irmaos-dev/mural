@@ -24,6 +24,7 @@ export const ArticleSchema = z.object({
     image: z.string(),
     following: z.boolean(),
   }),
+  image: z.string(),
 })
 
 export const ArticlesSchema = z.map(z.string(), ArticleSchema)
