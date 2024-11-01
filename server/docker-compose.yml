@@ -1,7 +1,7 @@
 services:
     laravel.test:
         build:
-            context: ./vendor/laravel/sail/runtimes/8.3
+            context: ./
             dockerfile: Dockerfile
             args:
                 NODE_VERSION: '20'
