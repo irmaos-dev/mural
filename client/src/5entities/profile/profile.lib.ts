@@ -1,5 +1,5 @@
 import { profileTypesDto } from '~6shared/api/profile'
-import { Profile } from './profie.types'
+import { Profile } from './profile.types'
 
 export function transformProfileDtoToProfile(
   profileDto: profileTypesDto.ProfileDto,

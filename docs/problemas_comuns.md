@@ -1,13 +1,30 @@
+## Erro "Network Error"
+
+Esse erro aparece quando você abre o client mas não abre o server.
+
+## Erro ao rodar comandos com o "Sail"
+
+Ao aparecer a mensagem:
+
+> Cannot connect to the Docker daemon at unix:///var/run/docker.sock. Is the docker daemon running?
+
+Ou algo como "docker-compose não está instalado",
+
+significa que você não abriu o Docker Desktop (assumindo que você fez a instalação padrão com WSL)
+
+## Erro "Something went wrong. The provided data does not meet the required criteria."
+
+Provavelmente você esqueceu de rodar o comando "cp .env.example .env" na pasta "client".
+
+## Erro "Request failed with status code 500"
+
+Esse erro quer dizer que algo no seu server quebrou. Pode ser inúmeras coisas.
+Para obter mais detalhes sobre o problema, abre o DevTools na aba Rede, rode algo que envie uma request ao server, clique em uma das requisições feitas e clique na aba Resposta.
+
+Exemplo do erro de quando as credenciais do banco de dados estão erradas:
+
+![aba rede no devtools](imagens/devtools_network.png)
+
 ## Erro "Request failed with status code 401"
 
-Caso você encontre esse erro:
-
-![alt text](imagens/401.png)
-
-Faça o procedimento a seguir:
-
-- Abra o seu DevTools na aba "Application";
-- No menu lateral, na seção "Storage", expanda o item "Local Storage" e clique em "http://localhost:5173";
-- Repare que um item chamado "session" é exibido. Essa é uma variável que o app armazena e usa para controlar a interface;
-- Delete esse item "session";
-- Atualize a página e o erro desaparecerá.
+esse erro foi corrigido pela PR https://github.com/irmaos-dev/mural/pull/52
