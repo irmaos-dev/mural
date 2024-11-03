@@ -1,7 +1,7 @@
 services:
     laravel.test:
         build:
-            context: ./
+            context: ./vendor/laravel/sail/runtimes/8.3
             dockerfile: Dockerfile
             args:
                 NODE_VERSION: '20'
@@ -73,20 +73,6 @@ services:
             - '${FORWARD_MAILPIT_DASHBOARD_PORT:-8025}:8025'
         networks:
             - sail
-    collector:
-        image: otel/opentelemetry-collector:latest
-        command: ["--config=/etc/otel-collector-config.yaml"]
-        volumes:
-        - ./otel-collector-config.yaml:/etc/otel-collector-config.yaml
-        ports:
-        - "4317:4317"
-        - "4318:4318"
-
-    jaeger:
-        image: jaegertracing/all-in-one:latest
-        ports:
-        - "16686:16686"
-        - "14250:14250"
 networks:
     sail:
         driver: bridge
