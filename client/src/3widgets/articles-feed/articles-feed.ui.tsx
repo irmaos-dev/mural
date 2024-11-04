@@ -27,8 +27,8 @@ const enhance = compose<ArticlesFeedProps>(
     withErrorBoundary(component, {
       FallbackComponent: ErrorHandler,
       onError: logError,
-      
-    } ),
+
+    }),
   (component) =>
     withSuspense(component, { FallbackComponent: ArticlesFeedSkeleton }),
 )
@@ -93,11 +93,16 @@ function ArticleMeta(props: ArticleMetaProps) {
 
   return (
     <div className="article-preview">
-      {article.image && <img
+      <Link
+        className="preview-link"
+        to={pathKeys.article.bySlug({ slug: article.slug })}
+      >
+        {article.image && <img
           src={article.image}
           className="article-img-feed"
           alt="foto"
         />}
+      </Link>
       <div className="article-meta">
         <Link to={pathKeys.profile.byUsername({ username: author.username })}>
           <img

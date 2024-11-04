@@ -82,7 +82,7 @@ export const CreateArticleForm = enhance(() => {
       <fieldset className="form-group">
         <input
           type="text"
-          className="form-control form-control-lg"
+          className="form-control"
           placeholder="Image URL"
           disabled={isPending}
           {...register('image')}

@@ -101,7 +101,6 @@ export const UpdateArticleForm = enhance((props: UpdateArticleFormProps) => {
           className="form-control"
           placeholder="Image URL"
           disabled={isPending}
-          // onBlur = 
           {...register('image')}
         />
       </fieldset>
