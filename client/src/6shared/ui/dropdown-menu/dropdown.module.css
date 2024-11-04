@@ -1,0 +1,94 @@
+/* Estilos gerais  dropdown*/
+
+.dropdown-menu {
+    position: relative;
+    display: inline-block;
+    padding: 0 3%;
+    border-radius: 5px;
+}
+
+.dropdown-menu.open {
+    background-color: #f2f2f2;
+    outline: 2px solid #648d64;
+}
+
+.dropdown-menu-toggle-split {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+.dropdown-menu-toggle-split button {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    padding: 0;
+    margin-left: 5px;
+    font-size: 1.2rem;
+}
+
+button:focus {
+    outline: none;
+}
+
+.dropdown-menu-toggle-split button svg {
+    color: #555;
+    transition: transform 0.3s ease;
+}
+
+.dropdown-menu-toggle-split button:hover svg {
+    color: #333;
+}
+
+.dropdown-menu-toggle-split .dropdown-menu-toggle-icon {
+    font-size: 1.4em;
+}
+
+.dropdown-menu-content {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: #fff;
+    border: 2px solid #1d6e1d;
+    box-shadow: 0 4px 20px black;
+    border-radius: 10px;
+    padding: 10px;
+    margin-top: 4px;
+    min-width: 12em;
+    z-index: 3;
+    opacity: 0;
+    transform: translateY(-10%);
+    visibility: hidden;
+    transition: opacity 0.3s ease, transform 0.3s ease, visibility 0s 0.3s;
+}
+
+.dropdown-menu-content.open {
+    opacity: 1;
+    transform: translateY(0);
+    visibility: visible;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.dropdown-menu-content .dropdown-menu-item {
+    border-radius: 5px;
+    color: #333;
+    cursor: pointer;
+    transition: background 0.2s ease;
+}
+
+.dropdown-menu .dropdown-menu-item+.dropdown-menu-item {
+    margin-top: 5px;
+}
+
+.dropdown-menu-content .dropdown-menu-item:hover {
+    background-color: #f2f2f2;
+}
+
+.dropdown-menu-content>.dropdown-menu-item>* {
+    padding-left: 5%;
+    width: 100%;
+    display: inline-flex;
+    align-items: center;
+}
