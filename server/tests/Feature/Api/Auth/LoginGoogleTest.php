@@ -5,14 +5,12 @@ declare(strict_types = 1);
 namespace Tests\Feature\Api\Auth;
 
 use App\Models\User;
+use Database\Seeders\DatabaseSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Laravel\Socialite\Facades\Socialite;
 use Mockery;
-use Tests\TestCase;
-use Illuminate\Support\Facades\DB;
 use Spatie\Permission\Models\Role;
-use Spatie\Permission\Models\Permission;
-use Database\Seeders\DatabaseSeeder;
+use Tests\TestCase;
 
 final class LoginGoogleTest extends TestCase
 {
@@ -108,9 +106,9 @@ final class LoginGoogleTest extends TestCase
 
         /** @var User $user */
         for ($i = 1; $i <= $usersCountSeeder; $i++) {
-            $user = User::factory()->create();            
+            $user = User::factory()->create();
         }
-        
+
         Role::create(['name' => 'Admin']);
 
         $socialiteUser = Mockery::mock('Laravel\Socialite\Two\User');

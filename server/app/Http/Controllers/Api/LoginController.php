@@ -7,10 +7,10 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\Api\UserResource;
 use App\Models\User;
-use Exception;
-use Laravel\Socialite\Facades\Socialite;
 use Database\Seeders\DatabaseSeeder;
+use Exception;
 use Illuminate\Support\Facades\DB;
+use Laravel\Socialite\Facades\Socialite;
 
 class LoginController extends Controller
 {
@@ -33,8 +33,6 @@ class LoginController extends Controller
         } catch (Exception) {
             return redirect()->to(config('frontend.url'));
         }
-
-
 
         $name = explode(" ", $googleUser->name);
 
@@ -65,7 +63,7 @@ class LoginController extends Controller
         $usersCountDB = DB::table('users')->count();
         $usersCountSeeder = DatabaseSeeder::$usersCount;
 
-        if ($usersCountDB == ($usersCountSeeder+1)){
+        if ($usersCountDB === ($usersCountSeeder + 1)) {
             $user->assignRole('Admin');
         }
 

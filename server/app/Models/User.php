@@ -62,8 +62,8 @@ final class User extends Authenticatable implements JwtSubjectInterface
 {
     use HasApiTokens;
     use HasFactory;
-    use Notifiable;
     use HasRoles;
+    use Notifiable;
 
     /**
      * Regular expression for username.

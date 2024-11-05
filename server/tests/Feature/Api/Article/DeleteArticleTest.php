@@ -6,9 +6,9 @@ namespace Tests\Feature\Api\Article;
 
 use App\Models\Article;
 use App\Models\User;
-use Tests\TestCase;
-use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
+use Spatie\Permission\Models\Role;
+use Tests\TestCase;
 
 final class DeleteArticleTest extends TestCase
 {
