@@ -54,7 +54,7 @@ function UserDropdownMenu() {
             style={{ border: '0px' }}
           >
             <IoLogOutOutline />
-            &nbsp;Loggout
+            &nbsp;Logout
           </LogoutButton>
         </DropdownMenu.Item>
       </DropdownMenu.Content>
