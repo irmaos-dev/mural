@@ -127,3 +127,7 @@ button:focus {
     display: flex;
     justify-content: center;
 }
+
+.disable {
+    display: none;
+}

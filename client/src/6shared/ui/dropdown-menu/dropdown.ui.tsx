@@ -59,16 +59,22 @@ function Root({
 function Trigger({
   children,
   split = false,
+  disable = false,
 }: {
   children: ReactNode
   split?: boolean
+  disable?: boolean
 }) {
   const { store } = useContext(DropdownContext)!
   const handleClick = () => store.getState().toggle()
   const isOpen = store.use.isOpen()
   if (split) {
     return (
-      <div className={styles['dropdown-menu-toggle-split']}>
+      <div
+        className={
+          styles[`dropdown-menu-toggle-split${disable ? ' disable' : ''}`]
+        }
+      >
         {children}
         <button
           type="button"
@@ -109,7 +115,13 @@ function Trigger({
 }
 
 // Move the click outside handler from Root to Content
-function Content({ children }: { children: ReactNode }) {
+function Content({
+  children,
+  disable = false,
+}: {
+  children: ReactNode
+  disable?: boolean
+}) {
   const { store, menuType } = useContext(DropdownContext)!
   const isOpen = store.use.isOpen()
   const contentRef = useRef<HTMLDivElement>(null)
@@ -145,7 +157,7 @@ function Content({ children }: { children: ReactNode }) {
       ref={contentRef}
       className={`${styles['dropdown-menu-content']} ${isOpen ? styles.open : ''} ${
         menuType === 'expansive' ? styles.expansive : ''
-      }`}
+      } ${disable ? 'disable' : ''}`}
     >
       {children}
     </div>
@@ -157,14 +169,16 @@ function Item({
   children,
   onClick,
   className,
+  disable = false,
 }: {
   children: ReactNode
   onClick?: () => void
   className?: string
+  disable?: boolean
 }) {
   return (
     <div
-      className={`${styles['dropdown-menu-item']} ${className || ''}`}
+      className={`${styles['dropdown-menu-item']} ${className || ''} ${disable ? 'disable' : ''}`}
       onClick={onClick}
       role="button"
       tabIndex={0}
