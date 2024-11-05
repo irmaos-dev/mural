@@ -87,6 +87,25 @@ function Trigger({
       </div>
     )
   }
+  return (
+    <div className={styles['dropdown-menu-toggle-split']}>
+      <button
+        type="button"
+        onClick={handleClick}
+      >
+        <span> {children}</span>
+        {isOpen ? (
+          <IoCloseCircleOutline
+            className={styles['dropdown-menu-toggle-icon']}
+          />
+        ) : (
+          <IoCaretDownCircleOutline
+            className={styles['dropdown-menu-toggle-icon']}
+          />
+        )}
+      </button>
+    </div>
+  )
 }
 
 // Move the click outside handler from Root to Content
