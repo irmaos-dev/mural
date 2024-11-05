@@ -2,7 +2,7 @@
   "name": "realworld-react-fsd",
   "private": true,
   "version": "0.0.0",
-  "type": "module",
+  "type":"commonjs",
   "scripts": {
     "start": "vite",
     "dev": "vite",
@@ -17,7 +17,9 @@
     "test:coverage": "vitest run --coverage",
     "coverage:open": "npx vite preview --outDir ./coverage",
     "test:coverage:open": "yarn run test:coverage && yarn run coverage:open",
-    "dep-cruiser:preview": "npx depcruise src --include-only \"^src\" --output-type dot | dot -T svg > dependency-graph-preview.svg"
+    "dep-cruiser:preview": "npx depcruise src --include-only \"^src\" --output-type dot | dot -T svg > dependency-graph-preview.svg",
+    "eslint:fix": "eslint . --fix"
+
   },
   "dependencies": {
     "@hookform/resolvers": "^3.6.0",
@@ -49,12 +51,12 @@
     "@vitejs/plugin-react": "^4.3.1",
     "@vitest/coverage-v8": "^1.6.0",
     "dependency-cruiser": "^16.3.3",
-    "eslint": "^8.2.0",
+    "eslint": "^8.57.1",
     "eslint-config-airbnb": "19.0.4",
     "eslint-config-airbnb-typescript": "^18.0.0",
     "eslint-config-prettier": "^9.1.0",
     "eslint-import-resolver-typescript": "^3.6.1",
-    "eslint-plugin-import": "^2.25.3",
+    "eslint-plugin-import": "^2.31.0",
     "eslint-plugin-jsx-a11y": "^6.5.1",
     "eslint-plugin-react": "^7.28.0",
     "eslint-plugin-react-hooks": "^4.3.0",
