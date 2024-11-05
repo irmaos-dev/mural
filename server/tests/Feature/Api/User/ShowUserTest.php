@@ -31,6 +31,7 @@ final class ShowUserTest extends TestCase
                         "email"    => $user->email,
                         "bio"      => $user->bio,
                         "image"    => $user->image,
+                        "perms"    => $user->getAllPermissions()->pluck('name'),
                     ])
             )
         );

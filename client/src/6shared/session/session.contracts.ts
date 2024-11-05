@@ -6,4 +6,5 @@ export const SessionSchema = z.object({
   username: z.string(),
   bio: z.string(),
   image: z.string(),
+  perms: z.array(z.string()),
 })
