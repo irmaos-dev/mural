@@ -1,4 +1,11 @@
-import { ReactNode, useEffect, useRef, createContext, useContext } from 'react'
+import {
+  ReactNode,
+  useEffect,
+  useRef,
+  createContext,
+  useContext,
+  useMemo,
+} from 'react'
 import { IoCaretDownCircleOutline, IoCloseCircleOutline } from 'react-icons/io5'
 import styles from './dropdown.module.css'
 
@@ -12,15 +19,36 @@ type Store = {
   }
 }
 
-const DropdownContext = createContext<Store | null>(null)
+type DropdownContextType = {
+  store: Store
+  menuType?: '' | 'expansive'
+}
 
-function Root({ store, children }: { store: Store; children: ReactNode }) {
+const DropdownContext = createContext<DropdownContextType | null>(null)
+
+function Root({
+  store,
+  children,
+  menuType = '',
+}: {
+  store: Store
+  children: ReactNode
+  menuType?: '' | 'expansive'
+}) {
   const isOpen = store.use.isOpen()
-
+  const contextValue = useMemo(
+    () => ({
+      store,
+      menuType,
+    }),
+    [store, menuType],
+  )
   return (
-    <DropdownContext.Provider value={store}>
+    <DropdownContext.Provider value={contextValue}>
       <div
-        className={`${styles['dropdown-menu']} ${isOpen ? styles.open : ''}`}
+        className={`${styles['dropdown-menu']} ${isOpen ? styles.open : ''} ${
+          menuType === 'expansive' ? styles.expansive : ''
+        }`}
       >
         {children}
       </div>
@@ -35,7 +63,7 @@ function Trigger({
   children: ReactNode
   split?: boolean
 }) {
-  const store = useContext(DropdownContext)!
+  const { store } = useContext(DropdownContext)!
   const handleClick = () => store.getState().toggle()
   const isOpen = store.use.isOpen()
   if (split) {
@@ -63,7 +91,7 @@ function Trigger({
 
 // Move the click outside handler from Root to Content
 function Content({ children }: { children: ReactNode }) {
-  const store = useContext(DropdownContext)!
+  const { store, menuType } = useContext(DropdownContext)!
   const isOpen = store.use.isOpen()
   const contentRef = useRef<HTMLDivElement>(null)
 
@@ -96,7 +124,9 @@ function Content({ children }: { children: ReactNode }) {
   return (
     <div
       ref={contentRef}
-      className={`${styles['dropdown-menu-content']} ${isOpen ? styles.open : ''}`}
+      className={`${styles['dropdown-menu-content']} ${isOpen ? styles.open : ''} ${
+        menuType === 'expansive' ? styles.expansive : ''
+      }`}
     >
       {children}
     </div>
