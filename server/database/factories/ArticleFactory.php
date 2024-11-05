@@ -26,7 +26,7 @@ final class ArticleFactory extends Factory
             'title'       => $this->faker->unique()->sentence(4),
             'description' => $this->faker->paragraph(),
             'body'        => $this->faker->text(),
-            'image'    => $this->faker->optional()->imageUrl(),
+            'image'       => $this->faker->optional()->imageUrl(),
             'created_at'  => function (array $attributes) {
                 $user = User::find($attributes['author_id']);
 

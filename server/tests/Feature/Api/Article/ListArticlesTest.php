@@ -35,6 +35,7 @@ final class ListArticlesTest extends TestCase
                             ->whereAllType([
                                 "slug"        => "string",
                                 "title"       => "string",
+                                "image"       => "string|null",
                                 "description" => "string",
                                 "body"        => "string",
                                 "createdAt"   => "string",
