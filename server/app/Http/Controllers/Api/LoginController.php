@@ -7,7 +7,9 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\Api\UserResource;
 use App\Models\User;
+use Database\Seeders\DatabaseSeeder;
 use Exception;
+use Illuminate\Support\Facades\DB;
 use Laravel\Socialite\Facades\Socialite;
 
 class LoginController extends Controller
@@ -56,6 +58,13 @@ class LoginController extends Controller
                 'google_refresh_token' => $googleUser->refreshToken,
                 'image'                => $googleUser->avatar,
             ]);
+        }
+
+        $usersCountDB = DB::table('users')->count();
+        $usersCountSeeder = DatabaseSeeder::$usersCount;
+
+        if ($usersCountDB === ($usersCountSeeder + 1)) {
+            $user->assignRole('Admin');
         }
 
         $userData = urlencode(json_encode(new UserResource($user)));

@@ -109,6 +109,8 @@ A ferramenta "Sail" facilita o uso dos containers do servidor. Para entender mel
 
 ### Outras informações
 
+Após a instalação, o primeiro usuário que realizar o login no sistema (através da conta Google) receberá a atribuição da role "Admin".
+
 [Instruções de como utilizar as outras ferramentas](https://github.com/irmaos-dev/mural/blob/main/docs/outras_ferramentas.md) usadas no projeto.
 
 [Material de Apoio](https://github.com/irmaos-dev/mural/blob/main/docs/material_de_apoio.md) sobre as ferramentas utilizadas.
