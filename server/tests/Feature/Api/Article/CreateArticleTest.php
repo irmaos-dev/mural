@@ -48,7 +48,7 @@ final class CreateArticleTest extends TestCase
                     ->whereAll([
                         "slug"           => "original-title",
                         "title"          => $title,
-                        "image"       => $image,
+                        "image"          => $image,
                         "description"    => $description,
                         "body"           => $body,
                         "favorited"      => false,

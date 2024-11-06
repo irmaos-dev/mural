@@ -39,8 +39,9 @@ final class UpdateArticleTest extends TestCase
 
         $this->assertNotEquals($title = "Updated title", $this->article->title);
         $this->assertNotEquals(
-            $image = "https://test-image.fake/imageid", 
-            $this->article->image);
+            $image = "https://test-image.fake/imageid",
+            $this->article->image
+        );
         $this->assertNotEquals(
             $fakeSlug = "overwrite-slug",
             $this->article->slug
@@ -59,8 +60,8 @@ final class UpdateArticleTest extends TestCase
             ->putJson("/api/articles/{$this->article->slug}", [
                 "article" => [
                     "description" => $description,
-                    "image" => $image,
-                    "body" => $body]
+                    "image"       => $image,
+                    "body"        => $body],
             ])
             ->assertOk();
 
