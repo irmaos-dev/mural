@@ -71,6 +71,18 @@ const sessionPermission: SessionPermission = {
     profile: { follow: true, unfollow: true, update: true },
     comment: { create: true, read: true, delete: false },
   },
+  deleteAnyArticle: {
+    article: {
+      create: true,
+      read: true,
+      update: false,
+      delete: true,
+      like: true,
+      dislike: true,
+    },
+    profile: { follow: true, unfollow: true, update: false },
+    comment: { create: true, read: true, delete: false },
+  },
 }
 
 type NestedKeysWithField<T, F extends keyof any> = {
@@ -117,6 +129,8 @@ export class PermissionService {
 
     if (this.isArticleContext(context)) {
       if (context.articleAuthorId === session.username) return 'author'
+      if (session.perms.includes('delete_any_article')) return 'deleteAnyArticle'
+      // 
     }
 
     if (this.isCommentContext(context)) {

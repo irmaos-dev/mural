@@ -1,8 +1,19 @@
+import { ButtonHTMLAttributes } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { pathKeys } from '~6shared/lib/react-router'
 import { useLogoutMutation } from './logout.mutation'
 
-export function LogoutButton() {
+type ButtonProps = Omit<ButtonHTMLAttributes<HTMLButtonElement>, 'onClick'>
+
+interface LogoutButtonProps extends ButtonProps {
+  children?: React.ReactNode
+}
+
+export function LogoutButton({
+  children = 'Or click here to logout.',
+  className = 'btn btn-outline-danger',
+  ...buttonProps
+}: LogoutButtonProps) {
   const navigate = useNavigate()
 
   const { mutate } = useLogoutMutation({
@@ -17,11 +28,12 @@ export function LogoutButton() {
 
   return (
     <button
-      className="btn btn-outline-danger"
+      {...buttonProps}
+      className={className}
       type="button"
       onClick={handleClick}
     >
-      Or click here to logout.
+      {children || 'Or click here to logout.'}
     </button>
   )
 }

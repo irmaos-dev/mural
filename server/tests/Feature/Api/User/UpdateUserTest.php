@@ -36,6 +36,10 @@ final class UpdateUserTest extends TestCase
             $image = "https://example.com/image.png",
             $this->user->image
         );
+        $this->assertNotEquals(
+            $perms = [],
+            $this->user->perms
+        );
 
         // update by one to check required_without_all rule
         $this->actingAs($this->user)
@@ -61,6 +65,7 @@ final class UpdateUserTest extends TestCase
                         "email"    => $email,
                         "bio"      => $bio,
                         "image"    => $image,
+                        "perms"    => $perms,
                     ])
             )
         );

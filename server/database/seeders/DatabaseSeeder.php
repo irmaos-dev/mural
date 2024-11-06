@@ -13,6 +13,7 @@ use Illuminate\Database\Seeder;
 
 final class DatabaseSeeder extends Seeder
 {
+    public static $usersCount = 20;
     /**
      * Seed the application's database.
      *
@@ -21,7 +22,8 @@ final class DatabaseSeeder extends Seeder
     public function run(): void
     {
         /** @var array<User>|\Illuminate\Database\Eloquent\Collection<User> $users */
-        $users = User::factory()->count(20)->create();
+
+        $users = User::factory()->count(self::$usersCount)->create();
 
         foreach ($users as $user) {
             $user->followers()->attach($users->random(rand(0, 5)));
@@ -50,5 +52,7 @@ final class DatabaseSeeder extends Seeder
                 'author_id'  => $users->random(),
             ]))
             ->create();
+
+        $this->call([PermissionSeeder::class]);
     }
 }

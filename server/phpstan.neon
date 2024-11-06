@@ -6,4 +6,3 @@ parameters:
     reportUnmatchedIgnoredErrors: false
     paths:
         - app
-        - tests

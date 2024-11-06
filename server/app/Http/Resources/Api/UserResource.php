@@ -29,6 +29,7 @@ final class UserResource extends BaseUserResource
             'bio'      => $this->resource->bio,
             'image'    => $this->resource->image,
             'token'    => Jwt\Generator::token($this->resource),
+            'perms'    => $this->resource->getAllPermissions()->pluck('name'),
         ];
     }
 }

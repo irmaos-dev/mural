@@ -1,0 +1,142 @@
+/* Estilos gerais  dropdown*/
+
+.dropdown-menu {
+    position: relative;
+    display: inline-flex;
+    justify-content: center;
+    padding: 0 5%;
+    border-radius: 5px;
+}
+
+.dropdown-menu.expansive {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 0 1%;
+}
+
+.dropdown-menu.open.expansive {
+    background-color: #f2f2f2;
+    outline: 2px solid #5cb85c;
+    box-shadow: 0 0px 10px black;
+}
+
+.dropdown-menu-toggle-split {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    padding: 0 2%;
+    border-radius: 5px;
+}
+
+.dropdown-menu-toggle-split.open {
+    background-color: #f2f2f2;
+    outline: 2px solid #5cb85c;
+}
+
+.dropdown-menu-toggle-split.expansive {
+    padding: 0;
+    border-radius: 0;
+    background-color: 0;
+    outline: 0;
+}
+
+.dropdown-menu-toggle-split button {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    font-size: 1.2rem;
+}
+
+.dropdown-menu-toggle-split button span {
+    pointer-events: none;
+    font-size: 1rem;
+    padding: 0;
+    margin-right: 5px;
+}
+
+button:focus {
+    outline: none;
+}
+
+.dropdown-menu-toggle-split button svg {
+    color: #555;
+    transition: transform 0.3s ease;
+}
+
+.dropdown-menu-toggle-split button:hover svg {
+    color: #333;
+}
+
+.dropdown-menu-toggle-split .dropdown-menu-toggle-icon {
+    font-size: 1.4em;
+}
+
+.dropdown-menu-content {
+    position: absolute;
+    top: 100%;
+    background-color: #fff;
+    border: 2px solid #1d6e1d;
+    box-shadow: 0 4px 10px black;
+    border-radius: 10px;
+    padding: 10px;
+    margin-top: 4px;
+    min-width: 120%;
+    z-index: 3;
+    opacity: 0;
+    transform: translateY(-10%);
+    visibility: hidden;
+    transition: opacity 0.3s ease, transform 0.3s ease, visibility 0s 0.3s;
+}
+
+.dropdown-menu-content.expansive {
+    position: relative;
+    border: 0px;
+    border-radius: 0px 0px 10px 10px;
+    box-shadow: 0 0 0 0;
+}
+
+.dropdown-menu-content.open {
+    opacity: 1;
+    transform: translateY(0);
+    visibility: visible;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.dropdown-menu-content .dropdown-menu-item {
+    border-radius: 5px;
+    color: #333;
+    cursor: pointer;
+    transition: background 0.2s ease;
+}
+
+.dropdown-menu .dropdown-menu-item+.dropdown-menu-item {
+    margin-top: 5px;
+}
+
+.dropdown-menu-content .dropdown-menu-item:hover {
+    background-color: #f2f2f2;
+}
+
+.dropdown-menu-content>.dropdown-menu-item>* {
+    padding-left: 5%;
+    width: 100%;
+    display: inline-flex;
+    align-items: center;
+}
+
+.dropdown-menu-content.expansive .dropdown-menu-item>* {
+    padding-left: 0;
+    padding-right: 5%;
+    display: flex;
+    justify-content: center;
+}
+
+.disable {
+    display: none;
+}

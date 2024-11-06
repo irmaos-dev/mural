@@ -33,6 +33,9 @@ final class ArticlePolicy
      */
     public function delete(User $user, Article $article): bool
     {
-        return $this->update($user, $article);
+        $author = $this->update($user, $article);
+        $canDelete = $user->can('delete_any_article');
+
+        return $author || $canDelete;
     }
 }

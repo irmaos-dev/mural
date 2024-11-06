@@ -22,7 +22,7 @@ Para mais informações, leia o [OVERVIEW.md](https://github.com/irmaos-dev/mura
 - A branch `main` é bloqueada para commits diretos, portanto faça o fork do projeto;
 - Você deverá compartilhar o progresso de suas tarefas semanalmente;
 - Um dos mentores irá disponibilizar 30 minutos diários para uma call a fim de auxiliar os membros (opcional);
-- Os membros pode solicitar tarefas e terão 1 semana para completá-las;
+- Os membros podem solicitar tarefas e terão 1 semana para completá-las;
 
 ## Requisitos Mínimos
 
@@ -71,7 +71,11 @@ https://www.certificacaolinux.com.br/como-instalar-ubuntu-no-windows-usando-wsl/
 
 - Instale as dependências do projeto com o comando abaixo
 
-```sudo apt-get install -y curl make && curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/master/install.sh | bash && nvm install 20```
+```sudo apt-get install -y curl make && curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/master/install.sh | bash```
+
+e o comando:
+
+```nvm install 20```
 
 - Instale a extensão do WSL dentro do Visual Studio Code.
 
@@ -86,6 +90,8 @@ Neste momento, o projeto do Mural App estará aberto no seu Visual Studio Code.
 - Abra o terminal e entre na pasta do projeto: `cd client`.
 
 - Para instalar as dependências do projeto, rode o comando: `npm install`.
+
+- Para criar o arquivo de configuração, rode o comando: `cp .env.example .env`.
 
 - Para rodar o projeto, execute: `npm run dev`.
 
@@ -102,6 +108,8 @@ Neste momento, o projeto do Mural App estará aberto no seu Visual Studio Code.
 A ferramenta "Sail" facilita o uso dos containers do servidor. Para entender melhor, acesse a [documentação](https://laravel.com/docs/11.x/sail).
 
 ### Outras informações
+
+Após a instalação, o primeiro usuário que realizar o login no sistema (através da conta Google) receberá a atribuição da role "Admin".
 
 [Instruções de como utilizar as outras ferramentas](https://github.com/irmaos-dev/mural/blob/main/docs/outras_ferramentas.md) usadas no projeto.
 

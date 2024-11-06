@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Passport\HasApiTokens;
+use Spatie\Permission\Traits\HasRoles;
 
 /**
  * App\Models\User
@@ -61,12 +62,15 @@ final class User extends Authenticatable implements JwtSubjectInterface
 {
     use HasApiTokens;
     use HasFactory;
+    use HasRoles;
     use Notifiable;
 
     /**
      * Regular expression for username.
      */
-    public const string REGEX_USERNAME = '/^[\pL\pM\pN._-]+$/u';
+    public const REGEX_USERNAME = '/^[\pL\pM\pN._@-]+$/u';
+
+    public const REGEX_IMAGE = '/\.(jpg|jpeg|png)$/i';
 
     /**
      * The attributes that are mass assignable.
@@ -77,6 +81,10 @@ final class User extends Authenticatable implements JwtSubjectInterface
         'password',
         'bio',
         'image',
+        'google_id',
+        'google_token',
+        'google_refresh_token',
+        'name',
     ];
 
     /**
