@@ -105,3 +105,7 @@ Estes são componentes que realmente realizam alguma mudança persistente.
 Uma vantagem de separá-los para essa camada é que mudanças que afetem apenas a aparência de uma página não chegam perto desses componentes que realizam modificações nos dados, evitando bugs com informações dos usuários.
 Isso também nos permite utilizá-los em múltiplos widgets e pages.
 Por último, é sempre mais fácil de trabalhar em aplicações onde é óbvio onde as mutações dos dados estão realmente acontecendo.
+
+## Como as ferramentas do backend funcionam
+
+https://medium.com/@rajvir.ahmed.shuvo/understanding-sync-attach-and-detach-in-laravel-managing-relationships-with-eloquent-394a7cf7fabd
