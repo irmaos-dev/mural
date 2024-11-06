@@ -34,6 +34,18 @@ export function UserLayout() {
   )
 }
 
+function UserLogoutButton() {
+  return (
+    <LogoutButton
+      className="btn btn-outline-danger"
+      style={{ border: '0px' }}
+    >
+      <IoLogOutOutline />
+      &nbsp;Logout
+    </LogoutButton>
+  )
+}
+
 function UserDropdownMenu() {
   const userDropdownMenuStore = createDropdownMenuStore({
     initialState: { isOpen: false },
@@ -49,13 +61,7 @@ function UserDropdownMenu() {
           <SettingsProfileLink />
         </DropdownMenu.Item>
         <DropdownMenu.Item>
-          <LogoutButton
-            className="btn btn-outline-danger"
-            style={{ border: '0px' }}
-          >
-            <IoLogOutOutline />
-            &nbsp;Logout
-          </LogoutButton>
+          <UserLogoutButton/>
         </DropdownMenu.Item>
       </DropdownMenu.Content>
     </DropdownMenu.Root>
