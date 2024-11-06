@@ -65,15 +65,14 @@ function Trigger({
   split?: boolean
   disable?: boolean
 }) {
-  const { store } = useContext(DropdownContext)!
+  const { store, menuType } = useContext(DropdownContext)!
   const handleClick = () => store.getState().toggle()
   const isOpen = store.use.isOpen()
   if (split) {
     return (
       <div
-        className={
-          styles[`dropdown-menu-toggle-split${disable ? ' disable' : ''}`]
-        }
+        className={`${styles['dropdown-menu-toggle-split']} ${isOpen ? styles.open : ''} ${menuType === 'expansive' ? styles.expansive : ''}  ${disable ? 'disable' : ''}
+        `}
       >
         {children}
         <button
@@ -94,7 +93,9 @@ function Trigger({
     )
   }
   return (
-    <div className={styles['dropdown-menu-toggle-split']}>
+    <div
+      className={`${styles['dropdown-menu-toggle-split']} ${isOpen ? styles.open : ''} ${menuType === 'expansive' ? styles.expansive : ''}  ${disable ? 'disable' : ''}`}
+    >
       <button
         type="button"
         onClick={handleClick}
