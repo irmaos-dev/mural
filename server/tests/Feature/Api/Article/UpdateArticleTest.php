@@ -39,6 +39,10 @@ final class UpdateArticleTest extends TestCase
 
         $this->assertNotEquals($title = "Updated title", $this->article->title);
         $this->assertNotEquals(
+            $image = "https://test-image.fake/imageid",
+            $this->article->image
+        );
+        $this->assertNotEquals(
             $fakeSlug = "overwrite-slug",
             $this->article->slug
         );
@@ -54,13 +58,13 @@ final class UpdateArticleTest extends TestCase
         // update by one to check required_without_all rule
         $this->actingAs($author)
             ->putJson("/api/articles/{$this->article->slug}", [
-                "article" => ["description" => $description],
+                "article" => [
+                    "description" => $description,
+                    "image"       => $image,
+                    "body"        => $body],
             ])
             ->assertOk();
-        $this->actingAs($author)->putJson(
-            "/api/articles/{$this->article->slug}",
-            ["article" => ["body" => $body]]
-        );
+
         $response = $this->actingAs($author)->putJson(
             "/api/articles/{$this->article->slug}",
             [
@@ -80,6 +84,7 @@ final class UpdateArticleTest extends TestCase
                         "slug"           => "updated-title",
                         "title"          => $title,
                         "description"    => $description,
+                        "image"          => $image,
                         "body"           => $body,
                         "tagList"        => [],
                         "createdAt"      => $this->article->created_at?->toISOString(),
@@ -125,6 +130,7 @@ final class UpdateArticleTest extends TestCase
     {
         $data = [
             'title'       => '',
+            'image'       => '',
             'body'        => 'Some valid body content',
             'description' => 'Some description',
         ];
@@ -221,6 +227,7 @@ final class UpdateArticleTest extends TestCase
                 [
                     "article" => [
                         "title"       => "",
+                        "image"       => "",
                         "description" => "",
                         "body"        => "",
                     ],

@@ -24,6 +24,7 @@ final class CreateArticleTest extends TestCase
         ]);
 
         $title = "Original title";
+        $image = "https://test-image.fake/imageid";
         $description = $this->faker->paragraph();
         $body = $this->faker->text();
         $tags = ["one", "two", "three", "four", "five"];
@@ -32,6 +33,7 @@ final class CreateArticleTest extends TestCase
             "article" => [
                 "title"       => $title,
                 "slug"        => "different-slug", // must be overwritten with title slug
+                "image"       => $image,
                 "description" => $description,
                 "body"        => $body,
                 "tagList"     => $tags,
@@ -46,6 +48,7 @@ final class CreateArticleTest extends TestCase
                     ->whereAll([
                         "slug"           => "original-title",
                         "title"          => $title,
+                        "image"          => $image,
                         "description"    => $description,
                         "body"           => $body,
                         "favorited"      => false,
@@ -68,7 +71,7 @@ final class CreateArticleTest extends TestCase
         );
     }
 
-    public function testCreateArticleEmptyTags(): void
+    public function testCreateArticleEmptyTagsAndImage(): void
     {
         /** @var User $author */
         $author = User::factory()->create();
@@ -78,11 +81,14 @@ final class CreateArticleTest extends TestCase
                 "title"       => $this->faker->sentence(4),
                 "description" => $this->faker->paragraph(),
                 "body"        => $this->faker->text(),
+                "image"       => "",
                 "tagList"     => [],
             ],
         ]);
 
         $response->assertCreated()->assertJsonPath("article.tagList", []);
+        $response->assertCreated()->assertJsonPath("article.image", "");
+
     }
 
     public function testCreateArticleExistingTags(): void
@@ -96,6 +102,7 @@ final class CreateArticleTest extends TestCase
         $response = $this->actingAs($author)->postJson("/api/articles", [
             "article" => [
                 "title"       => $this->faker->sentence(4),
+                "image"       => $this->faker->imageUrl(),
                 "description" => $this->faker->paragraph(),
                 "body"        => $this->faker->text(),
                 "tagList"     => $tagsList,
@@ -186,6 +193,7 @@ final class CreateArticleTest extends TestCase
                 [
                     "article" => [
                         "title"       => 123,
+                        "image"       => [],
                         "description" => [],
                         "body"        => null,
                         "tagList"     => [123, [], null],

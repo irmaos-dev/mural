@@ -241,6 +241,7 @@ const createArticleDto: articleTypesDto.CreateArticleDto = {
   description: 'test-descriprion',
   title: 'test-title',
   tagList: ['test-tag-1', 'test-tag-2'],
+  image: '',
 }
 
 const createArticle: CreateArticle = {
@@ -248,6 +249,7 @@ const createArticle: CreateArticle = {
   description: 'test-descriprion',
   title: 'test-title',
   tagList: 'test-tag-1, test-tag-2',
+  image: '',
 }
 
 const article = transformCreateArticleToArticle({ createArticle, session })

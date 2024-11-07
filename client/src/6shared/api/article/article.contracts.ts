@@ -16,6 +16,7 @@ const ArticleDto = z.object({
     image: z.string(),
     following: z.boolean(),
   }),
+  image: z.string(),
 })
 
 export const ArticlesDtoSchema = z.object({
@@ -53,6 +54,7 @@ export const CreateArticleDtoSchema = z.object({
   description: z.string().min(1),
   body: z.string().min(1),
   tagList: z.optional(z.string().array()),
+  image: z.string(),
 })
 
 export const UpdateArticleDtoSchema = z.object({
@@ -60,4 +62,5 @@ export const UpdateArticleDtoSchema = z.object({
   description: z.string().optional(),
   body: z.string().optional(),
   tagList: z.optional(z.string().array()),
+  image: z.string(),
 })

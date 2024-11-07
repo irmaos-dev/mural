@@ -58,6 +58,7 @@ final class Article extends Model
         'title',
         'description',
         'body',
+        'image',
     ];
 
     /**

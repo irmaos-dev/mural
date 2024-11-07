@@ -31,7 +31,7 @@ export const CreateArticleForm = enhance(() => {
   } = useForm<CreateArticle>({
     mode: 'onTouched',
     resolver: zodResolver(CreateArticleSchema),
-    defaultValues: { title: '', description: '', body: '', tagList: '' },
+    defaultValues: { title: '', description: '', body: '', tagList: '', image: '', },
   })
 
   const { mutate, isPending } = useCreateArticleMutation({
@@ -76,6 +76,16 @@ export const CreateArticleForm = enhance(() => {
           placeholder="Article Title"
           disabled={isPending}
           {...register('title')}
+        />
+      </fieldset>
+
+      <fieldset className="form-group">
+        <input
+          type="text"
+          className="form-control"
+          placeholder="Image URL"
+          disabled={isPending}
+          {...register('image')}
         />
       </fieldset>
 

@@ -11,6 +11,7 @@ export function transformArticleToCreateArticleDto(
     description: article.description,
     body: article.body,
     tagList: article.tagList,
+    image: article.image,
   }
 }
 
@@ -35,5 +36,6 @@ export function transformCreateArticleToArticle(config: {
       image,
     },
     tagList: createArticle.tagList?.split(', ').filter(Boolean) || [],
+    image: createArticle.image || '',
   }
 }

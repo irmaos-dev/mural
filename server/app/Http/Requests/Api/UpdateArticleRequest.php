@@ -25,6 +25,7 @@ final class UpdateArticleRequest extends BaseArticleRequest
             'slug'        => ['required_with:title', 'alpha_dash', $unique],
             'description' => ['required_without_all:title,body'],
             'body'        => ['required_without_all:title,description'],
+            'image'       => "sometimes|nullable|string|url",
         ];
     }
 }
