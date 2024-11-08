@@ -1,7 +1,7 @@
 import { ReactNode } from 'react'
 import { useSuspenseQuery } from '@tanstack/react-query'
 import { withErrorBoundary } from 'react-error-boundary'
-import { IoAdd, IoPencil } from 'react-icons/io5'
+import { IoAdd, IoHeart, IoPencil } from 'react-icons/io5'
 import { Link, useLoaderData, useNavigate } from 'react-router-dom'
 import { compose, withSuspense } from '~6shared/lib/react'
 import { pathKeys } from '~6shared/lib/react-router'
@@ -187,30 +187,28 @@ function ToggleFollowProfile(props: { profile: profileTypes.Profile }) {
 }
 
 function ToggleFavoriteArticle(props: { article: articleTypes.Article }) {
-  console.log('ToggleFavoriteArticle', props);
   const { article } = props
   const { favorited } = article
+  const { favoritesCount } = article
 
-  // const canLikeArticle = PermissionService.useCanPerformAction(
-  //   'like',
-  //   'article',
-  // )
-  // const canDislikeArticle = PermissionService.useCanPerformAction(
-  //   'dislike',
-  //   'article',
-  // )
-  // const cannotLikeOrDislike = !canLikeArticle || !canDislikeArticle
+  const canLikeArticle = PermissionService.useCanPerformAction(
+    'like',
+    'article',
+  )
+  const canDislikeArticle = PermissionService.useCanPerformAction(
+    'dislike',
+    'article',
+  )
+  const cannotLikeOrDislike = !canLikeArticle || !canDislikeArticle
 
-  // const canLike = canLikeArticle && !favorited
-  // const canDislike = canDislikeArticle && favorited
-
-  const canLike = !favorited
-  const canDislike = favorited
+  const canLike = canLikeArticle && !favorited
+  const canDislike = canDislikeArticle && favorited
 
   return (
     <>
       {canLike && <FavoriteArticleExtendedButton article={article} />}
       {canDislike && <UnfavoriteArticleExtendedButton article={article} />}
+      {cannotLikeOrDislike && <NavigateToLoginButtonFavorite favoritesCount={favoritesCount}/>}
     </>
   )
 }
@@ -249,22 +247,22 @@ function NavigateToLoginButtonFollow(props: { username: string }) {
   )
 }
 
-// function NavigateToLoginButtonFavorite(props: { favoritesCount: number }) {
-//   const { favoritesCount } = props
+function NavigateToLoginButtonFavorite(props: { favoritesCount: number }) {
+  const { favoritesCount } = props
 
-//   const navigate = useNavigate()
+  const navigate = useNavigate()
 
-//   const onClick = () => navigate(pathKeys.login())
+  const onClick = () => navigate(pathKeys.login())
 
-//   return (
-//     <Button
-//       color="primary"
-//       variant="outline"
-//       onClick={onClick}
-//     >
-//       <IoHeart size={16} />
-//       &nbsp;Favorite Article&nbsp;
-//       <span className="counter">({favoritesCount})</span>
-//     </Button>
-//   )
-// }
+  return (
+    <Button
+      color="primary"
+      variant="outline"
+      onClick={onClick}
+    >
+      <IoHeart size={16} />
+      &nbsp;Favorite Article&nbsp;
+      <span className="counter">({favoritesCount})</span>
+    </Button>
+  )
+}
