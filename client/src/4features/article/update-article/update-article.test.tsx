@@ -203,6 +203,7 @@ const articleDto: articleTypesDto.ArticleDto = {
       image: '',
       following: false,
     },
+    image:'',
   },
 }
 

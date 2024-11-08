@@ -42,6 +42,7 @@ final class ArticleResource extends JsonResource
             'updatedAt'      => $this->resource->updated_at,
             'favorited'      => $user && $this->resource->favoredBy($user),
             'favoritesCount' => $this->resource->favoredUsers->count(),
+            'image'          => $this->resource->image ?? "",
             'author'         => new ProfileResource($this->resource->author),
         ];
     }

@@ -77,6 +77,7 @@ const article: articleTypes.Article = {
     image: '',
     following: false,
   },
+  image:'',
 }
 
 function renderUnfavoriteArticleBriefButton() {

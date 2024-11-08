@@ -10,6 +10,7 @@ export function transformArticleToUpdateArticleDto(
     description: article.description,
     body: article.body,
     tagList: article.tagList,
+    image: article.image,
   }
 }
 
@@ -21,5 +22,6 @@ export function transformArticleToUpdateArticle(
     description: article.description,
     body: article.body,
     tagList: article.tagList.join(', '),
+    image: article.image,
   }
 }

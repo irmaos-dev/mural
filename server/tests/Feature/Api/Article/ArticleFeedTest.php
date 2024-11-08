@@ -50,6 +50,7 @@ final class ArticleFeedTest extends TestCase
                                 ->whereAllType([
                                     'slug'        => 'string',
                                     'title'       => 'string',
+                                    'image'       => 'string',
                                     'description' => 'string',
                                     'body'        => 'string',
                                     'createdAt'   => 'string',

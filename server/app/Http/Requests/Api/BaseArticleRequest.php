@@ -60,6 +60,7 @@ abstract class BaseArticleRequest extends FormRequest
             'slug'        => ['string', 'max:255', $unique],
             'description' => ['string', 'max:510'],
             'body'        => ['string'],
+            'image'       => ['string'],
         ];
     }
 
