@@ -15,7 +15,9 @@ final class ShowArticleTest extends TestCase
     public function testShowArticleWithoutAuth(): void
     {
         /** @var Article $article */
-        $article = Article::factory()
+        $article = Article::factory()->state([
+            "image" => "https://example.com/image.png",
+        ])
             ->has(Tag::factory()->count(5), "tags")
             ->for(
                 User::factory()->state([
@@ -37,6 +39,7 @@ final class ShowArticleTest extends TestCase
                     ->whereAll([
                         "slug"           => $article->slug,
                         "title"          => $article->title,
+                        "image"          => $article->image,
                         "description"    => $article->description,
                         "body"           => $article->body,
                         "tagList"        => $tags->pluck("name"),

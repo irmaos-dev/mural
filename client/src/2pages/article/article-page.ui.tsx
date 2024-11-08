@@ -19,6 +19,7 @@ import { FollowUserButton, UnfollowUserButton } from '~4features/profile'
 import { CommentsFeed } from '~3widgets/comments-feed'
 import { ArticleLoaderData } from './article-page.model'
 import { ArticlePageSkeleton } from './article-page.skeleton'
+import "./articles-page.css"
 
 const enhance = compose(
   (component) =>
@@ -41,6 +42,11 @@ export const ArticlePage = enhance(() => {
     <div className="article-page">
       <div className="banner">
         <div className="container">
+        {article.image && <img
+          src={article.image}
+          className="article-img-feed"
+          alt="foto"
+        />}
           <h1>{article.title}</h1>
           <ArticleMeta
             article={article}

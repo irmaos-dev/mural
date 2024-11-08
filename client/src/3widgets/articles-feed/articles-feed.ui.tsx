@@ -15,6 +15,7 @@ import {
   filterArticleModel,
 } from '~4features/article'
 import { ArticlesFeedSkeleton } from './articles-feed.skeleton'
+import './articles-feed.css'
 
 type ArticlesFeedProps = {
   useArticleFilterStore?: filterArticleModel.ArticleFilterStore
@@ -26,6 +27,7 @@ const enhance = compose<ArticlesFeedProps>(
     withErrorBoundary(component, {
       FallbackComponent: ErrorHandler,
       onError: logError,
+
     }),
   (component) =>
     withSuspense(component, { FallbackComponent: ArticlesFeedSkeleton }),
@@ -91,6 +93,16 @@ function ArticleMeta(props: ArticleMetaProps) {
 
   return (
     <div className="article-preview">
+      <Link
+        className="preview-link"
+        to={pathKeys.article.bySlug({ slug: article.slug })}
+      >
+        {article.image && <img
+          src={article.image}
+          className="article-img-feed"
+          alt="foto"
+        />}
+      </Link>
       <div className="article-meta">
         <Link to={pathKeys.profile.byUsername({ username: author.username })}>
           <img
@@ -118,7 +130,9 @@ function ArticleMeta(props: ArticleMetaProps) {
         to={pathKeys.article.bySlug({ slug: article.slug })}
       >
         <h1>{article.title}</h1>
-        <p>{article.description}</p>
+        <div className="row">
+          <p>{article.description}</p>
+        </div>
         <span>Read more...</span>
         <ul className="tag-list">
           {article.tagList.map((tag) => (
