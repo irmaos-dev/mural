@@ -89,13 +89,26 @@
     Leia mais sobre isso: https://anshita0705.medium.com/engaging-users-with-progressive-loading-in-skeleton-screen-335a4e287a55
     Note que declaramos os skeletons através do método "enhance" que utilizam os auxiliares "compose" e "withSuspense". Não há necessidade de compreender o funcionamento destes, apenas note como usar.
 
+- React Hook Form
+    https://medium.com/@Bigscal-Technologies/why-is-react-hook-form-better-than-other-forms-497054a6b2fe
+    https://dev.to/majiedo/using-zod-with-react-hook-form-using-typescript-1mgk
 - Zod
+    https://blog.logrocket.com/schema-validation-typescript-zod/
 - Zustand
+    https://www.freecodecamp.org/news/zustand-vs-usestate-how-to-manage-state-in-react/
+    https://dev.to/teyim/using-zustand-to-manage-state-in-react-app-2iia
+    https://pietrobondioli.com.br/articles/how-to-keep-zustand-sync-with-storage
+    https://www.gabrielmaestre.com/blog/using-zustand-with-redux-devtools
 - TanStack
+    https://medium.com/@abdulrafayn001/tanstack-query-improve-your-web-apps-performance-and-reduce-boilerplate-code-708e30aeced3
+    https://tkdodo.eu/blog/practical-react-query
+    https://medium.com/@seeusimong/rendering-paginated-data-in-react-with-useinfinitequery-ece9771ec3a3
     https://dev.to/androbro/simplifying-data-fetching-with-zustand-and-tanstack-query-one-line-to-rule-them-all-3k87
     https://www.youtube.com/watch?v=1UpZgXaKkcw
 - cn
+    https://github.com/JedWatson/classnames/blob/main/README.md#usage
 - Feature-Sliced Design
+    https://dev.to/m_midas/feature-sliced-design-the-best-frontend-architecture-4noj
 
 Por que uma pasta "widgets"?
 Veja a subpasta "articles-feed". Ela define um componente que é usada de forma idêntica em duas páginas: "home" e "profile". Em vez de implementar exatamente a mesma lógica nas duas páginas, criamos um widget que pode ser usada em ambas páginas. Além disso, não devemos importar uma página dentro de outra página.
@@ -109,3 +122,14 @@ Por último, é sempre mais fácil de trabalhar em aplicações onde é óbvio o
 ## Como as ferramentas do backend funcionam
 
 https://medium.com/@rajvir.ahmed.shuvo/understanding-sync-attach-and-detach-in-laravel-managing-relationships-with-eloquent-394a7cf7fabd
+
+- Outros
+    https://dev.to/guiselair/automatizando-formularios-com-devtools-2p9e
+    https://dev.to/guiselair/interceptando-requisicoes-no-devtools-39jl
+    https://dev.to/guiselair/usecallback-hook-entenda-quando-utiliza-lo-3n3k
+    https://vercel.com/guides/enhancing-security-for-redirects-and-rewrites
+    https://vercel.com/guides/understanding-xss-attacks
+    https://vercel.com/docs/edge-network/security-headers
+    https://vercel.com/blog/understanding-the-samesite-cookie-attribute
+    https://vercel.com/blog/understanding-csrf-attacks
+    https://jaimeneeves.medium.com/atualizando-seu-fork-do-github-1e2a78ee4cbf
