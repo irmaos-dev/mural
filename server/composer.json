@@ -17,6 +17,7 @@
         "laravel/sanctum": "^4.0",
         "laravel/socialite": "^5.16",
         "laravel/tinker": "^2.7",
+        "open-telemetry/opentelemetry-auto-laravel": "^1.0",
         "spatie/laravel-permission": "^6.9"
     },
     "require-dev": {
