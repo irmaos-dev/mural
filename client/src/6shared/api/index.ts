@@ -17,33 +17,35 @@ export function handleGenericError(error: AxiosError) {
   //   return Promise.reject(error)
   // }
 
-  const validation = GenericErrorSchema.safeParse(error.response?.data)
+  const validation = ErrorSchema.safeParse(error.response?.data);
 
   if (validation.error) {
     return error
   }
 
-  const message = formatValidationErrors(validation.data)
+  const {message} = validation.data;
+  const {file} = validation.data;
+  const {line} = validation.data;
+  const stack =`File: ${file}\nLine: ${line}`;
 
-  return new AxiosError(
+  return { 
     message,
-    error.code,
-    error.config,
-    error.request,
-    error.response,
+    stack
+  }
+}
+
+const ErrorSchema = z.object({
+  message: z.string(),
+  exception: z.string(),
+  file: z.string(),
+  line: z.number(),
+  trace: z.array(
+    z.object({
+      file: z.string(),
+      line: z.number(),
+      function: z.string(),
+      class: z.string().optional(),
+      type: z.string().optional()
+    })
   )
-}
-
-const GenericErrorSchema = z.object({
-  errors: z.record(z.string(), z.array(z.string())),
-})
-
-type GenericError = z.infer<typeof GenericErrorSchema>
-
-function formatValidationErrors(data: GenericError): string {
-  return Object.entries(data.errors)
-    .map(([field, messages]) =>
-      messages.map((message) => `${field}: ${message}`).join('\n'),
-    )
-    .join('\n')
-}
+});
