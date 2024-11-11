@@ -77,7 +77,6 @@ Route::name('api.')->group(function (): void {
 
     Route::name('auth.')->group(function (): void {
         Route::get('auth/redirect', [LoginController::class, 'redirect']);
-
         Route::get('auth/callback', [LoginController::class, 'callback']);
     });
 });

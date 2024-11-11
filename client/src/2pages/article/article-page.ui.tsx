@@ -152,7 +152,8 @@ function ArticleActions(props: { article: articleTypes.Article }) {
       {!canUpdateArticle && <ToggleFollowProfile profile={author} />}
       &nbsp;
       {canDeleteArticle && <DeleteArticleButton slug={article.slug} />}
-      {!canDeleteArticle && <ToggleFavoriteArticle article={article} />}
+      &nbsp;
+      <ToggleFavoriteArticle article={article} />
     </>
   )
 }
@@ -188,6 +189,7 @@ function ToggleFollowProfile(props: { profile: profileTypes.Profile }) {
 function ToggleFavoriteArticle(props: { article: articleTypes.Article }) {
   const { article } = props
   const { favorited } = article
+  const { favoritesCount } = article
 
   const canLikeArticle = PermissionService.useCanPerformAction(
     'like',
@@ -206,11 +208,7 @@ function ToggleFavoriteArticle(props: { article: articleTypes.Article }) {
     <>
       {canLike && <FavoriteArticleExtendedButton article={article} />}
       {canDislike && <UnfavoriteArticleExtendedButton article={article} />}
-      {cannotLikeOrDislike && (
-        <NavigateToLoginButtonFavorite
-          favoritesCount={article.favoritesCount}
-        />
-      )}
+      {cannotLikeOrDislike && <NavigateToLoginButtonFavorite favoritesCount={favoritesCount}/>}
     </>
   )
 }
