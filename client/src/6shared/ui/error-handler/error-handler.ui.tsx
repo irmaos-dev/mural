@@ -10,7 +10,7 @@ const isDevelopment = import.meta.env.DEV
 export function ErrorHandler(props: ErrorHandlerProps) {
   const { error, resetErrorBoundary } = props
 
-  return (
+  return (  
     <div>
       <h3>Something went wrong.</h3>
       {isDevelopment && (
