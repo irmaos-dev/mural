@@ -1,3 +1,4 @@
+import * as React from 'react'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useSuspenseQuery } from '@tanstack/react-query'
 import { withErrorBoundary } from 'react-error-boundary'
@@ -38,6 +39,7 @@ export const CreateCommentForm = enhance((props: CreateCommentFormProps) => {
     handleSubmit,
     setError,
     setValue,
+    reset,
     formState: { errors, isDirty, isValid },
   } = useForm<commentTypesDto.CreateCommentDto>({
     mode: 'onChange',
@@ -68,6 +70,15 @@ export const CreateCommentForm = enhance((props: CreateCommentFormProps) => {
       session,
     })
     mutate({ slug, comment })
+    reset()
+  }
+
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLTextAreaElement>) => {
+    if (event.key === 'Enter' && event.ctrlKey) {
+      event.preventDefault();
+      handleSubmit(onSubmit)();
+      reset();
+    }
   }
 
   return (
@@ -75,6 +86,7 @@ export const CreateCommentForm = enhance((props: CreateCommentFormProps) => {
       {hasMessages(errors) && <ErrorList errors={errors} />}
 
       <form
+        data-testid="comment-form"
         className="card comment-form"
         onSubmit={handleSubmit(onSubmit)}
       >
@@ -85,6 +97,7 @@ export const CreateCommentForm = enhance((props: CreateCommentFormProps) => {
               placeholder="Write a comment..."
               rows={3}
               {...register('body')}
+              onKeyDown={handleKeyDown}
             />
           </fieldset>
         </div>
