@@ -113,7 +113,7 @@ final class User extends Authenticatable implements JwtSubjectInterface
         $userName = $this->username ?? 'Desconhecido';
 
         return match ($eventName) {
-            'created' => "Uma nova conta foi criada, com username '{$userName}' ",
+            'created' => "Uma nova conta foi criada, com username '{$userName}' e id '{$this->id}'.",
             'updated' => "O usuário '{$userName}' atualizou seu perfil",
             'deleted' => "O usuário '{$userName}' excluiu sua conta",
             default   => "O usuário '{$userName}' realizou uma ação desconhecida (ação/evento: {$eventName})"
