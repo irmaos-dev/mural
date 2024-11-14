@@ -6,10 +6,12 @@ use App\Http\Controllers\Api\Articles\ArticleController;
 use App\Http\Controllers\Api\Articles\CommentsController;
 use App\Http\Controllers\Api\Articles\FavoritesController;
 use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\Api\BillingController;
 use App\Http\Controllers\Api\LoginController;
 use App\Http\Controllers\Api\ProfileController;
 use App\Http\Controllers\Api\TagsController;
 use App\Http\Controllers\Api\UserController;
+use App\Http\Controllers\Api\CheckoutController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -79,4 +81,13 @@ Route::name('api.')->group(function (): void {
         Route::get('auth/redirect', [LoginController::class, 'redirect']);
         Route::get('auth/callback', [LoginController::class, 'callback']);
     });
+
+    Route::name('checkout.')->group((function(): void{
+        Route::get('checkout', [CheckoutController::class, 'checkout']);
+        Route::get('sucess', [CheckoutController::class, 'sucess']);
+        Route::get('cancel', [CheckoutController::class, 'cancel']);
+    }));
+
+    Route::get('billing', [BillingController::class, 'billing'])
+        ->middleware(['auth'])->name('billing');
 });

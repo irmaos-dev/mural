@@ -64,7 +64,7 @@ class LoginController extends Controller
         $usersCountSeeder = DatabaseSeeder::$usersCount;
 
         if ($usersCountDB === ($usersCountSeeder + 1)) {
-            $user->assignRole('Admin');
+            $user->assignRole('Admin')->createAsStripeCustomer();
         }
 
         $userData = urlencode(json_encode(new UserResource($user)));
