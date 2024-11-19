@@ -17,6 +17,7 @@ import {
   NewArticleLink,
   SettingsProfileLink,
   ProfileLink,
+  PremiumLink,
 } from './layout.ui'
 
 export function UserLayout() {
@@ -25,6 +26,7 @@ export function UserLayout() {
       <nav className="navbar navbar-light">
         <div className="container">
           <BrandLink />
+
           <UserNavigation />
         </div>
       </nav>
@@ -52,7 +54,7 @@ function UserDropdownMenu() {
     devtoolsOptions: { name: 'Example Dropdown' },
   })
   return (
-    <DropdownMenu.Root store={userDropdownMenuStore}>
+    <DropdownMenu.Root store={userDropdownMenuStore} >
       <DropdownMenu.Trigger split>
         <ProfileLink />
       </DropdownMenu.Trigger>
@@ -61,7 +63,10 @@ function UserDropdownMenu() {
           <SettingsProfileLink />
         </DropdownMenu.Item>
         <DropdownMenu.Item>
-          <UserLogoutButton/>
+          <PremiumLink />
+        </DropdownMenu.Item>
+        <DropdownMenu.Item>
+          <UserLogoutButton />
         </DropdownMenu.Item>
       </DropdownMenu.Content>
     </DropdownMenu.Root>
@@ -99,11 +104,14 @@ const UserNavigation = enhance(() => {
           <NewArticleLink />
         </li>
       )}
+
       {canUpdateProfile && (
+
         <li className="nav-item">
           <UserDropdownMenu />
         </li>
       )}
+
     </ul>
   )
 })

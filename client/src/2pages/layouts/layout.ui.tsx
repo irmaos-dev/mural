@@ -1,8 +1,9 @@
 import { useSuspenseQuery } from '@tanstack/react-query'
-import { IoCreateOutline, IoSettingsSharp } from 'react-icons/io5'
+import { IoCreateOutline, IoSettingsSharp, IoStar } from 'react-icons/io5'
 import { NavLink } from 'react-router-dom'
 import { pathKeys } from '~6shared/lib/react-router'
 import { SessionQueries } from '~6shared/session'
+import { Button } from '~6shared/ui/button'
 import { GoogleButton } from '~6shared/ui/button-google'
 
 export function Footer() {
@@ -36,7 +37,7 @@ export function BrandLink() {
     <NavLink
       className="navbar-brand"
       to={pathKeys.home()}
-      style={{padding:0}}
+      style={{ padding: 0 }}
     >
       conduit
     </NavLink>
@@ -49,6 +50,16 @@ export function SignInLink() {
   }
   return (
     <GoogleButton onClick={onSubmit} />
+  )
+}
+
+export function Premium() {
+  const onSubmit = async () => {
+    window.location.href = `${import.meta.env.VITE_API_BASE_URL}/checkout`
+  }
+  const label = "Seja Premium"
+  return (
+    <Button onClick={onSubmit}>{label}</Button>
   )
 }
 
@@ -69,9 +80,30 @@ export function SettingsProfileLink() {
     <NavLink
       className="nav-link"
       to={pathKeys.settings()}
+      style={{color: 'green'}}
     >
-      <IoSettingsSharp size={16} />
+      <IoSettingsSharp size={16}
+      color='green'
+      style={{boxShadow: '0px 0px 3px green', borderRadius: '100%', padding: '2px'}}
+      />
       &nbsp;Settings
+    </NavLink>
+  )
+}
+
+export function PremiumLink() {
+  return (
+    <NavLink
+      className="nav-link"
+      to={pathKeys.settings()}
+      style={{ color: 'green' }}
+    >
+      <IoStar
+        size={16}
+        color='green'
+        style={{boxShadow: '0px 0px 5px green', borderRadius: '100%', padding: '2px'}}
+      />
+      &nbsp;Seja Premium
     </NavLink>
   )
 }

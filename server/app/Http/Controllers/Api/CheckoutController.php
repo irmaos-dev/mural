@@ -8,13 +8,13 @@ use Illuminate\Support\Facades\Redis;
 
 class CheckoutController extends Controller
 {
-    public function chechout (Request $request){
+    public function checkout (Request $request){
 
         return $request->user()
             ->newSubscription('default', 'price_basic_monthly')
             ->trialDays(5)
             ->allowPromotionCodes()
-            ->checkout([
+            ->checkout([    
                 'success_url' => route('checkout.sucess'),
                 'cancel_url' => route('checkout.cancel'),
             ]);

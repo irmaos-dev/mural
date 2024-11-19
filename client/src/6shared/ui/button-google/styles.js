@@ -1,14 +1,14 @@
 const baseStyle = {
-    height: '35px',
-    width: '185px',
+    height: '27.5px',
+    width: '170px',
     border: 'none',
     textAlign: 'center',
     verticalAlign: 'center',
     boxShadow: '0 2px 4px 0 rgba(0,0,0,.25)',
-    fontSize: '16px',
-    lineHeight: '35px',
+    fontSize: '0.875rem',
+    lineHeight: '27.5px',
     display: 'block',
-    borderRadius: '1px',
+    borderRadius: '0.2rem',
     transition: 'background-color .218s, border-color .218s, box-shadow .218s',
     fontFamily: 'Roboto,arial,sans-serif',
     cursor: 'pointer',
@@ -28,8 +28,8 @@ const baseStyle = {
   }
   
   export const iconStyle = {
-    width: '38.4px',
-    height: '33px',
+    width: '30px',
+    height: '25.5px',
     textAlign: 'center',
     verticalAlign: 'center',
     display: 'block',
@@ -37,13 +37,13 @@ const baseStyle = {
     marginLeft: '1px',
     float: 'left',
     backgroundColor: '#fff',
-    borderRadius: '1px',
+    borderRadius: '0.2rem',
     whiteSpace: 'nowrap'
   }
   
   export const svgStyle = {
-    width: '38px',
-    height: '33px',
+    width: '30px',
+    height: '25.5px',
     display: 'block'
   }
   

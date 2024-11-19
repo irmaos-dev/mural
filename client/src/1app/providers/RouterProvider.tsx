@@ -13,6 +13,7 @@ import { Skeleton } from '~6shared/ui/skeleton'
 import { Spinner } from '~6shared/ui/spinner'
 import { Stack } from '~6shared/ui/stack'
 import { articlePageRoute } from '~2pages/article'
+import { checkoutPageRoute } from '~2pages/checkout'
 import { editorPageRoute } from '~2pages/editor'
 import { homePageRoute } from '~2pages/home'
 import { page404Route } from '~2pages/page-404'
@@ -45,7 +46,7 @@ const browserRouter = createBrowserRouter([
     children: [
       {
         element: createElement(enhance(GenericLayout)),
-        children: [homePageRoute, articlePageRoute, profilePageRoute],
+        children: [homePageRoute, articlePageRoute, profilePageRoute, checkoutPageRoute],
       },
       {
         element: createElement(enhance(UserLayout)),
