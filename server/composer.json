@@ -17,6 +17,7 @@
         "laravel/sanctum": "^4.0",
         "laravel/socialite": "^5.16",
         "laravel/tinker": "^2.7",
+        "spatie/laravel-activitylog": "^4.9",
         "spatie/laravel-permission": "^6.9"
     },
     "require-dev": {
