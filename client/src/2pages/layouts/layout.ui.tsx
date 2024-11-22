@@ -3,7 +3,6 @@ import { IoCreateOutline, IoSettingsSharp, IoStar } from 'react-icons/io5'
 import { NavLink } from 'react-router-dom'
 import { pathKeys } from '~6shared/lib/react-router'
 import { SessionQueries } from '~6shared/session'
-import { Button } from '~6shared/ui/button'
 import { GoogleButton } from '~6shared/ui/button-google'
 
 export function Footer() {
@@ -53,16 +52,6 @@ export function SignInLink() {
   )
 }
 
-export function Premium() {
-  const onSubmit = async () => {
-    window.location.href = `${import.meta.env.VITE_API_BASE_URL}/checkout`
-  }
-  const label = "Seja Premium"
-  return (
-    <Button onClick={onSubmit}>{label}</Button>
-  )
-}
-
 export function NewArticleLink() {
   return (
     <NavLink
@@ -95,7 +84,7 @@ export function PremiumLink() {
   return (
     <NavLink
       className="nav-link"
-      to={pathKeys.settings()}
+      to={pathKeys.checkout()}
       style={{ color: 'green' }}
     >
       <IoStar

@@ -10,7 +10,8 @@ class CheckoutController extends Controller
 {
     public function checkout (Request $request){
 
-        return $request->user()
+        if ($request->user()){
+            return $request->user()
             ->newSubscription('default', 'price_basic_monthly')
             ->trialDays(5)
             ->allowPromotionCodes()
@@ -18,6 +19,9 @@ class CheckoutController extends Controller
                 'success_url' => route('checkout.sucess'),
                 'cancel_url' => route('checkout.cancel'),
             ]);
+        } else {
+            return redirect()->to(config('frontend.url'));
+        }
     }
 
     public function sucess (){

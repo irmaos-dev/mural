@@ -3,7 +3,6 @@ import {
   Footer,
   BrandLink,
   SignInLink,
-  Premium,
 } from './layout.ui'
 
 
@@ -15,9 +14,6 @@ export function GuestLayout() {
           <BrandLink />
 
           <ul className="nav navbar-nav pull-xs-right">
-            <li className="nav-item">
-              <Premium/>
-            </li>
             <li className="nav-item">
               <SignInLink />
             </li>

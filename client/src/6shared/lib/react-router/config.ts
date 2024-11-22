@@ -44,9 +44,7 @@ export const pathKeys = {
       return pathKeys.editor.root().concat(slug, '/')
     },
   },
-  checkout: {
-    root() {
-      return pathKeys.root.concat('checkout/')
-    },
+  checkout() {
+    return pathKeys.root.concat('checkout/')
   },
 }
