@@ -65,7 +65,7 @@ https://www.certificacaolinux.com.br/como-instalar-ubuntu-no-windows-usando-wsl/
 
 `sudo apt update && sudo apt upgrade`
 
-- Instale o docker dentro do WSL2 [DOCKER.md](https://github.com/irmaos-dev/mural/blob/main/docs/docker.md)
+- Instale o docker dentro do WSL2 [usando essas instruções de instalação.](https://github.com/irmaos-dev/mural/blob/main/docs/docker.md)
 
 - Instale as dependências do projeto com o comando abaixo
 
