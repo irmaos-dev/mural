@@ -93,7 +93,12 @@
     https://medium.com/@Bigscal-Technologies/why-is-react-hook-form-better-than-other-forms-497054a6b2fe
     https://dev.to/majiedo/using-zod-with-react-hook-form-using-typescript-1mgk
 - Zod
-    https://blog.logrocket.com/schema-validation-typescript-zod/
+    Zod é útil para validar tanto os dados que vão para o server quanto os dados que voltam do server.
+    O servidor não deve receber dados em um formato que não é o correto. Mesmo que o servidor também faça a validação dos dados, identificar um problema nos dados ainda dentro do client previne o envio de requisições inválidas, gerando menos tráfego de rede.
+    E também o client também não deve receber dados inválidos, pois um dado inválido pode desencadear um erro inesperado que pode confundir o usuário. Além disso, no relatório de erros, nós desenvolvedores, saberemos que o erro aconteceu porque o servidor enviou dados em um formato inválido, descartando imediatamente um problema no client.
+    https://www.treinaweb.com.br/blog/o-que-e-o-zod
+    https://dev.to/vitorrios1001/validacao-de-formularios-com-react-hook-form-e-zod-a6k
+    https://dev.to/vitorrios1001/criando-validacoes-de-endpoints-com-zod-k28
 - Zustand
     https://www.freecodecamp.org/news/zustand-vs-usestate-how-to-manage-state-in-react/
     https://dev.to/teyim/using-zustand-to-manage-state-in-react-app-2iia
