@@ -5,6 +5,7 @@ declare(strict_types = 1);
 namespace App\Models;
 
 use App\Contracts\JwtSubjectInterface;
+use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -67,6 +68,7 @@ final class User extends Authenticatable implements JwtSubjectInterface
     use HasRoles;
     use LogsActivity;
     use Notifiable;
+    use Sluggable;
 
     /**
      * Regular expression for username.
@@ -79,6 +81,7 @@ final class User extends Authenticatable implements JwtSubjectInterface
      * The attributes that are mass assignable.
      */
     protected $fillable = [
+        'name',
         'username',
         'email',
         'password',
@@ -87,7 +90,6 @@ final class User extends Authenticatable implements JwtSubjectInterface
         'google_id',
         'google_token',
         'google_refresh_token',
-        'name',
     ];
 
     /**
@@ -97,6 +99,22 @@ final class User extends Authenticatable implements JwtSubjectInterface
         'bio'   => '',
         'image' => '',
     ];
+
+    public function sluggable(): array
+    {
+
+        return [
+            'username' => [
+                'source'    => ['firstname'],
+                'separator' => '@',
+            ],
+        ];
+    }
+
+    public function getFirstNameAttribute(): string
+    {
+        return strtok($this->name, ' ');
+    }
 
     public function getActivitylogOptions(): LogOptions
     {

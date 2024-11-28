@@ -34,13 +34,6 @@ class LoginController extends Controller
             return redirect()->to(config('frontend.url'));
         }
 
-        $name = explode(" ", $googleUser->name);
-
-        do {
-            $num_rand = rand(10000000, 99999999);
-            $username = $name[0] . "@" . $num_rand;
-        } while (User::where(['username' => $username])->exists());
-
         if (User::where(['google_id' => $googleUser->id])->exists()) {
             $user = User::where(['google_id' => $googleUser->id])->first();
             $user->update([
@@ -49,9 +42,9 @@ class LoginController extends Controller
                 'google_refresh_token' => $googleUser->refreshToken,
             ]);
         } else {
+            $name = explode(" ", $googleUser->name);
             $user = User::create([
                 'google_id'            => $googleUser->id,
-                'username'             => $username,
                 'name'                 => $googleUser->name,
                 'email'                => $googleUser->email,
                 'google_token'         => $googleUser->token,
