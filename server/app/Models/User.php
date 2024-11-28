@@ -113,7 +113,15 @@ final class User extends Authenticatable implements JwtSubjectInterface
 
     public function getFirstNameAttribute(): string
     {
-        return strtok($this->name, ' ');
+        $name = explode(" ", $this->name);
+        $firstname = $name[0];
+
+        if (mb_strlen($firstname) <= 3) {
+            return $name[0] . ' ' . $name[1];
+        }
+
+        return $firstname;
+
     }
 
     public function getActivitylogOptions(): LogOptions

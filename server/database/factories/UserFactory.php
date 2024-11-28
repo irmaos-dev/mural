@@ -19,10 +19,11 @@ final class UserFactory extends Factory
     public function definition()
     {
         return [
-            'username' => $this->faker->unique()->userName(),
-            'email'    => $this->faker->unique()->safeEmail(),
-            'bio'      => $this->faker->optional()->paragraph(),
-            'image'    => $this->faker->optional()->imageUrl(),
+            'name' => $this->faker->name(),
+            // 'username' => $this->faker->unique()->userName(),
+            'email' => $this->faker->unique()->safeEmail(),
+            'bio'   => $this->faker->optional()->paragraph(),
+            'image' => $this->faker->optional()->imageUrl(),
             // 'password'   => 'password',
             'google_id'            => $this->faker->unique()->userName(),
             'google_token'         => $this->faker->unique()->userName(),
