@@ -6,6 +6,7 @@ namespace Tests\Feature\Api\Auth;
 
 use App\Jwt;
 use App\Models\User;
+use Spatie\Activitylog\Facades\CauserResolver;
 use Tests\TestCase;
 
 final class JwtGuardTest extends TestCase
@@ -19,7 +20,13 @@ final class JwtGuardTest extends TestCase
         parent::setUp();
 
         /** @var User $user */
+        CauserResolver::resolveUsing(function (): void {});
         $user = User::factory()->create();
+        CauserResolver::resolveUsing(function ($subject) {
+            if ($subject instanceof Model) {
+                return $subject;
+            }
+        });
 
         $this->user = $user;
         $this->token = Jwt\Generator::token($user);
