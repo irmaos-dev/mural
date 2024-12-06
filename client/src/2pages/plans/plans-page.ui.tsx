@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { PlansService } from "~6shared/api/plans";
+import { PlansService } from "~6shared/api/plan";
 import { PricingCard, cardsModel } from "~6shared/ui/cards";
 
 const PlansCards: React.FC = () => {
@@ -25,11 +25,11 @@ const PlansCards: React.FC = () => {
             controller.abort();
         };
     }, []);
-            console.log(plans);
+    console.log(plans);
     return (
         <div className="plans-page">
 
-            {plans.length&&plans.map((plan) => (
+            {plans.length && plans.map((plan) => (
                 <PricingCard
                     key={plan.id}
                     plan={plan} />
