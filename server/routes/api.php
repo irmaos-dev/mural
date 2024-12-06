@@ -84,8 +84,11 @@ Route::name('api.')->group(function (): void {
 
     Route::name('checkout.')->group((function(): void{
         Route::get('checkout', [CheckoutController::class, 'checkout']);
-        Route::get('sucess', [CheckoutController::class, 'sucess']);
-        Route::get('cancel', [CheckoutController::class, 'cancel']);
+        Route::get('checkout/success', [CheckoutController::class, 'success'])
+        ->name('success');
+        Route::get('checkout/cancel', [CheckoutController::class, 'cancel'])    ->name('cancel');
+        Route::get('checkout/plans', [CheckoutController::class, 'plans'])
+        ->name('plans');
     }));
 
     Route::get('billing', [BillingController::class, 'billing'])

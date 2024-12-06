@@ -1,0 +1,1 @@
+export { plansPageRoute } from './plans-page.route'

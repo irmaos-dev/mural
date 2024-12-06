@@ -65,6 +65,7 @@ class LoginController extends Controller
 
         if ($usersCountDB === ($usersCountSeeder + 1)) {
             $user->assignRole('Admin')->createAsStripeCustomer();
+            // $user->newSubscription('default', 'price_1QMWm22QKc4mmxl23stlZ8jm')->add();
         }
 
         $userData = urlencode(json_encode(new UserResource($user)));

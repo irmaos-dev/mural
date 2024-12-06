@@ -17,8 +17,11 @@ import { checkoutPageRoute } from '~2pages/checkout'
 import { editorPageRoute } from '~2pages/editor'
 import { homePageRoute } from '~2pages/home'
 import { page404Route } from '~2pages/page-404'
+import { plansPageRoute } from '~2pages/plans'
 import { profilePageRoute } from '~2pages/profile'
 import { settingsPageRoute } from '~2pages/settings'
+
+
 
 export function BrowserRouter() {
   return <RouterProvider router={browserRouter} />
@@ -50,7 +53,7 @@ const browserRouter = createBrowserRouter([
       },
       {
         element: createElement(enhance(UserLayout)),
-        children: [editorPageRoute, settingsPageRoute],
+        children: [editorPageRoute, settingsPageRoute, plansPageRoute],
       },
       {
         element: createElement(Outlet),

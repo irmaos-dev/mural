@@ -45,6 +45,9 @@ export const pathKeys = {
     },
   },
   checkout() {
-    return pathKeys.root.concat('checkout/')
+    return pathKeys.root.concat('checkout/plans/')
+  },
+  premium() {
+    return pathKeys.root.concat('premium/')
   },
 }
