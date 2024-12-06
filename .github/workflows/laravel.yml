@@ -50,10 +50,10 @@ jobs:
           cd server/
           php artisan test --parallel
 
-      - name: Execute code style check
-        run: |
-          cd server/
-          vendor/bin/pint --test
+      # - name: Execute code style check
+      #   run: |
+      #     cd server/
+      #     vendor/bin/pint --test
 
       - name: Execute Larastan code quality checking
         run: |

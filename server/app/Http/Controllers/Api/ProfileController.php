@@ -39,6 +39,7 @@ final class ProfileController extends Controller
 
         $profile->followers()
             ->syncWithoutDetaching($request->user());
+        $this->logFollowUnfollow($request, $profile, 'follow');
 
         return new ProfileResource($profile);
     }
@@ -56,7 +57,25 @@ final class ProfileController extends Controller
             ->firstOrFail();
 
         $profile->followers()->detach($request->user());
+        $this->logFollowUnfollow($request, $profile, 'unfollow');
 
         return new ProfileResource($profile);
     }
+
+    private function logFollowUnfollow(Request $request, User $profile, string $action): void
+    {
+        $follower_id = $request->user()->id;
+        $author_id = $profile->id;
+        $actionMessage = 'follow' === $action ? 'começou a seguir' : 'deixou de seguir';
+        activity('FollowAction')
+            ->performedOn($profile)
+            ->causedBy($request->user())
+            ->event($action)
+            ->withProperties([
+                'follower_id' => $follower_id,
+                'followed_id' => $author_id,
+            ])
+            ->log("Usuário de id:'{$follower_id}' {$actionMessage} o usuário de id:'{$author_id}'");
+    }
+
 }

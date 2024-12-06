@@ -7,6 +7,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Spatie\Activitylog\LogOptions;
+use Spatie\Activitylog\Traits\LogsActivity;
 
 /**
  * App\Models\Article
@@ -48,6 +50,7 @@ use Illuminate\Database\Eloquent\Model;
 final class Article extends Model
 {
     use HasFactory;
+    use LogsActivity;
 
     /**
      * The attributes that are mass assignable.
@@ -60,6 +63,30 @@ final class Article extends Model
         'body',
         'image',
     ];
+
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()
+            ->LogOnly(['*'])
+            ->logOnlyDirty()
+            ->dontSubmitEmptyLogs()
+            ->useLogName('Article')
+            ->setDescriptionForEvent(fn (string $eventName) => $this->getDescriptionForEvent($eventName));
+    }
+
+    protected function getDescriptionForEvent(string $eventName): string
+    {
+        $userName = auth()->user()->name ?? 'Desconhecido';
+        $userId = auth()->id();
+        $userOrAdmin = $this->author_id === $userId ? 'pelo próprio dono do artigo:' : 'pelo admin: ';
+
+        return match ($eventName) {
+            'created' => "Um novo artigo foi criado. Id: '{$this->id}'.",
+            'updated' => "O artigo '{$this->title}' de id '{$this->id}' foi atualizado {$userOrAdmin} {$userName}.",
+            'deleted' => "O artigo '{$this->title}' de id '{$this->id}' foi excluído {$userOrAdmin} {$userName}.",
+            default   => "O artigo '{$this->title}' de id '{$this->id}' teve uma ação desconhecida. (ação/evento: {$eventName})"
+        };
+    }
 
     /**
      * Determine if user favored the article.

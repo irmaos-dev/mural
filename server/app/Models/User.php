@@ -12,6 +12,8 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Cashier\Billable;
 use Laravel\Passport\HasApiTokens;
+use Spatie\Activitylog\LogOptions;
+use Spatie\Activitylog\Traits\LogsActivity;
 use Spatie\Permission\Traits\HasRoles;
 
 /**
@@ -64,6 +66,7 @@ final class User extends Authenticatable implements JwtSubjectInterface
     use HasApiTokens;
     use HasFactory;
     use HasRoles;
+    use LogsActivity;
     use Notifiable;
     use Billable;
 
@@ -96,6 +99,28 @@ final class User extends Authenticatable implements JwtSubjectInterface
         'bio'   => '',
         'image' => '',
     ];
+
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()
+            ->logOnly(['name', 'username', 'bio', 'image']) //Caso precise adicionar algum outro parâmetro é aqui
+            ->logOnlyDirty()
+            ->dontSubmitEmptyLogs()
+            ->useLogName('User')
+            ->setDescriptionForEvent(fn (string $eventName) => $this->getDescriptionForEvent($eventName));
+    }
+
+    protected function getDescriptionForEvent(string $eventName): string
+    {
+        $userName = $this->username ?? 'Desconhecido';
+
+        return match ($eventName) {
+            'created' => "Uma nova conta foi criada, com username '{$userName}' e id '{$this->id}'.",
+            'updated' => "O usuário '{$userName}' atualizou seu perfil",
+            'deleted' => "O usuário '{$userName}' excluiu sua conta",
+            default   => "O usuário '{$userName}' realizou uma ação desconhecida (ação/evento: {$eventName})"
+        };
+    }
 
     /**
      * The attributes that should be hidden for serialization.
