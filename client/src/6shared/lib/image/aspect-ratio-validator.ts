@@ -3,7 +3,7 @@ export function ImageAspectRatioValidator (url: string, min:number, max:number):
     return new Promise((resolve) => {
         const img = new Image();
         
-        img.onload = function() {
+        img.onload = () => {
             const aspectRatio = img.width / img.height;
             if (aspectRatio >= min && aspectRatio <= max) {
                 resolve(true);
@@ -12,7 +12,7 @@ export function ImageAspectRatioValidator (url: string, min:number, max:number):
             }
         };
 
-        img.onerror = function() {
+        img.onerror = () => {
             resolve(false);
         };
 

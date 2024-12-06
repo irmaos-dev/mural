@@ -28,6 +28,8 @@ final class FavoritesController extends Controller
 
         $user->favorites()->syncWithoutDetaching($article);
 
+        $this->logFavoriteAction($request, $article, 'add');
+
         return new ArticleResource($article);
     }
 
@@ -45,9 +47,26 @@ final class FavoritesController extends Controller
 
         /** @var \App\Models\User $user */
         $user = $request->user();
-
         $user->favorites()->detach($article);
 
+        $this->logFavoriteAction($request, $article, 'remove');
+
         return new ArticleResource($article);
+    }
+
+    private function logFavoriteAction(Request $request, Article $article, string $action): void
+    {
+        $user_id = $request->user()->id;
+        $article_id = $article->id;
+        $actionMessage = 'add' === $action ? 'adicionou aos favoritos' : 'retirou dos favoritos';
+        activity('FavoriteAction')
+            ->performedOn($article)
+            ->causedBy($request->user())
+            ->event($action)
+            ->withProperties([
+                'user_id'    => $user_id,
+                'article_id' => $article_id,
+            ])
+            ->log("Usuário de id: '{$user_id}' {$actionMessage} o artigo de id: '{$article_id}'");
     }
 }

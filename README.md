@@ -55,11 +55,7 @@ https://realworld-docs.netlify.app/introduction/
 
 ## Instalação do Projeto
 
-Para ambos client e server, é sugerido que utilize Docker Desktop em conjunto com o WSL 2 (Subsistema Windows para Linux).
-
-- Primeiramente, instale o Docker Desktop:
-
-https://docs.docker.com/desktop/install/windows-install/
+Para ambos client e server, é sugerido que utilize docker em conjunto com o WSL 2 (Subsistema Windows para Linux).
 
 - Siga o passo a passo a seguir para instalar o WSL 2:
 
@@ -67,15 +63,17 @@ https://www.certificacaolinux.com.br/como-instalar-ubuntu-no-windows-usando-wsl/
 
 - Execute o comando a seguir para atualizar os pacotes do Linux
 
-```sudo apt update && sudo apt upgrade```
+`sudo apt update && sudo apt upgrade`
+
+- Instale o docker dentro do WSL2 [usando essas instruções de instalação.](https://github.com/irmaos-dev/mural/blob/main/docs/docker.md)
 
 - Instale as dependências do projeto com o comando abaixo
 
-```sudo apt-get install -y curl make && curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/master/install.sh | bash```
+`sudo apt-get install -y curl make && curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/master/install.sh | bash`
 
 e o comando:
 
-```nvm install 20```
+`nvm install 20`
 
 - Instale a extensão do WSL dentro do Visual Studio Code.
 
