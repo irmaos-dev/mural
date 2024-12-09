@@ -59,7 +59,6 @@ final class Article extends Model
      */
     protected $fillable = [
         'author_id',
-        'slug',
         'title',
         'description',
         'body',

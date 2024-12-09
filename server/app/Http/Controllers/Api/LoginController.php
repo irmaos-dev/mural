@@ -42,7 +42,6 @@ class LoginController extends Controller
                 'google_refresh_token' => $googleUser->refreshToken,
             ]);
         } else {
-            $name = explode(" ", $googleUser->name);
             $user = User::create([
                 'google_id'            => $googleUser->id,
                 'name'                 => $googleUser->name,
