@@ -9,6 +9,7 @@
         "php": "^8.3",
         "ext-json": "*",
         "ext-pdo": "*",
+        "cviebrock/eloquent-sluggable": "^11.0",
         "darkaonline/l5-swagger": "^8.3",
         "doctrine/dbal": "^3.0",
         "guzzlehttp/guzzle": "^7.2",

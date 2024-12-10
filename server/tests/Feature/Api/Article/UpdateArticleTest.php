@@ -143,23 +143,6 @@ final class UpdateArticleTest extends TestCase
         $response->assertUnprocessable()->assertInvalid($errors);
     }
 
-    public function testUpdateArticleValidationUnique(): void
-    {
-        /** @var Article $anotherArticle */
-        $anotherArticle = Article::factory()->create();
-
-        $response = $this->actingAs($this->article->author)->putJson(
-            "/api/articles/{$this->article->slug}",
-            [
-                "article" => [
-                    "title" => $anotherArticle->title,
-                ],
-            ]
-        );
-
-        $response->assertUnprocessable()->assertInvalid("slug");
-    }
-
     public function testSelfUpdateArticleValidationUnique(): void
     {
         $response = $this->actingAs($this->article->author)->putJson(

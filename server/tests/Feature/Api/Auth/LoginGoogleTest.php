@@ -44,7 +44,7 @@ final class LoginGoogleTest extends TestCase
 
         $this->getJson("/api/auth/callback")
             ->assertRedirectContains(config('frontend.url'))
-            -> assertRedirectContains($socialiteUser->name);
+            -> assertRedirectContains('teste');
 
         $this-> assertDatabaseHas('users', [
             'name'                 => "Teste",
@@ -73,7 +73,7 @@ final class LoginGoogleTest extends TestCase
         // @phpstan-ignore-next-line
         $socialiteUser->refreshToken = "login123";
         // @phpstan-ignore-next-line
-        $socialiteUser->username = "TesteUsername";
+        $socialiteUser->username = "teste";
         // @phpstan-ignore-next-line
         $socialiteUser->avatar = "https://irmaos.dev/logo.png";
 
@@ -90,7 +90,6 @@ final class LoginGoogleTest extends TestCase
             'google_token'         => "login123",
             'google_refresh_token' => "login123",
             'image'                => $user->image,
-            'username'             => $user->username,
         ]);
     }
 
