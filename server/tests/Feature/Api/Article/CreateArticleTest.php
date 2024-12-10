@@ -116,6 +116,40 @@ final class CreateArticleTest extends TestCase
         $this->assertDatabaseCount("article_tag", 5);
     }
 
+    public function testCreateArticleExistingTitle(): void
+    {
+        /** @var User $author */
+        $author = User::factory()->create();
+
+        $articleTitle = $this->faker->sentence(4);
+
+        $response = $this->actingAs($author)->postJson("/api/articles", [
+            "article" => [
+                "title"       => $articleTitle,
+                "image"       => $this->faker->imageUrl(),
+                "description" => $this->faker->paragraph(),
+                "body"        => $this->faker->text(),
+                "tagList"     => [],
+            ],
+        ]);
+
+        $slug = $response->decodeResponseJson()['article']['slug'];
+
+        $response2 = $this->actingAs($author)->postJson("/api/articles", [
+            "article" => [
+                "title"       => $articleTitle,
+                "image"       => $this->faker->imageUrl(),
+                "description" => $this->faker->paragraph(),
+                "body"        => $this->faker->text(),
+                "tagList"     => [],
+            ],
+        ]);
+
+        $slug2 = $response2->decodeResponseJson()['article']['slug'];
+
+        $this->assertNotEquals($slug, $slug2);
+    }
+
     /**
      * @dataProvider articleProvider
      */
