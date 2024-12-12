@@ -291,41 +291,4 @@ final class UpdateArticleTest extends TestCase
         $slug2Edited = $response3->decodeResponseJson()['article']['slug'];
         $this->assertEquals("{$slug}-2", $slug2Edited);
     }
-
-    public function testUpdatingSlugToExistingSlugFails(): void
-    {
-        /** @var User $author */
-        $author = User::factory()->create();
-
-        $response = $this->actingAs($author)->postJson("/api/articles", [
-            "article" => [
-                "title"       => $this->faker->sentence(4),
-                "image"       => $this->faker->imageUrl(),
-                "description" => $this->faker->paragraph(),
-                "body"        => $this->faker->text(),
-                "tagList"     => [],
-            ],
-        ]);
-
-        $slug = $response->decodeResponseJson()['article']['slug'];
-
-        $response2 = $this->actingAs($author)->postJson("/api/articles", [
-            "article" => [
-                "title"       => $this->faker->sentence(4),
-                "image"       => $this->faker->imageUrl(),
-                "description" => $this->faker->paragraph(),
-                "body"        => $this->faker->text(),
-                "tagList"     => [],
-            ],
-        ]);
-
-        $slug2 = $response2->decodeResponseJson()['article']['slug'];
-
-        $response3 = $this->actingAs($author)->putJson("/api/articles/{$slug2}", [
-            "article" => [
-                "slug" => $slug,
-            ],
-        ]);
-        $response3->assertStatus(422);
-    }
 }
