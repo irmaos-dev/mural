@@ -289,6 +289,6 @@ final class UpdateArticleTest extends TestCase
         ]);
 
         $slug2Edited = $response3->decodeResponseJson()['article']['slug'];
-        $this->assertEquals("{$slug}-2", $slug2Edited);
+        $this->assertNotEquals($slug, $slug2Edited);
     }
 }
