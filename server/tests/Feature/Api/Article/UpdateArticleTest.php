@@ -291,4 +291,33 @@ final class UpdateArticleTest extends TestCase
         $slug2Edited = $response3->decodeResponseJson()['article']['slug'];
         $this->assertNotEquals($slug, $slug2Edited);
     }
+
+    public function testUpdateSlugIgnoresManualInput(): void
+    {
+        /** @var User $author */
+        $author = User::factory()->create();
+
+        $response = $this->actingAs($author)->postJson("/api/articles", [
+            "article" => [
+                "title"       => "Test title",
+                "image"       => $this->faker->imageUrl(),
+                "description" => $this->faker->paragraph(),
+                "body"        => $this->faker->text(),
+                "tagList"     => [],
+            ],
+        ]);
+
+        $slug = $response->decodeResponseJson()['article']['slug'];
+
+        $response2 = $this->actingAs($author)->putJson("/api/articles/{$slug}", [
+            "article" => [
+                "title" => "Test title edited",
+                "slug"  => "Slug edited",
+            ], ]);
+
+        $slug2 = $response2->decodeResponseJson()['article']['slug'];
+
+        $this->assertEquals("test-title-edited", $slug2);
+    }
+
 }
