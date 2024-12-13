@@ -4,7 +4,7 @@ default: env prepare up key-generate migrate
 .PHONY: env
 env:
 	@echo "--> Copying .env.example to .env file"
-	@cp .env.example .env
+	@cp -n .env.example .env
 
 .PHONY: prepare
 prepare:
