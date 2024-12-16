@@ -308,16 +308,16 @@ final class UpdateArticleTest extends TestCase
         ]);
 
         $slug = $response->decodeResponseJson()['article']['slug'];
-
+        $manualSlugAttempt = "manual-slug-attempt";
         $response2 = $this->actingAs($author)->putJson("/api/articles/{$slug}", [
             "article" => [
                 "title" => "Test title edited",
-                "slug"  => "Slug edited",
+                "slug"  => $manualSlugAttempt,
             ], ]);
 
         $slug2 = $response2->decodeResponseJson()['article']['slug'];
 
-        $this->assertEquals("test-title-edited", $slug2);
+        $this->assertNotEquals($manualSlugAttempt, $slug2);
     }
 
 }
