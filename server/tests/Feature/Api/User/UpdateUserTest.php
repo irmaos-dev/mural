@@ -176,4 +176,19 @@ final class UpdateUserTest extends TestCase
             "not url"   => [["user" => ["image" => "string"]], "image"],
         ];
     }
+
+    public function testErrorUsernameExists(): void
+    {
+        $user = User::factory()->create();
+        $user2 = User::factory()->create();
+
+        $response = $this->actingAs($user)->putJson("/api/user", [
+            "user" => [
+                "username" => $user2->username,
+            ],
+        ]);
+
+        $response->assertStatus(422);
+    }
+
 }

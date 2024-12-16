@@ -21,8 +21,8 @@ final class ArticleFactory extends Factory
     public function definition()
     {
         return [
-            'author_id'   => User::factory(),
-            'slug'        => fn (array $attrs) => Str::slug($attrs['title']),
+            'author_id' => User::factory(),
+            // 'slug'        => fn (array $attrs) => Str::slug($attrs['title']),
             'title'       => $this->faker->unique()->sentence(4),
             'description' => $this->faker->paragraph(),
             'body'        => $this->faker->text(),

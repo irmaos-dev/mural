@@ -143,23 +143,6 @@ final class UpdateArticleTest extends TestCase
         $response->assertUnprocessable()->assertInvalid($errors);
     }
 
-    public function testUpdateArticleValidationUnique(): void
-    {
-        /** @var Article $anotherArticle */
-        $anotherArticle = Article::factory()->create();
-
-        $response = $this->actingAs($this->article->author)->putJson(
-            "/api/articles/{$this->article->slug}",
-            [
-                "article" => [
-                    "title" => $anotherArticle->title,
-                ],
-            ]
-        );
-
-        $response->assertUnprocessable()->assertInvalid("slug");
-    }
-
     public function testSelfUpdateArticleValidationUnique(): void
     {
         $response = $this->actingAs($this->article->author)->putJson(
@@ -236,4 +219,105 @@ final class UpdateArticleTest extends TestCase
             ],
         ];
     }
+
+    public function testUpdateArticleSlugModifier(): void
+    {
+        /** @var User $author */
+        $author = User::factory()->create();
+
+        $articleTitle = $this->faker->sentence(4);
+
+        $response = $this->actingAs($author)->postJson("/api/articles", [
+            "article" => [
+                "title"       => $articleTitle,
+                "image"       => $this->faker->imageUrl(),
+                "description" => $this->faker->paragraph(),
+                "body"        => $this->faker->text(),
+                "tagList"     => [],
+            ],
+        ]);
+
+        $slugOriginal = $response->decodeResponseJson()['article']['slug'];
+
+        $articleTitleEdited = $this->faker->sentence(5);
+        $response2 = $this->actingAs($author)->putJson("/api/articles/{$slugOriginal}", [
+            "article" => [
+                "title" => $articleTitleEdited,
+            ],
+        ]);
+
+        $slugEdited = $response2->decodeResponseJson()['article']['slug'];
+        $this->assertNotEquals($slugOriginal, $slugEdited, 'O slug deve ser modificado após a edição do título.');
+
+    }
+
+    public function testSlugIsUniqueWhenTitleIsDuplicated(): void
+    {
+        /** @var User $author */
+        $author = User::factory()->create();
+
+        $articleTitle = $this->faker->sentence(4);
+
+        $response = $this->actingAs($author)->postJson("/api/articles", [
+            "article" => [
+                "title"       => $articleTitle,
+                "image"       => $this->faker->imageUrl(),
+                "description" => $this->faker->paragraph(),
+                "body"        => $this->faker->text(),
+                "tagList"     => [],
+            ],
+        ]);
+
+        $slug = $response->decodeResponseJson()['article']['slug'];
+
+        $response2 = $this->actingAs($author)->postJson("/api/articles", [
+            "article" => [
+                "title"       => $this->faker->sentence(4),
+                "image"       => $this->faker->imageUrl(),
+                "description" => $this->faker->paragraph(),
+                "body"        => $this->faker->text(),
+                "tagList"     => [],
+            ],
+        ]);
+
+        $slug2 = $response2->decodeResponseJson()['article']['slug'];
+
+        $response3 = $this->actingAs($author)->putJson("/api/articles/{$slug2}", [
+            "article" => [
+                "title" => $articleTitle,
+            ],
+        ]);
+
+        $slug2Edited = $response3->decodeResponseJson()['article']['slug'];
+        $this->assertNotEquals($slug, $slug2Edited);
+    }
+
+    public function testUpdateSlugIgnoresManualInput(): void
+    {
+        /** @var User $author */
+        $author = User::factory()->create();
+
+        $response = $this->actingAs($author)->postJson("/api/articles", [
+            "article" => [
+                "title"       => "Test title",
+                "image"       => $this->faker->imageUrl(),
+                "description" => $this->faker->paragraph(),
+                "body"        => $this->faker->text(),
+                "tagList"     => [],
+            ],
+        ]);
+
+        $slug = $response->decodeResponseJson()['article']['slug'];
+        $manualSlugAttempt = "manual-slug-attempt";
+        $response2 = $this->actingAs($author)->putJson("/api/articles/{$slug}", [
+            "article" => [
+                "title" => "Test title edited",
+                "slug"  => $manualSlugAttempt,
+            ], ]);
+
+        $slug2 = $response2->decodeResponseJson()['article']['slug'];
+
+        $this->assertNotEquals($manualSlugAttempt, $slug2);
+    }
+
 }

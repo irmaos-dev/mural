@@ -4,7 +4,6 @@ declare(strict_types = 1);
 
 namespace Tests\Feature\Api\Article;
 
-use App\Models\Article;
 use App\Models\Tag;
 use App\Models\User;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -117,6 +116,40 @@ final class CreateArticleTest extends TestCase
         $this->assertDatabaseCount("article_tag", 5);
     }
 
+    public function testCreateArticleExistingTitle(): void
+    {
+        /** @var User $author */
+        $author = User::factory()->create();
+
+        $articleTitle = $this->faker->sentence(4);
+
+        $response = $this->actingAs($author)->postJson("/api/articles", [
+            "article" => [
+                "title"       => $articleTitle,
+                "image"       => $this->faker->imageUrl(),
+                "description" => $this->faker->paragraph(),
+                "body"        => $this->faker->text(),
+                "tagList"     => [],
+            ],
+        ]);
+
+        $slug = $response->decodeResponseJson()['article']['slug'];
+
+        $response2 = $this->actingAs($author)->postJson("/api/articles", [
+            "article" => [
+                "title"       => $articleTitle,
+                "image"       => $this->faker->imageUrl(),
+                "description" => $this->faker->paragraph(),
+                "body"        => $this->faker->text(),
+                "tagList"     => [],
+            ],
+        ]);
+
+        $slug2 = $response2->decodeResponseJson()['article']['slug'];
+
+        $this->assertNotEquals($slug, $slug2);
+    }
+
     /**
      * @dataProvider articleProvider
      */
@@ -135,9 +168,6 @@ final class CreateArticleTest extends TestCase
             "title" => [
                 "The title field is required.",
             ],
-            "slug" => [
-                "The slug field is required.",
-            ],
             "description" => [
                 "The description field is required.",
             ],
@@ -145,25 +175,6 @@ final class CreateArticleTest extends TestCase
                 "The body field is required.",
             ],
         ]);
-    }
-
-    public function testCreateArticleValidationUnique(): void
-    {
-        /** @var Article $article */
-        $article = Article::factory()->create();
-
-        $response = $this->actingAs($article->author)->postJson(
-            "/api/articles",
-            [
-                "article" => [
-                    "title"       => $article->title,
-                    "description" => $this->faker->paragraph(),
-                    "body"        => $this->faker->text(),
-                ],
-            ]
-        );
-
-        $response->assertUnprocessable()->assertInvalid("slug");
     }
 
     public function testCreateArticleWithoutAuth(): void

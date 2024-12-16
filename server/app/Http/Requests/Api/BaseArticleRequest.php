@@ -7,7 +7,6 @@ namespace App\Http\Requests\Api;
 use App\Models\Article;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Arr;
-use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
 
 abstract class BaseArticleRequest extends FormRequest
@@ -28,13 +27,6 @@ abstract class BaseArticleRequest extends FormRequest
     protected function prepareForValidation(): void
     {
         $input = $this->input();
-        $title = Arr::get($input, 'article.title');
-
-        if (is_string($title)) {
-            Arr::set($input, 'article.slug', Str::slug($title));
-        } else {
-            Arr::forget($input, 'article.slug');
-        }
 
         $this->merge($input);
     }
