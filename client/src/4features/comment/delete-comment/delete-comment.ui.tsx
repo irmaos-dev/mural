@@ -12,6 +12,7 @@ export function DeleteCommentButtton(props: DeleteCommentButttonProps) {
   const { mutate } = useDeleteCommentMutation({ mutationKey: [slug, id] })
 
   const handleClick = () => {
+    alert("Voce estará deletand esse comentario")
     mutate({ slug, id })
   }
 
