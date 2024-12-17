@@ -20,6 +20,21 @@ describe('Create Comment Form', () => {
     useSessionStore.getState().setSession(session)
   })
 
+  it('must submit the comment after pressing (ctrl + enter) on the keyboard', async () => {
+
+    const { type, keyboard } = renderCreateCommentForm();
+
+    const textarea = await screen.findByPlaceholderText('Write a comment...');
+
+    await type(textarea, comment.body);
+
+    await keyboard('{Control>}{Enter}{/Control}');
+
+    await waitFor(() => {
+      expect(screen.getByPlaceholderText('Write a comment...')).toHaveValue('');
+    });
+  })
+
   it('should display the user image and username', async () => {
     renderCreateCommentForm()
 
