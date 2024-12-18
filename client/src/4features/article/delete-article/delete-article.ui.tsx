@@ -1,8 +1,7 @@
 import { IoTrash } from 'react-icons/io5';
 import { useNavigate } from 'react-router-dom';
 import { pathKeys } from '~6shared/lib/react-router';
-import { ModalContent, ModalFooter, ModalHeader, ModalRoot } from '~6shared/ui/modal';
-import { useModalStore } from '~6shared/ui/modal';
+import { useModalStore, ModalContent, ModalFooter, ModalHeader, ModalRoot } from '~6shared/ui/modal';
 import { spinnerModel } from '~6shared/ui/spinner';
 import { useDeleteArticleMutation } from './delete-article.mutation';
 
