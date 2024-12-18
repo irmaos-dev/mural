@@ -1,10 +1,11 @@
-import { useState } from 'react';
-import { IoTrash } from 'react-icons/io5'; // Ícone para botão
-import { useNavigate } from 'react-router-dom'; // Navegação
+import { IoTrash } from 'react-icons/io5';
+import { useNavigate } from 'react-router-dom';
 import { pathKeys } from '~6shared/lib/react-router';
-import { Modal } from '~6shared/ui/modal-delete'; // Importação do modal
+import { ModalContent, ModalFooter, ModalHeader, ModalRoot } from '~6shared/ui/modal';
+import { useModalStore } from '~6shared/ui/modal';
 import { spinnerModel } from '~6shared/ui/spinner';
 import { useDeleteArticleMutation } from './delete-article.mutation';
+
 
 type DeleteArticleButtonProps = { slug: string };
 
@@ -12,8 +13,11 @@ export function DeleteArticleButton(props: DeleteArticleButtonProps) {
   const { slug } = props;
   const navigate = useNavigate();
 
-  // Estado para controle do modal
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  // Usando a store do modal para controlar o estado do modal
+  const { setOpen } = useModalStore(state => ({
+    isOpen: state.isOpen,
+    setOpen: state.setOpen,
+  }));
 
   const { mutate, isPending } = useDeleteArticleMutation({
     mutationKey: [slug],
@@ -28,20 +32,17 @@ export function DeleteArticleButton(props: DeleteArticleButtonProps) {
     },
   });
 
-  // Função para confirmar a exclusão
   const handleDeleteConfirmation = () => {
     mutate(slug);
-    setIsModalOpen(false); // Fecha o modal após a confirmação
+    setOpen(false);
   };
 
-  // Função para abrir o modal
   const handleClick = () => {
-    setIsModalOpen(true);
+    setOpen(true);
   };
 
-  // Função para fechar o modal
   const handleCloseModal = () => {
-    setIsModalOpen(false);
+    setOpen(false);
   };
 
   return (
@@ -49,44 +50,34 @@ export function DeleteArticleButton(props: DeleteArticleButtonProps) {
       <button
         onClick={handleClick}
         className="btn btn-outline-danger btn-sm"
-        type="button" // Adicionado tipo explícito
+        type="button"
         disabled={isPending}
       >
         <IoTrash size={16} />
         &nbsp;Delete Article
       </button>
-
-      {/* Modal de Confirmação */}
-      <Modal.Root
-        store={{
-          use: { isOpen: () => isModalOpen },
-          getState: () => ({
-            setOpen: setIsModalOpen,
-            toggle: () => setIsModalOpen((prev) => !prev),
-          }),
-        }}
-      >
-        <Modal.Header>Confirmação de Exclusão</Modal.Header>
-        <Modal.Content>
+      <ModalRoot>
+        <ModalHeader>Confirmação de Exclusão</ModalHeader>
+        <ModalContent>
           Tem certeza que deseja deletar este artigo?
-        </Modal.Content>
-        <Modal.Footer>
+        </ModalContent>
+        <ModalFooter>
           <button
             onClick={handleCloseModal}
             className="btn btn-secondary"
-            type="button" // Adicionado tipo explícito
+            type="button"
           >
             Cancelar
           </button>
           <button
             onClick={handleDeleteConfirmation}
             className="btn btn-danger"
-            type="button" // Adicionado tipo explícito
+            type="button"
           >
             Confirmar
           </button>
-        </Modal.Footer>
-      </Modal.Root>
+        </ModalFooter>
+      </ModalRoot>
     </>
   );
 }
