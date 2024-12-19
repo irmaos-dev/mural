@@ -1,0 +1,46 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "ProfileController",
+        "version": "1.0"
+    },
+    "paths": {
+        "/profiles/{username}": {
+            "post": {
+                "summary": "GET profiles by username",
+                "description": "Pegar as informações do perfil de um usuário buscando pelo seu username",
+                "operationId": "3c61eff5db89cd2c2d1ff3c5d8cf35d3",
+                "parameters": [
+                    {
+                        "parameter": "username",
+                        "name": "username",
+                        "in": "query",
+                        "description": "O username/slug do usuário. Aparece na URL do perfil do usuário.",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "404": {
+                        "description": "Not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "User was not found"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
