@@ -8,7 +8,14 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\Api\ProfileResource;
 use App\Models\User;
 use Illuminate\Http\Request;
+use OpenApi\Annotations as OA;
 
+/**
+ * @OA\Info(
+ *     version="1.0",
+ *     title="ProfileController"
+ * )
+ */
 final class ProfileController extends Controller
 {
     /**
@@ -16,6 +23,29 @@ final class ProfileController extends Controller
      *
      * @param string $username
      * @return ProfileResource
+     *
+     * @OA\Post(
+     *     path="/profiles/{username}",
+     *     summary="GET profiles by username",
+     *     description="Pegar as informações do perfil de um usuário buscando pelo seu username",
+     *     @OA\Parameter(
+     *      parameter="username",
+     *      name="username",
+     *      description="O username/slug do usuário. Aparece na URL do perfil do usuário.",
+     *      @OA\Schema(
+     *          type="string"
+     *      ),
+     *      in="query",
+     *      required=true
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Not found",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="error", type="string", example="User was not found")
+     *         )
+     *     )
+     * )
      */
     public function show(string $username)
     {
