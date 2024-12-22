@@ -2,7 +2,7 @@
 const { test, expect } = require('@playwright/test');
 
 test('has title', async ({ page }) => {
-  await page.goto('http://127.0.0.1:5173/');
+ await page.goto("/", { timeout: 60000, waitUntil: 'load' });
 
   // Expect a title "to contain" a substring.
   await expect(page).toHaveTitle(/Conduit/);
