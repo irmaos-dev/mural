@@ -79,7 +79,7 @@ e o comando:
 
 - Abra o terminal do WSL (menu iniciar -> pesquisar por WSL) e rode o comando a seguir para baixar o código do projeto e abrí-lo no Visual Studio Code:
 
-`git clone https://github.com/irmaos-dev/mural.git && code mural`
+`cd ~ && git clone https://github.com/irmaos-dev/mural.git && code mural`
 
 Neste momento, o projeto do Mural App estará aberto no seu Visual Studio Code.
 
