@@ -1,13 +1,17 @@
 const { test, expect } = require("@playwright/test");
+const { text } = require("stream/consumers");
 
 test.describe("Teste de filtragem e navegação por tags populares", () => {
+  test.setTimeout(120000);
   let selectedButtons = [];
 
   test.beforeEach(async ({ page }) => {
     await page.goto("/");
 
-    const buttons = await page.locator(".tag-list button").all();
+    // Espera a aba de tags serem carregadas e visíveis
+    await page.waitForSelector(".sidebar > .tag-list", { state: "visible" });
 
+    const buttons = await page.locator(".tag-list button").all();
     if (buttons.length <= 3) {
       selectedButtons = buttons;
     } else {
@@ -16,30 +20,29 @@ test.describe("Teste de filtragem e navegação por tags populares", () => {
   });
 
   async function verifyTagTabOpened(button, page) {
-    const text = await button.textContent();
-    const cleanText = text.replace("#", "").trim(); // Retira a # do texto da tag
-
+    const buttonTagText = await button.textContent();
     await button.click();
-
-    const liButton = page.locator(".nav.nav-pills.outline-active li button").withText(cleanText);
-
-    const count = await liButton.count();
-    expect(count).toBeGreaterThan(0);
+    await page.waitForTimeout(1000); // Espera um tempo para carregar os artigos
+    await page.waitForSelector(".article-preview", { state: "visible" }); // Verifica que foi carregado e espera mais um pouco se não estiver carregado
+    const liButton = page.locator(".nav.nav-pills.outline-active > :last-child > button");
+    const liButtonText = await (await liButton.textContent()).replace("#", "").trim();
+    expect(liButtonText).toBe(buttonTagText);
+    return;
   }
 
   async function verifyArticlesHaveTag(button, page) {
-    await button.click();
-    const articles = await page.locator(".article-preview");
-    const tag = await button.textContent();
-    const cleanTag = tag.replace("#", "").trim();
+    await button.click(); // Clica no botão
+    await page.waitForTimeout(1000); // Espera um tempo para carregar os artigos
+    await page.waitForSelector(".article-preview", { state: "visible" }); // Verifica que foi carregado e espera mais um pouco se não estiver carregado
 
-    const articlesCount = await articles.count();
-    expect(articlesCount).toBeGreaterThan(0);
+    const articles = await page.locator(".article-preview").all();
+    const buttonTagText = await button.textContent();
+    expect(articles.length).toBeGreaterThan(0, `No articles found for tag "${buttonTagText}"`);
 
-    for (let i = 0; i < articlesCount; i++) {
-      const article = articles.nth(i);
-      const articleTags = await article.locator(".tag-list").textContent();
-      expect(articleTags).toContain(cleanTag);
+    for (const article of articles) {
+      const articleTags = await article.locator(".tag-list > li").all();
+      const tagTexts = await Promise.all(articleTags.map(tag => tag.textContent()));
+      expect(tagTexts).toContain(buttonTagText);
     }
   }
 
