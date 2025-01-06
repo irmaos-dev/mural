@@ -1,5 +1,4 @@
 const { test, expect } = require("@playwright/test");
-const { text } = require("stream/consumers");
 
 test.describe("Teste de filtragem e navegação por tags populares", () => {
   test.setTimeout(120000);
