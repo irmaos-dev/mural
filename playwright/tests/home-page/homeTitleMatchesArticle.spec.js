@@ -1,5 +1,5 @@
 const { test, expect } = require("@playwright/test");
-const { selectArticlesForPage } = require("../../utils");
+const { selectArticlesForPage } = require("../utils");
 
 test("Verifica o título do artigo na home corresponde ao do artigo", async ({ page }) => {
   await page.goto("/");

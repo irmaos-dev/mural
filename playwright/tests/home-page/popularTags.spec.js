@@ -1,9 +1,7 @@
 const { test, expect } = require("@playwright/test");
-const { selectArticlesForPage } = require("../../utils");
+const { selectArticlesForPage } = require("../utils");
 
 test.describe("Teste na sessão de PopularTags ", () => {
-  test.setTimeout(120000);
-
   test.beforeEach(async ({ page }) => {
     await page.goto("/");
     await page.waitForSelector(".home-page", { state: "visible" });
