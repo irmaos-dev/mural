@@ -10,5 +10,8 @@
     "test": "npx playwright test",
     "test:headed": "npx playwright test --headed",
     "test:install": "npx playwright install"
+  },
+  "dependencies": {
+    "wait-on": "^8.0.1"
   }
 }
