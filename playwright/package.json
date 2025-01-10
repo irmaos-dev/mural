@@ -12,6 +12,7 @@
     "test:install": "npx playwright install"
   },
   "dependencies": {
+    "dotenv": "^16.4.7",
     "wait-on": "^8.0.1"
   }
 }

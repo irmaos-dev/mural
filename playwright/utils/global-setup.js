@@ -1,6 +1,8 @@
 const { exec } = require("child_process");
 const waitOn = require("wait-on");
 
+require("dotenv").config();
+
 async function globalSetup() {
   async function initServerBack() {
     // Inicia o servidor backend
@@ -18,9 +20,17 @@ async function globalSetup() {
   async function initServerFront() {
     // Inicia o servidor frontend
     console.log("Iniciando o servidor frontend...");
-    const frontend = await exec("cd ../client && npm run dev -- --host 127.0.0.1 --port 3000");
+    const frontend = await exec(
+      `cd ../client && ${
+        process.env.TESTE_IN_PREVIEW == "true" ? "npm run preview" : "npm run dev"
+      } -- --host ${process.env.BASE_URL || "127.0.0.1"} --port ${process.env.PORT || "3000"}`
+    );
     //Espera o frontend estar disponível
-    await waitOn({ resources: ["tcp:127.0.0.1:3000"], delay: 2000, timeout: 60000 });
+    await waitOn({
+      resources: [`tcp:${process.env.BASE_URL || "127.0.0.1"}:${process.env.PORT || "3000"}`],
+      delay: 2000,
+      timeout: 60000,
+    });
   }
 
   async function timeout(second) {
