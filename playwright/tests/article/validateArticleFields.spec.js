@@ -3,12 +3,13 @@ const { selectArticlesForPage } = require("../utils");
 
 test("Verifica se os campos obrigatórios do artigo estão conforme o esperado", async ({ page }) => {
   await page.goto("/");
-
-  await page.waitForSelector(".article-preview", { state: "visible" }); // Espera que a página da home seja carregada
+  //test.slow();
+  await page.waitForLoadState("domcontentloaded");
+  await page.waitForSelector(".article-preview", { state: "visible", timeout: 30000 }); // Espera que a página da home seja carregada
   const article = (await selectArticlesForPage(page))[0]; // Pega o primeiro artigo da home
 
   await test.step("Verificando descrição do artigo", async () => {
-    const articleDescription = await article.locator("div > p");
+    const articleDescription = await article.locator("p");
     await expect(articleDescription).toBeVisible();
     await expect(articleDescription.textContent()).not.toBe("");
   });

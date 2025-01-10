@@ -54,9 +54,7 @@ test.describe("Teste na sessão de PopularTags ", () => {
 
       // Verifica se a aba da tag testada tem artigos
       if ((await article.locator("a").all()).length == 0) {
-        await test.step(
-          "A tag '${buttonTagText}' não contem artigos, o teste irá para a proxima tag para fazer os testes."
-        );
+        await test.step("A tag '${buttonTagText}' não contem artigos, o teste irá para a proxima tag para fazer os testes.", async () => {});
 
         console.log(
           `A tag '${buttonTagText}' não contem artigos, o teste irá para a proxima tag para fazer os testes.`
