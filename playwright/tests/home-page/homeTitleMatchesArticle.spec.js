@@ -16,6 +16,6 @@ test("Verifica o título do artigo na home corresponde ao do artigo", async ({ p
   const articleTitle = await page.locator("h1").textContent(); // Pega o título do artigo na página
 
   await test.step("Verificando titulo do artigo", async () => {
-    expect(titleHome).toContain(articleTitle);
+    expect(titleHome).toEqual(articleTitle);
   });
 });
