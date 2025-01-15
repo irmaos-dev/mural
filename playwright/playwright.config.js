@@ -39,9 +39,14 @@ module.exports = defineConfig({
   reporter: "html",
 
   use: {
-    baseURL: process.env.BASE_URL
-      ? process.env.BASE_URL + ":" + process.env.PORT
-      : "http://127.0.0.1:3000",
+    baseURL:
+      process.env.BASE_URL && process.env.PORT
+        ? process.env.BASE_URL + ":" + process.env.PORT
+        : process.env.BASE_URL
+        ? process.env.BASE_URL + ":3000"
+        : process.env.PORT
+        ? "http://127.0.0.1:" + process.env.PORT
+        : "http://127.0.0.1:3000",
 
     trace: "on-first-retry",
   },
