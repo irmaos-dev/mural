@@ -4,18 +4,7 @@
     - https://www.alura.com.br/artigos/cli-interface-linha-comandos
 - Git
     - https://www.freecodecamp.org/portuguese/news/aprenda-o-basico-de-git-em-menos-de-10-minutos/
-    - https://www.freecodecamp.org/portuguese/news/como-fazer-o-seu-primeiro-pull-request-no-github/
-    
-    Como atualizar a branch com o a main:
-        Se você está pegou uma tarefa e está criando uma funcionalidade já há alguns dias, pode ser que uma outra pessoa tenha contribuído com alguma coisa, e portanto, a sua versão contém um código base desatualizado.
-        Isso também pode acontecer caso você tenha clonado o repositório já há algum tempo e quando foi criar uma branch para sua tarefa não se atentou de atualizar a branch main. Portanto sua nova branch está fora de sincronia com a main.
-        Para resolver isso, você deve mudar para a branch main (git checkout main), atualizá-la (git pull), voltar para a sua branch de origem (git checkout my-branch) e realizar o merge com a main (git merge main).
-        Note que se seu projeto contém modificações que ainda não foram comitadas, você não conseguirá trocar para a main. Você tem duas opções: comitar essas modificações ou fazer um "stash". Basicamente o stash é um "armário" que você vai guardar as modificações para usá-las mais tarde.
-        Ao realizar um merge, pode acontecer um "conflito". Essa é uma situação em que ambas as branches modificaram o código no mesmo lugar e, portanto, o Git não sabe qual o código ele deve realmente utilizar.
-        TODO: copiar o link do vídeo falando sobre correção de conflitos para cá
-        Vale mencionar, que é possível fazer esse procedimento com qualquer branch. Talvez você queira incluir as modificações de uma outra pessoa antes de enviar seu código para a main.
-    
-    como fazer um stash para poder olhar alguma outra branch
+
     como criar uma branch
         É possível criar uma branch no próprio projeto do Mural, porém é necessário que você já seja membro do projeto (eu costumo adicionar todo mundo interessado ao projeto, qualquer coisa me peça).
         Outra opção é criar um fork. Um fork é uma cópia do repositório para dentro da sua própria conta. Você então tem controle deste repositório criado.
@@ -24,7 +13,25 @@
         No VSCode, clique no nome da branch ativa que fica no canto inferior esquerdo. Um menu irá aparecer onde você pode escolher a opção de criar nova branch (ou simplesmente trocar para uma outra branch existente - similar a fazer um "git checkout branch").
         Pela linha de comando, você pode executar o comando "git checkout -B nome-branch-nova".
 
+    Como atualizar a branch com a main:
+        Se você está pegou uma tarefa e está criando uma funcionalidade já há alguns dias, pode ser que uma outra pessoa tenha contribuído com alguma coisa, e portanto, a sua versão contém um código base desatualizado.
+        Isso também pode acontecer caso você tenha clonado o repositório já há algum tempo e quando foi criar uma branch para sua tarefa não se atentou de atualizar a branch main. Portanto sua nova branch está fora de sincronia com a main.
+        Para resolver isso, você deve mudar para a branch main (git checkout main), atualizá-la (git pull), voltar para a sua branch de origem (git checkout my-branch) e realizar o merge com a main (git merge main).
+        Note que se seu projeto contém modificações que ainda não foram comitadas, você não conseguirá trocar para a main. Você tem duas opções: comitar essas modificações ou fazer um "stash". Basicamente o stash é um "armário" que você vai guardar as modificações para usá-las mais tarde.
+        Ao realizar um merge, pode acontecer um "conflito". Essa é uma situação em que ambas as branches modificaram o código no mesmo lugar e, portanto, o Git não sabe qual o código ele deve realmente utilizar.
+        TODO: copiar o link do vídeo falando sobre correção de conflitos para cá
+        Vale mencionar, que é possível fazer esse procedimento com qualquer branch. Talvez você queira incluir as modificações de uma outra pessoa antes de enviar seu código para a main.
+
+    Mas eu estou em um fork, como atualizo com a main?
+        https://docs.github.com/pt/pull-requests/collaborating-with-pull-requests/working-with-forks/configuring-a-remote-repository-for-a-fork
+        https://docs.github.com/pt/pull-requests/collaborating-with-pull-requests/working-with-forks/syncing-a-fork#syncing-a-fork-branch-from-the-command-line
+    
+    como fazer um stash para poder olhar alguma outra branch
+        https://medium.com/wooza/git-stash-conhecendo-e-utilizando-um-dos-comandos-mais-pr%C3%A1ticos-para-o-versionamento-de-seu-c%C3%B3digo-a4dab3ac70da
+        O VSCode tem na parte de "Controle de Código-Fonte" (Ctrl+Shift+G G) um conjunto de funcionalidades do Git, incluindo o Stash. É possível fazer todas as operações descritas no artigo acima sem precisar nem abrir o terminal. As funcionalidades mais usadas são "Apply Latest" e "Stash (Include Untracked)".
+
     pull request
+        https://www.freecodecamp.org/portuguese/news/como-fazer-o-seu-primeiro-pull-request-no-github/
 
 
 - Docker Desktop / WSL
