@@ -113,7 +113,7 @@ Execute o comando abaixo no terminal na pasta do playwright:
 - **Valor Padrão**: `true`
 - **Possíveis Valores**: `true` ou `false`
 
-#### TESTE_IN_PREVIEW
+#### TEST_IN_PREVIEW
 
 - **Descrição**: Indica se o teste é realizado com o preview do front-end. Necessário dar build no front-end manualmente antes, melhora a performance do teste.
 - **Valor Padrão**: `false`

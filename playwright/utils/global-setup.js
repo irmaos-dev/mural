@@ -22,7 +22,7 @@ async function globalSetup() {
     console.log("Iniciando o servidor frontend...");
     const frontend = await exec(
       `cd ../client && ${
-        process.env.TESTE_IN_PREVIEW == "true" ? "npm run preview" : "npm run dev"
+        process.env.TEST_IN_PREVIEW == "true" ? "npm run preview" : "npm run dev"
       } -- --host ${process.env.BASE_URL || "127.0.0.1"} --port ${process.env.PORT || "3000"}`
     );
     //Espera o frontend estar disponível
