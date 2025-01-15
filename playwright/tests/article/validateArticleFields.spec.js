@@ -10,8 +10,9 @@ test("Verifica se os campos obrigatórios do artigo estão conforme o esperado",
 
   await test.step("Verificando descrição do artigo", async () => {
     const articleDescription = await article.locator("p");
+    const articleDescriptionText = await articleDescription.textContent();
     await expect(articleDescription).toBeVisible();
-    await expect(articleDescription.textContent()).not.toBe("");
+    await expect(articleDescriptionText).not.toBe("");
   });
 
   await test.step("Clica e espera pagina do artigo carregar", async () => {
@@ -26,13 +27,15 @@ test("Verifica se os campos obrigatórios do artigo estão conforme o esperado",
 
   await test.step("Verificando titulo do artigo", async () => {
     const title = await page.locator("h1");
+    const titleText = await title.textContent();
     await expect(title).toBeVisible();
-    await expect(title.textContent()).not.toBe("");
+    await expect(titleText).not.toBe("");
   });
 
   await test.step("Verificando conteúdo do artigo", async () => {
-    const contentArticle = await page.locator(".article-page .row.article-content div p");
+    const contentArticle = await page.locator(".article-page .article-content p");
+    const contentArticleText = await contentArticle.textContent();
     await expect(contentArticle).toBeVisible();
-    await expect(contentArticle.textContent()).not.toBe("");
+    await expect(contentArticleText).not.toBe("");
   });
 });
