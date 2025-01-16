@@ -66,7 +66,7 @@ test.describe("Teste na sessão de PopularTags ", () => {
       await test.step("Verificando se artigo tem a tag esperada", async () => {
         const articleTags = await article.locator(".tag-list > li").all();
         const tagTexts = await Promise.all(articleTags.map(tag => tag.textContent()));
-        expect(tagTexts).toEqual(buttonTagText);
+        await expect(tagTexts.includes(buttonTagText)).toBeTruthy();
       });
 
       return;
