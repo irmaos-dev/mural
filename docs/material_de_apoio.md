@@ -162,17 +162,21 @@ Uma vantagem de separá-los para essa camada é que mudanças que afetem apenas 
 Isso também nos permite utilizá-los em múltiplos widgets e pages.
 Por último, é sempre mais fácil de trabalhar em aplicações onde é óbvio onde as mutações dos dados estão realmente acontecendo.
 
+Por que uma pasta "entities"?
+
+Por que uma pasta "shared"?
+
 ## Como as ferramentas do backend funcionam
 
 https://medium.com/@rajvir.ahmed.shuvo/understanding-sync-attach-and-detach-in-laravel-managing-relationships-with-eloquent-394a7cf7fabd
 
 - Outros
-    https://dev.to/guiselair/automatizando-formularios-com-devtools-2p9e
-    https://dev.to/guiselair/interceptando-requisicoes-no-devtools-39jl
-    https://dev.to/guiselair/usecallback-hook-entenda-quando-utiliza-lo-3n3k
-    https://vercel.com/guides/enhancing-security-for-redirects-and-rewrites
-    https://vercel.com/guides/understanding-xss-attacks
-    https://vercel.com/docs/edge-network/security-headers
-    https://vercel.com/blog/understanding-the-samesite-cookie-attribute
-    https://vercel.com/blog/understanding-csrf-attacks
-    https://jaimeneeves.medium.com/atualizando-seu-fork-do-github-1e2a78ee4cbf
+    - https://dev.to/guiselair/automatizando-formularios-com-devtools-2p9e
+    - https://dev.to/guiselair/interceptando-requisicoes-no-devtools-39jl
+    - https://dev.to/guiselair/usecallback-hook-entenda-quando-utiliza-lo-3n3k
+    - https://vercel.com/guides/enhancing-security-for-redirects-and-rewrites
+    - https://vercel.com/guides/understanding-xss-attacks
+    - https://vercel.com/docs/edge-network/security-headers
+    - https://vercel.com/blog/understanding-the-samesite-cookie-attribute
+    - https://vercel.com/blog/understanding-csrf-attacks
+    - https://jaimeneeves.medium.com/atualizando-seu-fork-do-github-1e2a78ee4cbf
