@@ -26,7 +26,7 @@ final class UpdateArticleRequest extends BaseArticleRequest
             'description' => ['required_without_all:title,body'],
             'body'        => ['required_without_all:title,description'],
             'tagList'     => 'sometimes|array',
-            'tagList.*'   => 'required|string|max:255',
+            'tagList.*'   => 'nullable|string|max:255',
             'image'       => "sometimes|nullable|string|url",
         ];
     }

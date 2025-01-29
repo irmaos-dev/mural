@@ -136,7 +136,11 @@ final class ArticleController extends Controller
         $article->update($request->validated());
 
         if (is_array($tags)) {
-            $article->attachTags($tags);
+            if (1 === count($tags) && empty($tags[0])) {
+                $article->attachTags([]);
+            } else {
+                $article->attachTags($tags);
+            }
         }
 
         return new ArticleResource($article);
