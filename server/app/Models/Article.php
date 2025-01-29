@@ -195,13 +195,16 @@ final class Article extends Model
      */
     public function attachTags(array $tags): void
     {
+        $tagIds = [];
+
         foreach ($tags as $tagName) {
             $tag = Tag::firstOrCreate([
                 'name' => $tagName,
             ]);
 
-            $this->tags()->syncWithoutDetaching($tag);
+            $tagIds[] = $tag->id;
         }
+        $this->tags()->sync($tagIds);
     }
 
     /**
