@@ -320,4 +320,102 @@ final class UpdateArticleTest extends TestCase
         $this->assertNotEquals($manualSlugAttempt, $slug2);
     }
 
+    public function testUpdateTagsIncludesNewTag(): void
+    {
+        /** @var User $author */
+        $author = User::factory()->create();
+
+        $articleTags = $this->faker->words(3);
+
+        $articleTitle = $this->faker->sentence(4);
+
+        $response = $this->actingAs($author)->postJson("/api/articles", [
+            "article" => [
+                "title"       => $articleTitle,
+                "image"       => $this->faker->imageUrl(),
+                "description" => $this->faker->paragraph(),
+                "body"        => $this->faker->text(),
+                "tagList"     => $articleTags,
+            ],
+        ]);
+
+        $slug = $response->decodeResponseJson()['article']['slug'];
+
+        $articleTagsIncludedNewTag = [...$articleTags, "new-tag"];
+
+        $response2 = $this->actingAs($author)->putJson("/api/articles/{$slug}", [
+            "article" => [
+                "title"   => $articleTitle,
+                "tagList" => $articleTagsIncludedNewTag,
+            ],
+        ]);
+
+        $articleTagsUpdated = $response2->decodeResponseJson()['article']['tagList'];
+
+        $this->assertEquals($articleTagsIncludedNewTag, $articleTagsUpdated);
+    }
+
+    public function testUpdateAllTags(): void
+    {
+        /** @var User $author */
+        $author = User::factory()->create();
+
+        $articleTags = $this->faker->words(3);
+
+        $articleTitle = $this->faker->sentence(4);
+
+        $response = $this->actingAs($author)->postJson("/api/articles", [
+            "article" => [
+                "title"       => $articleTitle,
+                "image"       => $this->faker->imageUrl(),
+                "description" => $this->faker->paragraph(),
+                "body"        => $this->faker->text(),
+                "tagList"     => $articleTags,
+            ],
+        ]);
+
+        $slug = $response->decodeResponseJson()['article']['slug'];
+
+        $response2 = $this->actingAs($author)->putJson("/api/articles/{$slug}", [
+            "article" => [
+                "title"   => $articleTitle,
+                "tagList" => ["new-tag"],
+            ],
+        ]);
+
+        $articleTagsUpdated = $response2->decodeResponseJson()['article']['tagList'];
+
+        $this->assertNotEquals($articleTags, $articleTagsUpdated);
+    }
+
+    public function testUpdateTagsEmpty(): void
+    {
+        /** @var User $author */
+        $author = User::factory()->create();
+
+        $articleTitle = $this->faker->sentence(4);
+
+        $response = $this->actingAs($author)->postJson("/api/articles", [
+            "article" => [
+                "title"       => $articleTitle,
+                "image"       => $this->faker->imageUrl(),
+                "description" => $this->faker->paragraph(),
+                "body"        => $this->faker->text(),
+                "tagList"     => $this->faker->words(3),
+            ],
+        ]);
+
+        $slug = $response->decodeResponseJson()['article']['slug'];
+
+        $response2 = $this->actingAs($author)->putJson("/api/articles/{$slug}", [
+            "article" => [
+                "title"   => $articleTitle,
+                "tagList" => [],
+            ],
+        ]);
+
+        $articleTagsUpdated = $response2->decodeResponseJson()['article']['tagList'];
+
+        $this->assertEmpty($articleTagsUpdated);
+    }
 }
