@@ -74,12 +74,13 @@ export const UpdateArticleForm = enhance((props: UpdateArticleFormProps) => {
   const canSubmit = [isDirty, isValid, !isPending].every(Boolean)
 
   const onSubmit = (updateArticle: UpdateArticle) => {
-    mutate({
-      ...currentArticle,
-      ...updateArticle,
-      tagList: updateArticle.tagList?.split(', ') || [],
-    })
-  }
+  const tags = updateArticle.tagList?.split(', ').map(tag => tag.trim()).filter(tag => tag) || []
+  mutate({
+    ...currentArticle,
+    ...updateArticle,
+    tagList: tags.length ? tags : [],
+  })
+}
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
