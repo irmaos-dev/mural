@@ -123,14 +123,12 @@ final class ArticleController extends Controller
      */
     public function update(UpdateArticleRequest $request, string $slug): ArticleResource
     {
-        $user = $request->user();
         $article = Article::whereSlug($slug)
             ->firstOrFail();
 
         $this->authorize('update', $article);
 
         $attributes = $request->validated();
-        $attributes['author_id'] = $user->getKey();
 
         $tags = Arr::pull($attributes, 'tagList');
         $article->update($request->validated());
