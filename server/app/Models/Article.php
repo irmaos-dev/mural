@@ -65,6 +65,13 @@ final class Article extends Model
         'image',
     ];
 
+    /**
+     * The attributes that should be appended to the model.
+     */
+    protected $appends = [
+        'tagList',
+    ];
+
     public function sluggable(): array
     {
 
@@ -245,5 +252,16 @@ final class Article extends Model
     public function favoredUsers()
     {
         return $this->belongsToMany(User::class, 'article_favorite');
+    }
+
+    /**
+     * Get the tag list attribute.
+     *
+     * @return array<string>
+     */
+    public function getTagListAttribute(): array
+    {
+        return $this->tags->pluck('name')->toArray();
+
     }
 }
