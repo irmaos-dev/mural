@@ -222,25 +222,11 @@ final class UpdateArticleTest extends TestCase
 
     public function testUpdateArticleSlugModifier(): void
     {
-        /** @var User $author */
-        $author = User::factory()->create();
 
-        $articleTitle = $this->faker->sentence(4);
-
-        $response = $this->actingAs($author)->postJson("/api/articles", [
-            "article" => [
-                "title"       => $articleTitle,
-                "image"       => $this->faker->imageUrl(),
-                "description" => $this->faker->paragraph(),
-                "body"        => $this->faker->text(),
-                "tagList"     => [],
-            ],
-        ]);
-
-        $slugOriginal = $response->decodeResponseJson()['article']['slug'];
+        $slugOriginal = $this->article->slug;
 
         $articleTitleEdited = $this->faker->sentence(5);
-        $response2 = $this->actingAs($author)->putJson("/api/articles/{$slugOriginal}", [
+        $response2 = $this->actingAs($this->article->author)->putJson("/api/articles/{$slugOriginal}", [
             "article" => [
                 "title" => $articleTitleEdited,
             ],
@@ -253,168 +239,92 @@ final class UpdateArticleTest extends TestCase
 
     public function testSlugIsUniqueWhenTitleIsDuplicated(): void
     {
-        /** @var User $author */
-        $author = User::factory()->create();
 
-        $articleTitle = $this->faker->sentence(4);
+        $article1Title = $this->article->title;
+        $article1Slug = $this->article->slug;
 
-        $response = $this->actingAs($author)->postJson("/api/articles", [
+        $article2 = Article::factory()->for($this->article->author, 'author')->create();
+        $article2Slug = $article2->slug;
+
+        $response = $this->actingAs($article2->author)->putJson("/api/articles/{$article2Slug}", [
             "article" => [
-                "title"       => $articleTitle,
-                "image"       => $this->faker->imageUrl(),
-                "description" => $this->faker->paragraph(),
-                "body"        => $this->faker->text(),
-                "tagList"     => [],
+                "title" => $article1Title,
             ],
         ]);
 
-        $slug = $response->decodeResponseJson()['article']['slug'];
-
-        $response2 = $this->actingAs($author)->postJson("/api/articles", [
-            "article" => [
-                "title"       => $this->faker->sentence(4),
-                "image"       => $this->faker->imageUrl(),
-                "description" => $this->faker->paragraph(),
-                "body"        => $this->faker->text(),
-                "tagList"     => [],
-            ],
-        ]);
-
-        $slug2 = $response2->decodeResponseJson()['article']['slug'];
-
-        $response3 = $this->actingAs($author)->putJson("/api/articles/{$slug2}", [
-            "article" => [
-                "title" => $articleTitle,
-            ],
-        ]);
-
-        $slug2Edited = $response3->decodeResponseJson()['article']['slug'];
-        $this->assertNotEquals($slug, $slug2Edited);
+        $article2SlugEdited = $article2->fresh()->slug;
+        $this->assertNotEquals($article1Slug, $article2SlugEdited);
     }
 
     public function testUpdateSlugIgnoresManualInput(): void
     {
-        /** @var User $author */
-        $author = User::factory()->create();
 
-        $response = $this->actingAs($author)->postJson("/api/articles", [
-            "article" => [
-                "title"       => "Test title",
-                "image"       => $this->faker->imageUrl(),
-                "description" => $this->faker->paragraph(),
-                "body"        => $this->faker->text(),
-                "tagList"     => [],
-            ],
-        ]);
-
-        $slug = $response->decodeResponseJson()['article']['slug'];
+        $articleSlug = $this->article->slug;
         $manualSlugAttempt = "manual-slug-attempt";
-        $response2 = $this->actingAs($author)->putJson("/api/articles/{$slug}", [
+        $response2 = $this->actingAs($this->article->author)->putJson("/api/articles/{$articleSlug}", [
             "article" => [
-                "title" => "Test title edited",
+                "title" => `{$this->article->title} edited`,
                 "slug"  => $manualSlugAttempt,
             ], ]);
 
-        $slug2 = $response2->decodeResponseJson()['article']['slug'];
+        $articleSlugEdited = $this->article->fresh()->slug;
 
-        $this->assertNotEquals($manualSlugAttempt, $slug2);
+        $this->assertNotEquals($manualSlugAttempt, $articleSlugEdited);
     }
 
     public function testUpdateTagsIncludesNewTag(): void
     {
-        /** @var User $author */
-        $author = User::factory()->create();
+        $this->article->attachTags($this->faker->words(3));
+        $articleSlug = $this->article->slug;
 
-        $articleTags = $this->faker->words(3);
+        $articleTagsIncludedNewTag = [...$this->article->tagList, "new-tag"];
 
-        $articleTitle = $this->faker->sentence(4);
-
-        $response = $this->actingAs($author)->postJson("/api/articles", [
+        $response = $this->actingAs($this->article->author)->putJson("/api/articles/{$articleSlug}", [
             "article" => [
-                "title"       => $articleTitle,
-                "image"       => $this->faker->imageUrl(),
-                "description" => $this->faker->paragraph(),
-                "body"        => $this->faker->text(),
-                "tagList"     => $articleTags,
-            ],
-        ]);
-
-        $slug = $response->decodeResponseJson()['article']['slug'];
-
-        $articleTagsIncludedNewTag = [...$articleTags, "new-tag"];
-
-        $response2 = $this->actingAs($author)->putJson("/api/articles/{$slug}", [
-            "article" => [
-                "title"   => $articleTitle,
+                "title"   => $this->article->title,
                 "tagList" => $articleTagsIncludedNewTag,
             ],
         ]);
 
-        $articleTagsUpdated = $response2->decodeResponseJson()['article']['tagList'];
+        $articleTagsUpdated = $this->article->fresh()->tagList;
 
         $this->assertEquals($articleTagsIncludedNewTag, $articleTagsUpdated);
     }
 
     public function testUpdateAllTags(): void
     {
-        /** @var User $author */
-        $author = User::factory()->create();
+        $this->article->attachTags($this->faker->words(3));
 
-        $articleTags = $this->faker->words(3);
+        $articleSlug = $this->article->slug;
+        $articleTags = $this->article->tagList;
 
-        $articleTitle = $this->faker->sentence(4);
-
-        $response = $this->actingAs($author)->postJson("/api/articles", [
+        $response = $this->actingAs($this->article->author)->putJson("/api/articles/{$articleSlug}", [
             "article" => [
-                "title"       => $articleTitle,
-                "image"       => $this->faker->imageUrl(),
-                "description" => $this->faker->paragraph(),
-                "body"        => $this->faker->text(),
-                "tagList"     => $articleTags,
-            ],
-        ]);
-
-        $slug = $response->decodeResponseJson()['article']['slug'];
-
-        $response2 = $this->actingAs($author)->putJson("/api/articles/{$slug}", [
-            "article" => [
-                "title"   => $articleTitle,
+                "title"   => $this->article->title,
                 "tagList" => ["new-tag"],
             ],
         ]);
 
-        $articleTagsUpdated = $response2->decodeResponseJson()['article']['tagList'];
+        $articleTagsUpdated = $this->article->fresh()->tagList;
 
         $this->assertNotEquals($articleTags, $articleTagsUpdated);
     }
 
     public function testUpdateTagsEmpty(): void
     {
-        /** @var User $author */
-        $author = User::factory()->create();
 
-        $articleTitle = $this->faker->sentence(4);
+        $this->article->attachTags($this->faker->words(3));
 
-        $response = $this->actingAs($author)->postJson("/api/articles", [
+        $articleSlug = $this->article->slug;
+
+        $response2 = $this->actingAs($this->article->author)->putJson("/api/articles/{$articleSlug}", [
             "article" => [
-                "title"       => $articleTitle,
-                "image"       => $this->faker->imageUrl(),
-                "description" => $this->faker->paragraph(),
-                "body"        => $this->faker->text(),
-                "tagList"     => $this->faker->words(3),
-            ],
-        ]);
-
-        $slug = $response->decodeResponseJson()['article']['slug'];
-
-        $response2 = $this->actingAs($author)->putJson("/api/articles/{$slug}", [
-            "article" => [
-                "title"   => $articleTitle,
+                "title"   => $this->article->title,
                 "tagList" => [],
             ],
         ]);
 
-        $articleTagsUpdated = $response2->decodeResponseJson()['article']['tagList'];
+        $articleTagsUpdated = $this->article->fresh()->tagList;
 
         $this->assertEmpty($articleTagsUpdated);
     }
