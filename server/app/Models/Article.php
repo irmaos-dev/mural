@@ -204,10 +204,6 @@ final class Article extends Model
     {
         $tagIds = [];
 
-        if ($this->tagList === $tags) {
-            return;
-        }
-
         foreach ($tags as $tagName) {
             $tag = Tag::firstOrCreate([
                 'name' => $tagName,

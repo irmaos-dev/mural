@@ -134,7 +134,10 @@ final class ArticleController extends Controller
         $article->update($request->validated());
 
         if (is_array($tags)) {
-            $article->syncTags($tags);
+            if ($article->tagList !== $tags) {
+                $article->syncTags($tags);
+            }
+
         }
 
         return new ArticleResource($article);
