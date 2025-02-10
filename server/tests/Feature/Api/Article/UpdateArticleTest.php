@@ -274,7 +274,7 @@ final class UpdateArticleTest extends TestCase
 
     public function testUpdateTagsIncludesNewTag(): void
     {
-        $this->article->attachTags($this->faker->words(3));
+        $this->article->syncTags($this->faker->words(3));
         $articleSlug = $this->article->slug;
 
         $articleTagsIncludedNewTag = [...$this->article->tagList, "new-tag"];
@@ -293,7 +293,7 @@ final class UpdateArticleTest extends TestCase
 
     public function testUpdateAllTags(): void
     {
-        $this->article->attachTags($this->faker->words(3));
+        $this->article->syncTags($this->faker->words(3));
 
         $articleSlug = $this->article->slug;
         $articleTags = $this->article->tagList;
@@ -313,7 +313,7 @@ final class UpdateArticleTest extends TestCase
     public function testUpdateTagsEmpty(): void
     {
 
-        $this->article->attachTags($this->faker->words(3));
+        $this->article->syncTags($this->faker->words(3));
 
         $articleSlug = $this->article->slug;
 

@@ -200,7 +200,7 @@ final class Article extends Model
      *
      * @param array<string> $tags
      */
-    public function attachTags(array $tags): void
+    public function syncTags(array $tags): void
     {
         $tagIds = [];
 

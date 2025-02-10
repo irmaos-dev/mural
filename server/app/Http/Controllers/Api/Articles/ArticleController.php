@@ -91,7 +91,7 @@ final class ArticleController extends Controller
         $article = Article::create($attributes);
 
         if (is_array($tags)) {
-            $article->attachTags($tags);
+            $article->syncTags($tags);
         }
 
         return (new ArticleResource($article))
@@ -134,7 +134,7 @@ final class ArticleController extends Controller
         $article->update($request->validated());
 
         if (is_array($tags)) {
-            $article->attachTags($tags);
+            $article->syncTags($tags);
         }
 
         return new ArticleResource($article);
