@@ -212,6 +212,13 @@ final class Article extends Model
             $tagIds[] = $tag->id;
         }
         $this->tags()->sync($tagIds);
+
+        activity('ArticleTags')
+            ->performedOn($this)
+            ->withProperties(
+                ['tags' => $tags]
+            )
+            ->log('Tags anexadas ao artigo de id: ' . $this->id);
     }
 
     /**
