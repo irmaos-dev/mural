@@ -97,6 +97,7 @@
 - types
     - https://www.typescriptlang.org/docs/handbook/2/everyday-types.html
     - https://www.typescriptlang.org/docs/handbook/2/types-from-types.html
+    - https://medium.com/hoppinger/type-driven-development-for-single-page-applications-bf8ee98d48e2
 - Axios
     - Você provavalmente conhece a função "fetch" do Javascript. O propósito do Axios é bem similar: enviar requisições. Contudo, ele te fornece mais opções de uso como os interceptadores.
     Exemplos de arquivos: 1app/index.tsx, 6shared/lib/axios/AxiosContracts.ts
@@ -151,20 +152,45 @@
 - cn
     https://github.com/JedWatson/classnames/blob/main/README.md#usage
 - Feature-Sliced Design
+    https://blog.meetbrackets.com/architectures-of-modern-front-end-applications-8859dfe6c12e
     https://dev.to/m_midas/feature-sliced-design-the-best-frontend-architecture-4noj
 
+Por que uma pasta "app"?
+Toda aplicação requer algum tipo de configuração dos componentes, bibliotecas e funções utilitárias. O propósito dessa pasta é abrigar esse tipo de código, que não está diretamente ligada a nenhuma página ou regra de negócio específica.
+
+Por que uma pasta "pages"?
+Imagine um site que todo o conteúdo dele está contido em um único arquivo. Rapidamente esse arquivo fica extenso demais e difícil de trabalhar. Para evitar isso, separamos o conteúdo do site em múltiplos arquivos. No nosso caso, cada página do sistema possui uma pasta dentro do "2pages" e essa pasta contém alguns arquivos (a utilidade de cada um dos arquivos está descrita na explicação do Router).
+Agora imagine que todas as páginas possuem coisas que se repetem, como por exemplo uma visualização das informações básicas do usuário. Caso outro dia você queira adicionar uma nova informação ao componente do usuário, você precisará alterar todas as páginas do sistema. É por isso que nós quebramos as páginas em partes ainda menores. Essas partes menores estarão localizadas nas pastas abaixo: "widgets" e "features". Logo se você alterar alguma coisa de um componente do "widgets", todas as páginas serão alteradas também.
+Além disso, não podemos importar uma página dentro de outra página.
+
 Por que uma pasta "widgets"?
-Veja a subpasta "articles-feed". Ela define um componente que é usada de forma idêntica em duas páginas: "home" e "profile". Em vez de implementar exatamente a mesma lógica nas duas páginas, criamos um widget que pode ser usada em ambas páginas. Além disso, não devemos importar uma página dentro de outra página.
+Veja a subpasta "articles-feed". Ela define um componente que é usada de forma idêntica em duas páginas: "home" e "profile". Em vez de implementar exatamente a mesma lógica nas duas páginas, criamos um widget que pode ser usada em ambas páginas.
+Um widget geralmente é composto de "features", localizados na pasta de baixo.
+Contudo, o ideal é criar uma funcionalidade na feature primeiro e só movê-la para o "widgets" caso você precise violar alguma das restrições da feature.
 
 Por que uma pasta "features"?
-Estes são componentes que realmente realizam alguma mudança persistente.
-Uma vantagem de separá-los para essa camada é que mudanças que afetem apenas a aparência de uma página não chegam perto desses componentes que realizam modificações nos dados, evitando bugs com informações dos usuários.
-Isso também nos permite utilizá-los em múltiplos widgets e pages.
-Por último, é sempre mais fácil de trabalhar em aplicações onde é óbvio onde as mutações dos dados estão realmente acontecendo.
+Os componentes "feature" são partes pequenas de funcionalidade. De forma geral, não viole as seguintes recomendações:
+    - Ela deve fazer apenas uma coisa.
+    - Ela não deve importar uma outra feature.
+Caso você sinta necessidade de fazer alguma dessas coisas, chegou a hora de fazer um "widget".
+Prefira fazer manipulações de dados nessa camada, ou seja, enviar requisições POST, PUT ou DELETE para o servidor.
+È sempre mais fácil de trabalhar em aplicações onde é óbvio onde as mutações dos dados estão realmente acontecendo.
 
 Por que uma pasta "entities"?
+Para construir uma interface que consulte um servidor, nós precisaremos converter os dados que o servidor nos entrega em estruturas de dados convenientes para trabalhar com a interface em si.
+Agora imagine que em todas as telas que utilizam algum dos conceitos da regra de negócio (por exemplo, usuários) precisarem criar essa mesma conversão na tela em questão. Teríamos rapidamente o códigos idênticos implementados em diferentes partes do sistema. E se você importasse a implementação de uma outra tela, você estaria criando uma dependência entre as telas e um desavisado teria grande dificuldade em encontrar onde estão essas definições.
+Portanto, para evitar a dependência entre as telas e centralizar a definição dessas entidades, utilizamos essa pasta.
+Se você ler os artigos sobre o "Feature-Sliced Design", vai ver que a pasta "entities" é considerada opcional.
+Isso não quer dizer, que as coisas que estão lá dentro não são importantes. Mas no caso, os arquivos que estão nela poderiam estar na pasta "shared".
+Então, por que não termos colocado essas entidades na pasta shared logo de cara? Essa separação é útil para deixar explicito que as coisas que estão nessa pasta não devem serem acessadas pelas outras coisas que estão na pasta de baixo (a pasta "shared").
+Por outro lado, se você ler o conceito da pasta "shared", verá que não é o seu objetivo conter códigos que reflitam as regras de negócio. Infelizmente, no nosso projeto, temos essas definições de regras de negócio em ambas as pastas. Esse é um ponto em potencial de refatoração para o futuro.
 
 Por que uma pasta "shared"?
+Existem muitas coisas como utilitários para a integração com o backend ou um serviços externos, componentes de interface como buttons, inputs, etc, controle de estados e outras funções auxiliares que podem serem usadas em múltiplas partes de um sistema e que não possuem qualquer relacionamento com as regras de negócio, ou seja, a existência delas não interferem ou são criadas por um requisito dos dados ou pela forma que o sistema soluciona o nosso problema. São completamente genéricas.
+
+Por que cada pasta contém mais outras pastas?
+Dentro de cada uma das pastas principais (chamadas camadas), nós temos mais outras pastas que são chamas "slices". Os slices são agrupamentos de conceitos (ou domínios) da nossa regra de negócio. Por exemplo: articles, users, tags, etc.
+Idealmente, um slice não deve chamar um outro slice. Caso você sinta a necessidade de fazer isso, pode ser que você esteja misturando responsabilidades do seu código. Uma saída para isso é abstrair o conceito sendo usado para uma camada inferior.
 
 ## Como as ferramentas do backend funcionam
 
