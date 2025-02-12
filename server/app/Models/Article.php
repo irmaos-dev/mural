@@ -200,7 +200,7 @@ final class Article extends Model
      *
      * @param array<string> $tags
      */
-    public function syncTags(array $tags): void
+    public function syncTags(array $tags, array $oldTags = null): void
     {
         $tagIds = [];
 
@@ -213,11 +213,17 @@ final class Article extends Model
         }
         $this->tags()->sync($tagIds);
 
+        $properties = [
+            'tags' => $tags,
+        ];
+
+        if (null !== $oldTags) {
+            $properties['old_tags'] = $oldTags;
+        }
+
         activity('ArticleTags')
             ->performedOn($this)
-            ->withProperties(
-                ['tags' => $tags]
-            )
+            ->withProperties($properties)
             ->log('Tags anexadas ao artigo de id: ' . $this->id);
     }
 

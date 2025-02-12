@@ -125,6 +125,7 @@ final class ArticleController extends Controller
     {
         $article = Article::whereSlug($slug)
             ->firstOrFail();
+        $oldTags = $article->tagList;
 
         $this->authorize('update', $article);
 
@@ -135,7 +136,7 @@ final class ArticleController extends Controller
 
         if (is_array($tags)) {
             if ($article->tagList !== $tags) {
-                $article->syncTags($tags);
+                $article->syncTags($tags, $oldTags);
             }
 
         }
