@@ -65,6 +65,13 @@ final class Article extends Model
         'image',
     ];
 
+    /**
+     * The attributes that should be appended to the model.
+     */
+    protected $appends = [
+        'tagList',
+    ];
+
     public function sluggable(): array
     {
 
@@ -193,15 +200,31 @@ final class Article extends Model
      *
      * @param array<string> $tags
      */
-    public function attachTags(array $tags): void
+    public function syncTags(array $tags, array $oldTags = null): void
     {
+        $tagIds = [];
+
         foreach ($tags as $tagName) {
             $tag = Tag::firstOrCreate([
                 'name' => $tagName,
             ]);
 
-            $this->tags()->syncWithoutDetaching($tag);
+            $tagIds[] = $tag->id;
         }
+        $this->tags()->sync($tagIds);
+
+        $properties = [
+            'tags' => $tags,
+        ];
+
+        if (null !== $oldTags) {
+            $properties['old_tags'] = $oldTags;
+        }
+
+        activity('ArticleTags')
+            ->performedOn($this)
+            ->withProperties($properties)
+            ->log('Tags anexadas ao artigo de id: ' . $this->id);
     }
 
     /**
@@ -242,5 +265,16 @@ final class Article extends Model
     public function favoredUsers()
     {
         return $this->belongsToMany(User::class, 'article_favorite');
+    }
+
+    /**
+     * Get the tag list attribute.
+     *
+     * @return array<string>
+     */
+    public function getTagListAttribute(): array
+    {
+        return $this->tags->pluck('name')->toArray();
+
     }
 }
