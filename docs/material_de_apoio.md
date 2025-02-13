@@ -173,24 +173,23 @@ Os componentes "feature" são partes pequenas de funcionalidade. De forma geral,
     - Ela deve fazer apenas uma coisa.
     - Ela não deve importar uma outra feature.
 Caso você sinta necessidade de fazer alguma dessas coisas, chegou a hora de fazer um "widget".
-Prefira fazer manipulações de dados nessa camada, ou seja, enviar requisições POST, PUT ou DELETE para o servidor.
-È sempre mais fácil de trabalhar em aplicações onde é óbvio onde as mutações dos dados estão realmente acontecendo.
+Prefira fazer manipulações de dados nessa camada, ou seja, enviar requisições POST, PUT ou DELETE para o servidor (mediadas pelo Tanstack Query).
+É sempre mais fácil de trabalhar em aplicações onde é óbvio onde as mutações dos dados estão realmente acontecendo.
 
 Por que uma pasta "entities"?
-Para construir uma interface que consulte um servidor, nós precisaremos converter os dados que o servidor nos entrega em estruturas de dados convenientes para trabalhar com a interface em si.
-Agora imagine que em todas as telas que utilizam algum dos conceitos da regra de negócio (por exemplo, usuários) precisarem criar essa mesma conversão na tela em questão. Teríamos rapidamente o códigos idênticos implementados em diferentes partes do sistema. E se você importasse a implementação de uma outra tela, você estaria criando uma dependência entre as telas e um desavisado teria grande dificuldade em encontrar onde estão essas definições.
+Para construir uma interface que consulte um servidor, nós precisaremos converter os dados que o servidor nos entrega em estruturas de dados convenientes para trabalhar com a interface em si e vice-versa.
+Agora imagine que em todas as telas que utilizam algum dos conceitos da regra de negócio (por exemplo, usuários) precisem criar essa mesma conversão. Teríamos rapidamente o códigos idênticos implementados em diferentes partes do sistema. E se você importasse a implementação de uma outra tela, você estaria criando uma dependência entre as telas  sem motivo e sem benefício.
 Portanto, para evitar a dependência entre as telas e centralizar a definição dessas entidades, utilizamos essa pasta.
-Se você ler os artigos sobre o "Feature-Sliced Design", vai ver que a pasta "entities" é considerada opcional.
-Isso não quer dizer, que as coisas que estão lá dentro não são importantes. Mas no caso, os arquivos que estão nela poderiam estar na pasta "shared".
-Então, por que não termos colocado essas entidades na pasta shared logo de cara? Essa separação é útil para deixar explicito que as coisas que estão nessa pasta não devem serem acessadas pelas outras coisas que estão na pasta de baixo (a pasta "shared").
-Por outro lado, se você ler o conceito da pasta "shared", verá que não é o seu objetivo conter códigos que reflitam as regras de negócio. Infelizmente, no nosso projeto, temos essas definições de regras de negócio em ambas as pastas. Esse é um ponto em potencial de refatoração para o futuro.
+Se você ler os artigos sobre o "Feature-Sliced Design", vai ver que a pasta "entities" é considerada opcional. Isso não quer dizer, que as coisas que estão lá dentro não são importantes, mas poderiam estar na pasta "shared".
+Por outro lado, se você ler o conceito da pasta "shared", verá que não é o seu objetivo conter códigos que reflitam as regras de negócio, por isso é melhor separá-los.
+Infelizmente, no nosso projeto, temos essas definições de regras de negócio em ambas as pastas. Esse é um ponto em potencial de refatoração para o futuro.
 
 Por que uma pasta "shared"?
-Existem muitas coisas como utilitários para a integração com o backend ou um serviços externos, componentes de interface como buttons, inputs, etc, controle de estados e outras funções auxiliares que podem serem usadas em múltiplas partes de um sistema e que não possuem qualquer relacionamento com as regras de negócio, ou seja, a existência delas não interferem ou são criadas por um requisito dos dados ou pela forma que o sistema soluciona o nosso problema. São completamente genéricas.
+Existem muitas coisas como utilitários para a integração com o backend ou um serviços externos, componentes de interface como buttons, inputs, etc, controle de estados e outras funções auxiliares que podem serem usadas em múltiplas partes de um sistema e que não possuem qualquer relacionamento com as regras de negócio.
 
 Por que cada pasta contém mais outras pastas?
 Dentro de cada uma das pastas principais (chamadas camadas), nós temos mais outras pastas que são chamas "slices". Os slices são agrupamentos de conceitos (ou domínios) da nossa regra de negócio. Por exemplo: articles, users, tags, etc.
-Idealmente, um slice não deve chamar um outro slice. Caso você sinta a necessidade de fazer isso, pode ser que você esteja misturando responsabilidades do seu código. Uma saída para isso é abstrair o conceito sendo usado para uma camada inferior.
+Idealmente, um slice não deve chamar um outro slice. Caso você sinta a necessidade de fazer isso, pode ser que você esteja misturando responsabilidades do seu código e você deveria abstrair o conceito para outra camada.
 
 ## Como as ferramentas do backend funcionam
 
