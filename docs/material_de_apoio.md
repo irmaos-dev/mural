@@ -191,6 +191,20 @@ Por que cada pasta contém mais outras pastas?
 Dentro de cada uma das pastas principais (chamadas camadas), nós temos mais outras pastas que são chamas "slices". Os slices são agrupamentos de conceitos (ou domínios) da nossa regra de negócio. Por exemplo: articles, users, tags, etc.
 Idealmente, um slice não deve chamar um outro slice. Caso você sinta a necessidade de fazer isso, pode ser que você esteja misturando responsabilidades do seu código e você deveria abstrair o conceito para outra camada.
 
+Outros arquivos
+
+- model.ts
+- route.tsx
+- skeleton.ts
+- lib.ts
+- mutation.ts
+- contract.ts
+- queries.ts
+- types.ts
+- service.ts
+
+Testes Automatizados ???
+
 ## Como as ferramentas do backend funcionam
 
 https://medium.com/@rajvir.ahmed.shuvo/understanding-sync-attach-and-detach-in-laravel-managing-relationships-with-eloquent-394a7cf7fabd
